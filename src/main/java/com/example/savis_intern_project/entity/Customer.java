@@ -30,6 +30,11 @@ public class Customer {
     @Column(name = "PhoneNumber")
     private String phone;
 
+    @Column(name = "Datecreated")
+    private String datecreated;
+
+
+
     @Column(name = "Email")
     private String email;
 
