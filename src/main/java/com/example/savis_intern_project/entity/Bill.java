@@ -21,7 +21,7 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID Id;
 
-    @Column(name = "Id")
+    @Column(name = "Price")
     private BigDecimal Price;
 
     @Column(name = "CreateDate")
