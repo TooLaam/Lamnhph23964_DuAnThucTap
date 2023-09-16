@@ -22,7 +22,7 @@ public class CartDetail {
     private Integer quantity;
 
     @ManyToOne
-    @JoinColumn(name = "Cartdetail",referencedColumnName = "Id",nullable = true)
+    @JoinColumn(name = "Cartdetail",referencedColumnName = "Cartid",nullable = true)
     private Cart cart;
 
     @ManyToOne
