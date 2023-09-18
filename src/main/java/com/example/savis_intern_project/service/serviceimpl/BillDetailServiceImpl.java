@@ -1,4 +1,4 @@
-package com.example.savis_intern_project.service;
+package com.example.savis_intern_project.service.serviceimpl;
 
-public interface BillDetailService {
+public class BillDetailServiceImpl {
 }
