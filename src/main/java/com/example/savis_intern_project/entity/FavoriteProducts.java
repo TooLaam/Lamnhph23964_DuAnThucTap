@@ -37,4 +37,11 @@ public class FavoriteProducts {
 
     @Column(name = "Description")
     private String descripTion;
+
+    public FavoriteProducts( Customer customer, Product product, String descripTion) {
+
+        this.customer = customer;
+        this.product = product;
+        this.descripTion = descripTion;
+    }
 }

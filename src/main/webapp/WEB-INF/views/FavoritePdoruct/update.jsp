@@ -17,7 +17,7 @@
         <label>Customer</label>
         <select name="customer" class="form-control">
             <c:forEach items="${listCustomer}" var="customer">
-                <option value="${customer.id}">${customer.name}</option>
+                <option value="${customer.id}">${customer.fullname}</option>
             </c:forEach>
         </select>
     </div>
@@ -31,7 +31,7 @@
     </div>
     <div class="mb-3">
         <label>Description</label>
-        <input class="form-control" name="descripTion">
+        <input class="form-control" name="descripTion" value="${spyt.descripTion}">
     </div>
     <input type="submit" class="btn btn-primary" value="Update">
 </form>

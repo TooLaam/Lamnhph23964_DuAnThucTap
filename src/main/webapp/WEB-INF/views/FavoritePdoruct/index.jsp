@@ -17,7 +17,7 @@
         <label>Customer</label>
         <select name="customer" class="form-control">
             <c:forEach items="${listCustomer}" var="customer">
-                <option value="${customer.id}">${customer.name}</option>
+                <option value="${customer.id}">${customer.fullname}</option>
             </c:forEach>
         </select>
     </div>
@@ -48,11 +48,11 @@
     <c:forEach items="${listFavor}" var="spyt">
         <tr>
             <td>${spyt.id}</td>
-            <td>${spyt.customer.name}</td>
+            <td>${spyt.customer.fullname}</td>
             <td>${spyt.product.name}</td>
             <td>${spyt.descripTion}</td>
             <td>
-                <a href="/favor/delete/${spyt.id}" class="btn btn-success">Delete</a>
+                <a href="/favor/delete?id=${spyt.id}" class="btn btn-success">Delete</a>
                 <a href="/favor/detail/${spyt.id}" class="btn btn-danger">Detail</a>
             </td>
         </tr>

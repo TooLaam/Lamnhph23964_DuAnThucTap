@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,32 +18,31 @@ public class FavoriteProductServiceimpl implements FavoriteProductService {
     FavoriteProductsRespository responitory;
 
     @Override
-    public ArrayList<FavoriteProducts> getAll() {
-        return (ArrayList<FavoriteProducts>) responitory.findAll();
-    }
-
-    @Override
-    public void save(FavoriteProducts favoriteProducts) {
-           responitory.saveAndFlush(favoriteProducts);
+    public void add(FavoriteProducts favoriteProducts) {
+         responitory.saveAndFlush(favoriteProducts);
     }
 
     @Override
     public void delete(UUID id) {
-                   responitory.deleteById(id);
+    responitory.deleteById(id);
     }
 
     @Override
     public void update(UUID id, FavoriteProducts favoriteProducts) {
-        FavoriteProducts a = getOne(id).get();
+        FavoriteProducts a = getOne(id);
         a.setCustomer(favoriteProducts.getCustomer());
         a.setProduct(favoriteProducts.getProduct());
         a.setDescripTion(favoriteProducts.getDescripTion());
         responitory.flush();
-
     }
 
     @Override
-    public Optional<FavoriteProducts> getOne(UUID id) {
-        return responitory.findById(id);
+    public List<FavoriteProducts> getAll() {
+        return responitory.findAll();
+    }
+
+    @Override
+    public FavoriteProducts getOne(UUID id) {
+        return responitory.findById(id).get();
     }
 }
