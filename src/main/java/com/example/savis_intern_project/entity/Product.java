@@ -55,4 +55,20 @@ public class Product {
             nullable = true
     )
     private Category category;
+
+    public Product( String name, String descripTion, String manufacTurer, Integer availableQuantity, Integer sold, BigDecimal price, BigDecimal importPrice, Date date, Integer staTus, String imageUrl, Color color, Category category) {
+
+        this.name = name;
+        this.descripTion = descripTion;
+        this.manufacTurer = manufacTurer;
+        this.availableQuantity = availableQuantity;
+        this.sold = sold;
+        this.price = price;
+        this.importPrice = importPrice;
+        this.date = date;
+        this.staTus = staTus;
+        this.imageUrl = imageUrl;
+        this.color = color;
+        this.category = category;
+    }
 }
