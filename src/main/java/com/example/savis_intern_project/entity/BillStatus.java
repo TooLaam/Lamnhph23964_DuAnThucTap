@@ -16,8 +16,8 @@ import java.util.UUID;
 public class BillStatus {
     @Id
     @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID Id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer Id;
 
     @Column(name = "Name")
     private String Name;
