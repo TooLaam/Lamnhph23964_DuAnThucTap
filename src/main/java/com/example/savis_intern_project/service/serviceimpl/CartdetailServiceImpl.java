@@ -5,12 +5,13 @@ import com.example.savis_intern_project.entity.Product;
 import com.example.savis_intern_project.repository.CartdetailRepository;
 import com.example.savis_intern_project.service.CartdetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
-
+@Service
 public class CartdetailServiceImpl implements CartdetailService  {
     @Autowired
     CartdetailRepository responitory;

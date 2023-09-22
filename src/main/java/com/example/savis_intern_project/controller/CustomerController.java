@@ -9,14 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.modelmapper.ModelMapper;
+//import org.modelmapper.ModelMapper;
 
 import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("customer")
+@RequestMapping("/customer")
 public class CustomerController {
 
 
@@ -26,15 +26,15 @@ public class CustomerController {
 //    @Autowired
 //    private ModelMapper modelMapper;
 
-    @GetMapping("index")
+    @GetMapping("/index")
     public String HienThi(Model model) {
         List<Customer> customerList = customerService.findAll() ;
         model.addAttribute("cusList", customerList);
 
-        return "/index/CustomerView";
+        return "CustomerView";
     }
 
-    @PostMapping("add_customer")
+    @PostMapping("/add_customer")
     public String themMoi(Model model,
                           @RequestParam("Id") UUID id,
                           @RequestParam("fullname") String fullname,
@@ -64,7 +64,7 @@ public class CustomerController {
         return "redirect:/customer/index";
     }
 
-    @PostMapping("update/{Id}")
+    @PostMapping("/update/{Id}")
     public String update(Model model,
                          @RequestParam("Id") UUID id,
                          @RequestParam("fullname") String fullname,
@@ -95,13 +95,13 @@ public class CustomerController {
         return "redirect:/customer/index";
     }
 
-    @GetMapping("delete/{id}")
+    @GetMapping("/delete/{id}")
     public String Delete(Model model, @PathVariable("id") UUID id) {
         customerService.delete(id);
         return "redirect:/kich_thuoc/hien_thi";
     }
 
-    @GetMapping("detail/{id}")
+    @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable("id") UUID id) {
         model.addAttribute("ktd", customerService.detail(id));
 

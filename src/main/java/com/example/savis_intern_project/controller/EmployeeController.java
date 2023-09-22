@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("employee")
+@RequestMapping("/employee")
 public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
@@ -22,7 +22,7 @@ public class EmployeeController {
 //    @Autowired
 //    private ModelMapper modelMapper;
 
-    @GetMapping("index")
+    @GetMapping("/index")
     public String HienThi(Model model) {
         List<Employee> customerList = employeeService.findAll() ;
         model.addAttribute("empList", customerList);
@@ -30,7 +30,7 @@ public class EmployeeController {
         return "/index/CustomerView";
     }
 
-    @PostMapping("add_employee")
+    @PostMapping("/add_employee")
     public String themMoi(Model model,
                           @RequestParam("Id") UUID id,
                           @RequestParam("fullname") String fullname,
@@ -63,7 +63,7 @@ public class EmployeeController {
         return "redirect:/employee/index";
     }
 
-    @PostMapping("update/{Id}")
+    @PostMapping("/update/{Id}")
     public String update(Model model,
                          @RequestParam("Id") UUID id,
                          @RequestParam("fullname") String fullname,
@@ -97,17 +97,17 @@ public class EmployeeController {
         return "redirect:/employee/index";
     }
 
-    @GetMapping("delete/{id}")
+    @GetMapping("/delete/{id}")
     public String Delete(Model model, @PathVariable("id") UUID id) {
         employeeService.delete(id);
         return "redirect:/employee/index";
     }
 
-    @GetMapping("detail/{id}")
+    @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable("id") UUID id) {
         model.addAttribute("ktd", employeeService.detail(id));
 
-        return "detail/employeeDetail";
+        return "/detail/employeeDetail";
 
     }
 }
