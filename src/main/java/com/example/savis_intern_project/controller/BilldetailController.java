@@ -25,7 +25,7 @@ public class BilldetailController {
     @Autowired
     BillServiceImpl billService;
 
-    @GetMapping
+    @GetMapping("/index")
     public String show_data_bill(Model model) {
         model.addAttribute("listBillDetail", billDetailService.get_all_billdetail());
         model.addAttribute("listBill", billService.get_all_bill());

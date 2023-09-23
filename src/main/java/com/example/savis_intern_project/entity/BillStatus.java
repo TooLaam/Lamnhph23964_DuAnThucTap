@@ -17,8 +17,10 @@ public class BillStatus {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Integer id;
 
     @Column(name = "Name")
-    private String Name;
+    private String name;
+
+
 }
