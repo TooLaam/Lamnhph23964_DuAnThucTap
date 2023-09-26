@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -25,13 +26,25 @@ public class BilldetailController {
     @Autowired
     BillServiceImpl billService;
 
-    @GetMapping("/index")
-    public String show_data_bill(Model model) {
-        model.addAttribute("listBillDetail", billDetailService.get_all_billdetail());
+    @GetMapping("/index/{billId}")
+    public String show_data_bill(Model model,@PathVariable("billId")UUID billId) {
         model.addAttribute("listBill", billService.get_all_bill());
-        model.addAttribute("listProduct", "");
-        model.addAttribute("view", "/billDetail/index.jsp");
-        return "";
+        List<BillDetail> billDetailList = billDetailService.get_all_by_billId(billId);
+        double allPrice = 0; // Khởi tạo biến tổng giá trị hóa đơn
+        for (BillDetail billDetail : billDetailList) {
+            int quantity = billDetail.getQuantity();
+            BigDecimal price = billDetail.getProduct().getPrice();
+            BigDecimal totalPrice = price.multiply(BigDecimal.valueOf(quantity));
+            allPrice += totalPrice.doubleValue();
+            System.out.println("price" + price);
+            System.out.println("quantity" + quantity);
+        }
+
+        System.out.println(allPrice);
+        model.addAttribute("billDetailD", billDetailList);
+        model.addAttribute("allPrice", allPrice);
+        model.addAttribute("view", "/BillDetail/index.jsp");
+        return "index";
     }
 
     @PostMapping("/create_bill_detail")

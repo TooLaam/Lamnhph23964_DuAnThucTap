@@ -27,6 +27,11 @@ public class BillDetailServiceImpl implements BillDetailService {
     public List<BillDetail> get_all_billdetail() {
         return billDetailRepository.findAll();
     }
+    @Override
+    public List<BillDetail> get_all_by_billId(UUID billId) {
+        return billDetailRepository.getAllByBillId(billId);
+    }
+
 
     @Override
     public BillDetail get_one_bill_detail(UUID billDetailId) {

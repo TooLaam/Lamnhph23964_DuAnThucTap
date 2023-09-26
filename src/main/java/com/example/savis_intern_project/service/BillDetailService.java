@@ -13,6 +13,8 @@ public interface BillDetailService {
 
     List<BillDetail> get_all_billdetail();
 
+    List<BillDetail> get_all_by_billId(UUID billId);
+
     BillDetail get_one_bill_detail(UUID billDetailId);
 
 //    void change_bill_status(UUID billDetailId);

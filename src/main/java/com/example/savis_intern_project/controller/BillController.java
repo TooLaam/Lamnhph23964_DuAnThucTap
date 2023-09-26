@@ -1,14 +1,8 @@
 package com.example.savis_intern_project.controller;
 
 
-import com.example.savis_intern_project.entity.Bill;
-import com.example.savis_intern_project.entity.BillStatus;
-import com.example.savis_intern_project.entity.Customer;
-import com.example.savis_intern_project.entity.Employee;
-import com.example.savis_intern_project.service.serviceimpl.BillServiceImpl;
-import com.example.savis_intern_project.service.serviceimpl.BillStatusServiceImpl;
-import com.example.savis_intern_project.service.serviceimpl.CustomerServiceImpl;
-import com.example.savis_intern_project.service.serviceimpl.EmployeeServiceImpl;
+import com.example.savis_intern_project.entity.*;
+import com.example.savis_intern_project.service.serviceimpl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -24,6 +19,8 @@ public class BillController {
 
     @Autowired
     BillServiceImpl billService;
+    @Autowired
+    BillDetailServiceImpl billDetailService;
     @Autowired
     CustomerServiceImpl customerService;
     @Autowired
@@ -50,10 +47,12 @@ public class BillController {
         bill.setEmployee(employeeService.detail(Employee));
         bill.setAddress(address);
         bill.setCreateDate(currentDate);
+
+
         billService.create_new_bill(bill);
 
         System.out.println("Ngày hiện tại: " + currentDate);
-        return "";
+        return "redirect:/bill/index";
     }
 
     @PostMapping("/update-bill/{billId}")
@@ -77,7 +76,7 @@ public class BillController {
         billService.create_new_bill(bill);
 
         System.out.println("Ngày hiện tại: " + currentDate);
-        return "";
+        return "redirect:/bill/index";
     }
 
     @GetMapping("/index")
@@ -91,12 +90,25 @@ public class BillController {
     }
 
     @GetMapping("/index/{billId}")
-    public String show_data_bill(Model model,@PathVariable("billId")UUID billId) {
+    public String show_data_bill(Model model, @PathVariable("billId") UUID billId) {
         model.addAttribute("listBill", billService.get_all_bill());
         model.addAttribute("listCustomer", customerService.findAll());
         model.addAttribute("listEmployee", employeeService.findAll());
         model.addAttribute("listBillStatus", billStatusService.get_all_bill_status());
         model.addAttribute("billD", billService.get_one_bill(billId));
+        List<BillDetail> billDetailList = billDetailService.get_all_by_billId(billId);
+        double allPrice = 0; // Khởi tạo biến tổng giá trị hóa đơn
+        for (BillDetail billDetail : billDetailList) {
+            int quantity = billDetail.getQuantity();
+            BigDecimal price = billDetail.getProduct().getPrice();
+            BigDecimal totalPrice = price.multiply(BigDecimal.valueOf(quantity));
+            allPrice = allPrice + totalPrice.doubleValue();
+        }
+
+        System.out.println(allPrice);
+        model.addAttribute("billDetailD", billDetailList);
+        model.addAttribute("allPrice", allPrice);
+
 
         model.addAttribute("view", "/Bill/index.jsp");
         return "index";
@@ -105,12 +117,12 @@ public class BillController {
     @GetMapping("delete_bill/{billId}")
     public String delete_bill(Model model, @PathVariable("billId") UUID billId) {
         billService.delete_bill(billId);
-        return "";
+        return "redirect:/bill/index";
     }
 
-    @PostMapping("/change_bill_status/{billId}")
+    @PostMapping("change_bill_status/{billId}")
     public String change_bill_status(Model model, @PathVariable("billId") UUID billId) {
         billService.change_bill_status(billId);
-        return "redirect:";
+        return "redirect:/bill/index";
     }
 }
