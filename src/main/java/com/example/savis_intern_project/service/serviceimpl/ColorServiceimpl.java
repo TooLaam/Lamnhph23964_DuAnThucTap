@@ -32,13 +32,15 @@ public class ColorServiceimpl implements ColorService {
 
     @Override
     public void update(UUID id, Color color) {
-         Color a = getOne(id).get();
+         Color a = getOne(id);
          a.setName(color.getName());
          responsitory.flush();
     }
 
     @Override
-    public Optional<Color> getOne(UUID id) {
-        return responsitory.findById(id);
+    public Color getOne(UUID id) {
+        return responsitory.findById(id).get();
     }
+
+
 }

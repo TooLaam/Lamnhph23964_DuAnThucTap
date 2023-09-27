@@ -4,12 +4,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="pagetitle">
-    <h1>Color</h1>
+    <h1>FavoriteProduct</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
             <li class="breadcrumb-item active">Overview</li>
-            <li class="breadcrumb-item active">Color</li>
+            <li class="breadcrumb-item active">FavoriteProduct</li>
         </ol>
     </nav>
 </div>
@@ -26,23 +26,26 @@
 
 
                         <div class="card-body">
-                            <h5 class="card-title">Color <span>| </span></h5>
+                            <h5 class="card-title">FavoriteProduct <span>| </span></h5>
 
                             <table class="table table-borderless datatable">
                                 <tr>
                                     <th>ID</th>
-                                    <th>Ten</th>
+                                    <th>Customer</th>
+                                    <th>Product</th>
+                                    <th>Description</th>
                                     <th>Action</th>
 
                                 </tr>
-                                <c:forEach items="${listColor}" var="mau">
+                                <c:forEach items="${listFavor}" var="spyt">
                                     <tr>
-                                        <td>${mau.id}</td>
-                                        <td>${mau.name}</td>
-
+                                        <td>${spyt.id}</td>
+                                        <td>${spyt.customer.fullname}</td>
+                                        <td>${spyt.product.name}</td>
+                                        <td>${spyt.descripTion}</td>
                                         <td>
-                                            <a href="/color/delete/${mau.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" style="text-decoration: none;color: white"><i class='bx bx-trash'></i></a>
-                                            <a href="/color/detail/${mau.id}" class="btn btn-success" style="text-decoration: none;color: white; margin-top: 5px" ><i class='bi bi-arrow-repeat'></i></a>
+                                            <a href="/favor/delete?id=${spyt.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" style="text-decoration: none;color: white"><i class='bx bx-trash'></i></a><br>
+                                            <a href="/favor/detail/${spyt.id}" class="btn btn-success" style="text-decoration: none;color: white; margin-top: 5px" ><i class='bi bi-arrow-repeat'></i></a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -96,11 +99,29 @@
                     <div class="tab-content pt-2" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel"
                              aria-labelledby="home-tab">
-                            <form method="post" action="/color/update/${mau.id}">
+                            <form method="post" action="/favor/update/${spyt.id}">
+                                <div class="form-group">
+                                    Customer :
+                                    <select name="customer" class="form-select"  aria-label="Default select example">
+                                        <c:forEach items="${listCustomer}" var="customer">
+                                            <option value="${customer.id}">${customer.fullname}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                    Product :
+                                    <select name="product" class="form-select"  aria-label="Default select example">
+                                        <c:forEach items="${listProduct}" var="product">
+                                            <option value="${product.id}">${product.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
 
                                 <div>
-                                    Name :
-                                    <input class="form-control" name="name" value="${mau.name}">
+                                    Description :
+                                    <input class="form-control" name="descripTion" value="${spyt.descripTion}">
                                 </div>
                                 <input type="submit" class="btn btn-primary" value="Update"style="margin-top: 10px">
                             </form>
@@ -108,22 +129,44 @@
 
                         <%--create--%>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <form method="post" action="/color/add">
-                                <div>
-                                    Name :
-                                    <input class="form-control" name="name" >
+                            <form method="post" action="/favor/add">
+                                <div class="form-group">
+                                    Customer :
+                                    <select name="customer" class="form-select"  aria-label="Default select example">
+                                        <c:forEach items="${listCustomer}" var="customer">
+                                            <option value="${customer.id}">${customer.fullname}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
-                                <input type="submit" class="btn btn-primary" value="Update"style="margin-top: 10px">
+
+
+                                <div class="form-group">
+                                    Product :
+                                    <select name="product" class="form-select"  aria-label="Default select example">
+                                        <c:forEach items="${listProduct}" var="product">
+                                            <option value="${product.id}">${product.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    Description :
+                                    <input class="form-control" name="descripTion" >
+                                </div>
+                                <input type="submit" class="btn btn-primary" value="Add" style="margin-top: 10px">
                             </form>
                         </div>
                         <%--detail--%>
                         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                             <form class="row g-3" action="/favor/detail/${spyt.id}" method="get">
                                 <div class="form-group">
-                                    ID : ${mau.id}
+                                    Customer : ${spyt.customer.fullname}
                                 </div>
                                 <div class="form-group">
-                                    Name : ${mau.name}
+                                    Product :  ${spyt.product.name}
+                                </div>
+                                <div class="form-group">
+                                    Description  : ${spyt.descripTion}
                                 </div>
 
                             </form><!-- End Multi Columns Form -->

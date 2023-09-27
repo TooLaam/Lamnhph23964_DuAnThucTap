@@ -30,7 +30,8 @@ public class FavoriteProductsController {
         model.addAttribute("FavoriteProducts",new FavoriteProductsController());
         model.addAttribute("listProduct",productServiceimpl.getAll());
         model.addAttribute("listCustomer",customerServiceimpl.findAll());
-        return "/FavoritePdoruct/index";
+        model.addAttribute("view", "/FavoriteProduct/index.jsp");
+        return "index";
     }
     @PostMapping("/add")
     public String add(Model model,
@@ -52,7 +53,8 @@ public class FavoriteProductsController {
         model.addAttribute("spyt",favoriteProductServiceimpl.getOne(id));
         model.addAttribute("listCustomer", customerServiceimpl.findAll());
         model.addAttribute("listProduct", productServiceimpl.getAll());
-        return "/FavoritePdoruct/update";
+        model.addAttribute("view", "/FavoriteProduct/index.jsp");
+        return "index";
     }
     @GetMapping("delete")
     public String delete(Model model,

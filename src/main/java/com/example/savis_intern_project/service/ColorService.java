@@ -1,6 +1,7 @@
 package com.example.savis_intern_project.service;
 
 import com.example.savis_intern_project.entity.Color;
+import com.example.savis_intern_project.entity.FavoriteProducts;
 import com.example.savis_intern_project.entity.Product;
 
 import java.util.ArrayList;
@@ -16,5 +17,5 @@ public interface ColorService {
 
     void update(UUID id, Color color);
 
-    Optional<Color> getOne(UUID id);
+    Color getOne(UUID id);
 }

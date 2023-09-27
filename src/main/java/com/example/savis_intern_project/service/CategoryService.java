@@ -17,5 +17,5 @@ public interface CategoryService {
 
     void update(UUID id, Category category);
 
-    Optional<Category> getOne(UUID id);
+    Category getOne(UUID id);
 }

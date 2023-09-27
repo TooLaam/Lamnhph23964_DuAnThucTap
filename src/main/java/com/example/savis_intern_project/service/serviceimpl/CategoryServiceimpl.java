@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,13 +30,15 @@ public class CategoryServiceimpl implements CategoryService {
 
     @Override
     public void update(UUID id, Category category) {
-           Category a = getOne(id).get();
+           Category a = getOne(id);
            a.setName(category.getName());
            responsitory.flush();
     }
 
     @Override
-    public Optional<Category> getOne(UUID id) {
-        return responsitory.findById(id);
+    public Category getOne(UUID id) {
+        return responsitory.findById(id).get();
     }
+
+
 }

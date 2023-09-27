@@ -43,7 +43,8 @@ public class ProductController {
         model.addAttribute("Product",new Product());
         model.addAttribute("listCategory",categoryServiceimpl.getAll());
         model.addAttribute("listColor",colorServiceimpl.getAll());
-        return "/Product/index";
+        model.addAttribute("view", "/Product/index.jsp");
+        return "index";
     }
     @PostMapping("/add")
     public String add(Model model,
@@ -73,7 +74,8 @@ public class ProductController {
         model.addAttribute("sp",productServiceimpl.getOne(id));
         model.addAttribute("listColor", colorServiceimpl.getAll());
         model.addAttribute("listCategory", categoryServiceimpl.getAll());
-        return "/Product/update";
+        model.addAttribute("view", "/Product/index.jsp");
+        return "index";
     }
     @GetMapping("delete")
     public String delete(Model model,
