@@ -22,14 +22,14 @@ public class CartdetailController {
     @Autowired
     CartServiceImpl cartService;
 
-    @GetMapping
+    @GetMapping("/index")
     public String show_data_cart(Model model) {
         model.addAttribute("listCartDetail", cartdetailService.getAll());
         model.addAttribute("listCart", cartService.getAll());
         model.addAttribute("listProduct", "");
         model.addAttribute("listQuantity", cartdetailService.getAll());
-        model.addAttribute("view", "/cartDetail/index.jsp");
-        return "";
+        model.addAttribute("view", "/CartDetail/index.jsp");
+        return "redirect:/cart/index";
     }
     @PostMapping("/create_cart_detail")
     public String create_cart(Model model,
@@ -42,13 +42,13 @@ public class CartdetailController {
        // cartDetail.setProduct(productid);
 //        billDetail.setProduct(productId);
         cartdetailService.save(cartDetail);
-        return "redirect:";
+        return "redirect:/cart/index";
     }
 
 
     @GetMapping("delete_cart_detail")
     public String delete_cart(Model model, @RequestParam("CartDetailId") UUID cartdetailid) {
         cartdetailService.delete(cartdetailid);
-        return "";
+        return "redirect:/cart/index";
     }
 }

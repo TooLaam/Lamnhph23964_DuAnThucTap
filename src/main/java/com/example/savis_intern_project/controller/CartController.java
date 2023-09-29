@@ -21,6 +21,7 @@ public class CartController {
 
     @Autowired
     CartdetailServiceImpl cartdetailService;
+
     @PostMapping("/create_cart")
     public String save(Model model,
                               @RequestParam("customerId") Customer customer,
@@ -32,20 +33,20 @@ public class CartController {
         cart.setDescription(description);
         cartService.save(cart);
 
-        return "";
+        return "redirect:/cart/index";
     }
-    @GetMapping
+    @GetMapping("/index")
     public String show_cart(Model model) {
         model.addAttribute("listCart", cartService.getAll());
         model.addAttribute("listCustomer","");
         model.addAttribute("listDescription",cartdetailService.getAll());
-        model.addAttribute("view", "/cart/index.jsp");
-        return "";
+        model.addAttribute("view", "/Cart/index.jsp");
+        return "redirect:/cart/index";
     }
     @GetMapping("delete-cart")
     public String delete(Model model, @RequestParam("cartId") UUID cartId) {
         cartService.delete(cartId);
-        return "";
+        return "redirect:/cart/index";
     }
 
     @PostMapping("/update-cart")
@@ -54,6 +55,6 @@ public class CartController {
                          @PathVariable("CustomerId") UUID customerid,
                          @RequestParam("description") String description){
         cartService.update(cartId,customerid,description);
-        return "redirect:/color/index";
+        return "redirect:/cart/index";
     }
 }
