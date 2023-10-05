@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/customer")
+
 public class CustomerController {
 
 
@@ -26,54 +26,56 @@ public class CustomerController {
 //    @Autowired
 //    private ModelMapper modelMapper;
 
-    @GetMapping("/index")
+    @GetMapping("/customer/index")
     public String HienThi(Model model) {
         List<Customer> customerList = customerService.findAll() ;
-        model.addAttribute("cusList", customerList);
+        model.addAttribute("cusList", customerService.findAll());
 
-        return "CustomerView";
+        return "/Customer/index";
     }
 
-    @PostMapping("/add_customer")
+    @GetMapping("/customer/viewAdd")
+    public String viewAdd(Model model) {
+        return "/Customer/add";
+    }
+
+    @PostMapping("/customer/add")
     public String themMoi(Model model,
-                          @RequestParam("Id") UUID id,
+
                           @RequestParam("fullname") String fullname,
                           @RequestParam("dateofbirth") String dateofbirth,
                           @RequestParam("address") String address,
                           @RequestParam("phone") String phone,
-                          @RequestParam("datecreated") String datecreated,
                           @RequestParam("email") String email,
-                          @RequestParam("gender") Boolean gender,
-                          @RequestParam("status") Integer status,
+                          @RequestParam("gender") int gender,
                           @RequestParam("username") String username,
                           @RequestParam("password") String password
     ) {
         Customer customer = new Customer();
-        customer.setId(id);
+        Date currentDate = new Date(System.currentTimeMillis());
         customer.setFullname(fullname);
         customer.setDateofbirth(Date.valueOf(dateofbirth) );
         customer.setAddress(address);
         customer.setPhone(phone);
-        customer.setDatecreated(datecreated);
+        customer.setDatecreated(String.valueOf(currentDate) );
         customer.setEmail(email);
         customer.setGender(gender);
-        customer.setStatus(status);
+        customer.setStatus(1);
         customer.setUsername(username);
         customer.setPassword(password);
         customerService.add(customer);
         return "redirect:/customer/index";
     }
 
-    @PostMapping("/update/{Id}")
+    @PostMapping("/customer/update")
     public String update(Model model,
-                         @RequestParam("Id") UUID id,
+                         @RequestParam("id") UUID id,
                          @RequestParam("fullname") String fullname,
                          @RequestParam("dateofbirth") String dateofbirth,
                          @RequestParam("address") String address,
                          @RequestParam("phone") String phone,
-                         @RequestParam("datecreated") String datecreated,
                          @RequestParam("email") String email,
-                         @RequestParam("gender") Boolean gender,
+                         @RequestParam("gender") int gender,
                          @RequestParam("status") Integer status,
                          @RequestParam("username") String username,
                          @RequestParam("password") String password
@@ -84,14 +86,14 @@ public class CustomerController {
         customer.setDateofbirth(Date.valueOf(dateofbirth) );
         customer.setAddress(address);
         customer.setPhone(phone);
-        customer.setDatecreated(datecreated);
+        customer.setId(id);
         customer.setEmail(email);
         customer.setGender(gender);
         customer.setStatus(status);
         customer.setUsername(username);
         customer.setPassword(password);
 
-        customerService.update(id,customer);
+        customerService.update(customer);
         return "redirect:/customer/index";
     }
 
@@ -101,11 +103,27 @@ public class CustomerController {
         return "redirect:/kich_thuoc/hien_thi";
     }
 
-    @GetMapping("/detail/{id}")
+    @GetMapping("/Customer/detail/{id}")
     public String detail(Model model, @PathVariable("id") UUID id) {
-        model.addAttribute("ktd", customerService.detail(id));
+        model.addAttribute("cus", customerService.detail(id));
 
-        return "detail/customerDetail";
+        return "/Customer/detail";
+
+    }
+
+    @GetMapping("/Customer/timKiem")
+    public String timKiem(Model model,
+                          @RequestParam("phone1")String phone) {
+
+
+        if(phone==""){
+            model.addAttribute("cusList",customerService.findAll());
+        }
+        else{
+            model.addAttribute("tim",customerService.timKiem(phone));
+        }
+
+        return "/Customer/index";
 
     }
 }

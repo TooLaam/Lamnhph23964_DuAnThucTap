@@ -39,7 +39,7 @@ public class Customer {
     private String email;
 
     @Column(name = "Gender")
-    private Boolean gender;
+    private Integer gender;
 
     @Column(name = "Status")
     private Integer status;

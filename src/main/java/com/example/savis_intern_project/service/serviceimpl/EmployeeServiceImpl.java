@@ -38,21 +38,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void update(UUID id ,Employee cs) {
-        Employee employee1 = employeeRepository.findById(id).get();
-        employee1.setAddress(cs.getAddress());
-        employee1.setDateOfBirth(cs.getDateOfBirth());
-        employee1.setEmail(cs.getEmail());
-        employee1.setFullName(cs.getFullName());
-        employee1.setGender(cs.getGender());
-        employee1.setPhoneNumber(cs.getPhoneNumber());
-        employee1.setPassword(cs.getPassword());
-        employee1.setUsername(cs.getUsername());
-        employee1.setStatus(cs.getStatus());
-        employee1.setImage(cs.getImage());
-        employee1.setRole(cs.getRole());
+    public List<Employee> timKiem(String name, String phone) {
+        return employeeRepository.timKiem(name,phone);
+    }
 
-        this.employeeRepository.save(employee1);
+    @Override
+    public List<Employee> timKiem2(String name, String phone) {
+        return employeeRepository.timKiem2(name,phone);
+    }
+
+    @Override
+    public void update(Employee cs) {
+
+        this.employeeRepository.save(cs);
 
     }
 }

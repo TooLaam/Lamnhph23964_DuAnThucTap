@@ -12,6 +12,8 @@ public interface EmployeeService  {
     List<Employee> findAll();
     void add(Employee cs);
     void delete(UUID id);
-    void update(UUID id,Employee cs);
+    void update(Employee cs);
     Employee detail(UUID id);
+    List<Employee> timKiem(String name,String phone);
+    List<Employee> timKiem2(String name,String phone);
 }

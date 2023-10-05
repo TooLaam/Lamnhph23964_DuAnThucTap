@@ -35,7 +35,7 @@ public class Employee {
     private String dateOfBirth;
 
     @Column(name = "Gender")
-    private String gender;
+    private Integer gender;
 
     @Column(name = "Datecreated")
     private String datecreated;
@@ -50,9 +50,9 @@ public class Employee {
     private String address;
 
     @Column(name = "Status")
-    private String status;
+    private Integer status;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "RoleId",
             referencedColumnName = "Id",
