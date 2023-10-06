@@ -11,6 +11,7 @@ public interface BillService {
     void create_new_bill(Bill bill);
 
     List<Bill> get_all_bill();
+    List<Bill> get_all_byCusId(UUID cusId);
 
     Bill get_one_bill(UUID billId);
 

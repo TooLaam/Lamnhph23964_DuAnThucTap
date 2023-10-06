@@ -33,6 +33,11 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
+    public List<Bill> get_all_byCusId(UUID cusId) {
+        return billRepository.getAllByCustomerId(cusId);
+    }
+
+    @Override
     public Bill get_one_bill(UUID billId) {
         return billRepository.findById(billId).get();
     }

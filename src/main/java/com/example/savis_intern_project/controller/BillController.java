@@ -89,6 +89,17 @@ public class BillController {
         return "index";
     }
 
+    @GetMapping("/indexcus/{idCus}")
+    public String show_data_bill_cus(Model model,@PathVariable("idCus")UUID idCus) {
+
+        model.addAttribute("listBill", billService.get_all_byCusId(idCus));
+//        model.addAttribute("listCustomer", customerService.findAll());
+//        model.addAttribute("listEmployee", employeeService.findAll());
+//        model.addAttribute("listBillStatus", billStatusService.get_all_bill_status());
+//        model.addAttribute("view", "/Bill/index.jsp");
+        return "/customerFE/bill/index";
+    }
+
     @GetMapping("/index/{billId}")
     public String show_data_bill(Model model, @PathVariable("billId") UUID billId) {
         model.addAttribute("listBill", billService.get_all_bill());
