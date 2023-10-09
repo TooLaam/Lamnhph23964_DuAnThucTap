@@ -181,7 +181,7 @@
                                     Color :
                                     <select name="color" class="form-select"  aria-label="Default select example">
                                         <c:forEach items="${listColor}" var="color">
-                                            <option value="${color.id}">${sp.color.name}</option>
+                                            <option value="${color.id}">${color.name}</option>
                                         </c:forEach>
                                     </select>
                                 </div>

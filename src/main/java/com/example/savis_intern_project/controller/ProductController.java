@@ -46,6 +46,17 @@ public class ProductController {
         model.addAttribute("view", "/Product/index.jsp");
         return "index";
     }
+    @GetMapping("/index1" )
+    public String hienThi1(Model model){
+
+        model.addAttribute("listProduct",productServiceimpl.getAll());
+        model.addAttribute("Product",new Product());
+        model.addAttribute("listCategory",categoryServiceimpl.getAll());
+        model.addAttribute("listColor",colorServiceimpl.getAll());
+        model.addAttribute("view", "/product/index.jsp");
+        return "/customerFE/product/index";
+    }
+
     @PostMapping("/add")
     public String add(Model model,
 
