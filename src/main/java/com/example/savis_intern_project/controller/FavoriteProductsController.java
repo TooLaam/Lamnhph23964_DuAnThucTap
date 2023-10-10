@@ -33,6 +33,18 @@ public class FavoriteProductsController {
         model.addAttribute("view", "/FavoriteProduct/index.jsp");
         return "index";
     }
+
+    @GetMapping("/indexcus" )
+    public String show_data_favor_cus(Model model){
+
+        model.addAttribute("listFavor",favoriteProductServiceimpl.getAll());
+        model.addAttribute("FavoriteProducts",new Product());
+        model.addAttribute("listProduct",productServiceimpl.getAll());
+        model.addAttribute("listCustomer",customerServiceimpl.findAll());
+        model.addAttribute("view", "/wishlist/index.jsp");
+        return "/customerFE/index";
+    }
+
     @PostMapping("/add")
     public String add(Model model,
 

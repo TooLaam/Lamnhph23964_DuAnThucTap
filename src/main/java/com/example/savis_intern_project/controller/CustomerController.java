@@ -1,6 +1,7 @@
 package com.example.savis_intern_project.controller;
 
 import com.example.savis_intern_project.entity.Customer;
+import com.example.savis_intern_project.entity.Product;
 import com.example.savis_intern_project.repository.CustomerRepository;
 import com.example.savis_intern_project.service.CustomerService;
 import com.example.savis_intern_project.service.serviceimpl.CustomerServiceImpl;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
+@RequestMapping("/customer")
 
 public class CustomerController {
 
@@ -26,7 +28,7 @@ public class CustomerController {
 //    @Autowired
 //    private ModelMapper modelMapper;
 
-    @GetMapping("/customer/index")
+    @GetMapping("/index")
     public String HienThi(Model model) {
         List<Customer> customerList = customerService.findAll() ;
         model.addAttribute("cusList", customerService.findAll());
@@ -34,12 +36,31 @@ public class CustomerController {
         return "/Customer/index";
     }
 
-    @GetMapping("/customer/viewAdd")
+    @GetMapping("/indexcus" )
+    public String show_data_customer_cus(Model model){
+        model.addAttribute("cusList",customerService.findAll());
+        model.addAttribute("view", "/account/index.jsp");
+        return "/customerFE/index";
+    }
+
+    @GetMapping("/signup" )
+    public String signup(Model model){
+        model.addAttribute("view", "/signup/index.jsp");
+        return "/customerFE/signup/index";
+    }
+
+    @GetMapping("/login" )
+    public String login(Model model){
+        model.addAttribute("view", "/login/index.jsp");
+        return "/customerFE/login/index";
+    }
+
+    @GetMapping("/viewAdd")
     public String viewAdd(Model model) {
         return "/Customer/add";
     }
 
-    @PostMapping("/customer/add")
+    @PostMapping("/add")
     public String themMoi(Model model,
 
                           @RequestParam("fullname") String fullname,
@@ -67,7 +88,7 @@ public class CustomerController {
         return "redirect:/customer/index";
     }
 
-    @PostMapping("/customer/update")
+    @PostMapping("/update")
     public String update(Model model,
                          @RequestParam("id") UUID id,
                          @RequestParam("fullname") String fullname,
@@ -103,7 +124,7 @@ public class CustomerController {
         return "redirect:/kich_thuoc/hien_thi";
     }
 
-    @GetMapping("/Customer/detail/{id}")
+    @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable("id") UUID id) {
         model.addAttribute("cus", customerService.detail(id));
 
@@ -111,7 +132,7 @@ public class CustomerController {
 
     }
 
-    @GetMapping("/Customer/timKiem")
+    @GetMapping("/timKiem")
     public String timKiem(Model model,
                           @RequestParam("phone1")String phone) {
 

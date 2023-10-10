@@ -46,15 +46,16 @@ public class ProductController {
         model.addAttribute("view", "/Product/index.jsp");
         return "index";
     }
-    @GetMapping("/index1" )
-    public String hienThi1(Model model){
+
+    @GetMapping("/indexcus" )
+    public String show_data_product_cus(Model model){
 
         model.addAttribute("listProduct",productServiceimpl.getAll());
         model.addAttribute("Product",new Product());
         model.addAttribute("listCategory",categoryServiceimpl.getAll());
         model.addAttribute("listColor",colorServiceimpl.getAll());
         model.addAttribute("view", "/product/index.jsp");
-        return "/customerFE/product/index";
+        return "/customerFE/index";
     }
 
     @PostMapping("/add")

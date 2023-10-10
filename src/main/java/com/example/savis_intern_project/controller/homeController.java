@@ -22,13 +22,53 @@ public class homeController {
     private ProductServiceimpl productServiceimpl;
     @GetMapping("/home" )
     public String home(Model model){
-        model.addAttribute("listProduct",productServiceimpl.getAll().subList(0,4));
+        model.addAttribute("listProduct",productServiceimpl.getAll());
         model.addAttribute("Product",new Product());
         model.addAttribute("listCategory",categoryServiceimpl.getAll());
         model.addAttribute("listColor",colorServiceimpl.getAll());
         model.addAttribute("view", "/home/index.jsp");
-        return "/customerFE/home/index";
+        return "/customerFE/index";
     }
 
+    @GetMapping("/blog" )
+    public String blog(Model model){
+        model.addAttribute("view", "/blog/index.jsp");
+        return "/customerFE/index";
+    }
 
+    @GetMapping("/blogPage1" )
+    public String blogPage1(Model model){
+        model.addAttribute("view", "/blogPage1/index.jsp");
+        return "/customerFE/index";
+    }
+
+    @GetMapping("/blogPage2" )
+    public String blogPage2(Model model){
+        model.addAttribute("view", "/blogPage2/index.jsp");
+        return "/customerFE/index";
+    }
+
+    @GetMapping("/blogPage3" )
+    public String blogPage3(Model model){
+        model.addAttribute("view", "/blogPage3/index.jsp");
+        return "/customerFE/index";
+    }
+
+    @GetMapping("/blogPage4" )
+    public String blogPage4(Model model){
+        model.addAttribute("view", "/blogPage4/index.jsp");
+        return "/customerFE/index";
+    }
+
+    @GetMapping("/blogPage5" )
+    public String blogPage5(Model model){
+        model.addAttribute("view", "/blogPage5/index.jsp");
+        return "/customerFE/index";
+    }
+
+    @GetMapping("/aboutus" )
+    public String aboutUs(Model model){
+        model.addAttribute("view", "/aboutus/index.jsp");
+        return "/customerFE/index";
+    }
 }

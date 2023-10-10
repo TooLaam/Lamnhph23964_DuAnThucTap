@@ -43,6 +43,15 @@ public class CartController {
         model.addAttribute("view", "/Cart/index.jsp");
         return "redirect:/cart/index";
     }
+
+    @GetMapping("/indexcus")
+    public String show_data_cart_cus(Model model) {
+        model.addAttribute("listCart", cartService.getAll());
+        model.addAttribute("listCustomer","");
+        model.addAttribute("view", "/cart/index.jsp");
+        return "/customerFE/index";
+    }
+
     @GetMapping("delete-cart")
     public String delete(Model model, @RequestParam("cartId") UUID cartId) {
         cartService.delete(cartId);
