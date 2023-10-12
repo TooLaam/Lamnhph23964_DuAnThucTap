@@ -5,11 +5,12 @@ import com.example.savis_intern_project.entity.BillDetail;
 import com.example.savis_intern_project.entity.BillStatus;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface BillStatusService {
     Bill getBillStatus();
 
-    BillStatus findById(Integer id);
+    BillStatus findById(UUID id);
 
     List<BillStatus> get_all_bill_status();
 }

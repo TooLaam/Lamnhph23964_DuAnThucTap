@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Controller
@@ -25,12 +26,15 @@ public class CartController {
     @PostMapping("/create_cart")
     public String save(Model model,
                               @RequestParam("customerId") Customer customer,
-                              @RequestParam("description") String description
+                              @RequestParam("Quantity") Integer Quantity,
+                              @RequestParam("TotalMoney") BigDecimal TotalMoney,
+                              @RequestParam("Status") Integer Status
 
     ) {
         Cart cart = new Cart();
         cart.setCustomer(customer);
-        cart.setDescription(description);
+        cart.setQuantity(cart.getQuantity());
+        cart.setTotalMoney(cart.getTotalMoney());
         cartService.save(cart);
 
         return "redirect:/cart/index";
@@ -52,7 +56,7 @@ public class CartController {
         return "/customerFE/index";
     }
 
-    @GetMapping("delete-cart")
+    @GetMapping("/delete-cart")
     public String delete(Model model, @RequestParam("cartId") UUID cartId) {
         cartService.delete(cartId);
         return "redirect:/cart/index";

@@ -19,11 +19,11 @@ public class BillDetail {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID Id;
 
-    @Column(name = "Price")
-    private BigDecimal Price;
-
     @Column(name = "Quantity")
     private Integer Quantity;
+
+    @Column(name = "Price")
+    private BigDecimal Price;
 
     @ManyToOne
     @JoinColumn(name = "BillId",referencedColumnName = "Id",nullable = true)

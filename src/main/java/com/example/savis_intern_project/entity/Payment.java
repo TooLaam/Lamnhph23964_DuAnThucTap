@@ -3,18 +3,17 @@ package com.example.savis_intern_project.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
-@Entity
-@Table(name = "Bill_Status")
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@Data
-public class BillStatus {
-    @Id
+@Entity
+@Table(name = "Payment")
+public class Payment {
+    @jakarta.persistence.Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID Id;
@@ -24,5 +23,4 @@ public class BillStatus {
 
     @Column(name = "Status")
     private Integer Status;
-
 }

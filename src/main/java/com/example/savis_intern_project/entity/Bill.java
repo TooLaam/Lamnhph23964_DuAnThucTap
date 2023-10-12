@@ -21,19 +21,24 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID Id;
 
-    @Column(name = "Price")
-    private BigDecimal Price;
+    @Column(name = "ReceiverName")
+    private String ReceiverName;
 
-    @Column(name = "CreateDate")
-    private Date CreateDate;
+    @Column(name = "TotalMoney")
+    private BigDecimal TotalMoney;
 
-    @Column(name = "Address")
-    private String Address;
+    @Column(name = "CustomerPhone")
+    private String CustomerPhone;
+
+    @Column(name = "AddressDelivery")
+    private String AddressDelivery;
+
+    @Column(name = "CreatedDate")
+    private Date CreatedDate;
 
     @ManyToOne
     @JoinColumn(name = "BillStatusId",referencedColumnName = "Id",nullable = true)
     private BillStatus billStatus;
-
 
     @ManyToOne
     @JoinColumn(name = "EmployeeId",referencedColumnName = "Id",nullable = true)

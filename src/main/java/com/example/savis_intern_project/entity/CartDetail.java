@@ -3,6 +3,7 @@ package com.example.savis_intern_project.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -19,14 +20,17 @@ public class CartDetail {
     private UUID Id;
 
     @Column(name = "Quantity")
-    private Integer quantity;
+    private Integer Quantity;
+
+    @Column(name = "Price")
+    private BigDecimal Price;
 
     @ManyToOne
     @JoinColumn(name = "Cartdetail",referencedColumnName = "Cartid",nullable = true)
     private Cart cart;
 
     @ManyToOne
-    @JoinColumn(name = "ProductId",referencedColumnName = "Id",nullable = true)
-    private Product product;
+    @JoinColumn(name = "ProductDetailId",referencedColumnName = "Id",nullable = true)
+    private ProductDetail productDetail;
 
 }

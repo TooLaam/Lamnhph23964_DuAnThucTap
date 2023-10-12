@@ -31,7 +31,9 @@ public class CartServiceImpl implements CartService {
     @Override
     public void update(UUID CartId, Cart cart) {
         Cart a = getOne(CartId).get();
-        a.setDescription(cart.getDescription());
+        a.setQuantity(cart.getQuantity());
+        a.setTotalMoney(cart.getTotalMoney());
+        a.setStatus(cart.getStatus());
         responitory.flush();
 
     }

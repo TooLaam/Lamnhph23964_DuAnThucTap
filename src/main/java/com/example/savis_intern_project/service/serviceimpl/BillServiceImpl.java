@@ -5,6 +5,7 @@ import com.example.savis_intern_project.entity.BillStatus;
 import com.example.savis_intern_project.repository.BillRepository;
 import com.example.savis_intern_project.repository.BillStatusRepository;
 import com.example.savis_intern_project.service.BillService;
+import com.oracle.wls.shaded.org.apache.xpath.operations.String;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,12 +50,12 @@ public class BillServiceImpl implements BillService {
         if (optionalBill.isPresent()) {
             Bill bill = optionalBill.get();
             System.out.println(bill.getBillStatus().getName());
-            if (bill.getBillStatus().getId() == 1) {
-                Optional<BillStatus> optionalBill2 = billStatusRepository.findById(2);
+            if (bill.getBillStatus().getId() ==  UUID.fromString("159b8bc3-5489-47c0-a115-b94a0cf6286f")) {
+                Optional<BillStatus> optionalBill2 = billStatusRepository.findById(UUID.fromString("159b8bc3-5489-47c0-a115-b94a0cf6286f"));
                 System.out.println(optionalBill2);
                 bill.setBillStatus(optionalBill2.get());
-            } else if (bill.getBillStatus().getId() == 2) {
-                bill.setBillStatus(billStatusRepository.findById(3).get());
+            } else if (bill.getBillStatus().getId() == UUID.fromString("259b8bc3-5489-47c0-a115-b94a0cf6286f")) {
+                bill.setBillStatus(billStatusRepository.findById(UUID.fromString("259b8bc3-5489-47c0-a115-b94a0cf6286f")).get());
             }
             billRepository.save(bill);
         } else {
