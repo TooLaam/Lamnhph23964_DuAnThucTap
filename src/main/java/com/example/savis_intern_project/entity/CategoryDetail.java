@@ -11,21 +11,16 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "FavoriteProducts")
-public class FavoriteProducts {
+@Table(name = "CategoryDetail")
+public class CategoryDetail {
 
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne()
-    @JoinColumn(
-            name = "CustomerId",
-            referencedColumnName = "Id",
-            nullable = true
-    )
-    private Customer customer;
+    @Column(name = "Quantity")
+    private Integer Quantity;
 
     @ManyToOne()
     @JoinColumn(
@@ -35,13 +30,18 @@ public class FavoriteProducts {
     )
     private Product product;
 
-    @Column(name = "Description")
-    private String descripTion;
+    @ManyToOne()
+    @JoinColumn(
+            name = "CategoryId",
+            referencedColumnName = "Id",
+            nullable = true
+    )
+    private Category category;
 
-    public FavoriteProducts( Customer customer, Product product, String descripTion) {
+    public CategoryDetail(Integer Quantity, Product product, Category category) {
 
-        this.customer = customer;
+        this.Quantity = Quantity;
         this.product = product;
-        this.descripTion = descripTion;
+        this.category = category;
     }
 }

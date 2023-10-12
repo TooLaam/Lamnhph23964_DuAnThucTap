@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -23,7 +24,7 @@ public class BillStatusServiceImpl implements BillStatusService {
     }
 
     @Override
-    public BillStatus findById(Integer id) {
+    public BillStatus findById(UUID id) {
         return billStatusRepository.findById(id).get();
     }
 

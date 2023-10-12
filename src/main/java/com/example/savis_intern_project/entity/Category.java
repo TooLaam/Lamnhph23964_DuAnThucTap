@@ -18,12 +18,15 @@ public class Category {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID Id;
 
     @Column(name = "Name")
-    private String name;
+    private String Name;
 
-    public Category(String name) {
-        this.name = name;
+    @Column(name = "Status")
+    private Integer Status;
+
+    public Category(String Name) {
+        this.Name = Name;
     }
 }

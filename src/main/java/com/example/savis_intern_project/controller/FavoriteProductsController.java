@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.UUID;
 
 @Controller
@@ -17,7 +15,7 @@ import java.util.UUID;
 public class FavoriteProductsController {
 
     @Autowired
-    FavoriteProductServiceimpl favoriteProductServiceimpl;
+    WishListServiceimpl wishListServiceimpl;
     @Autowired
     ProductServiceimpl productServiceimpl;
     @Autowired
@@ -26,7 +24,7 @@ public class FavoriteProductsController {
     @GetMapping("/index")
     public String hienThi(Model model){
 
-        model.addAttribute("listFavor",favoriteProductServiceimpl.getAll());
+        model.addAttribute("listFavor", wishListServiceimpl.getAll());
         model.addAttribute("FavoriteProducts",new FavoriteProductsController());
         model.addAttribute("listProduct",productServiceimpl.getAll());
         model.addAttribute("listCustomer",customerServiceimpl.findAll());
@@ -37,7 +35,7 @@ public class FavoriteProductsController {
     @GetMapping("/indexcus" )
     public String show_data_favor_cus(Model model){
 
-        model.addAttribute("listFavor",favoriteProductServiceimpl.getAll());
+        model.addAttribute("listFavor", wishListServiceimpl.getAll());
         model.addAttribute("FavoriteProducts",new Product());
         model.addAttribute("listProduct",productServiceimpl.getAll());
         model.addAttribute("listCustomer",customerServiceimpl.findAll());
@@ -49,20 +47,19 @@ public class FavoriteProductsController {
     public String add(Model model,
 
                       @RequestParam("customer") Customer customer,
-                      @RequestParam("product") Product product,
-                      @RequestParam("descripTion") String descripTion
+                      @RequestParam("product") Product product
 
 
     ){
-        FavoriteProducts favoriteProducts = new FavoriteProducts(customer,product,descripTion);
-        favoriteProductServiceimpl.add(favoriteProducts);
+        WishList wishList = new WishList(customer,product);
+        wishListServiceimpl.add(wishList);
         return "redirect:/favor/index";
     }
     @GetMapping("/detail/{id}")
     public String detail(Model model,
                          @PathVariable("id") UUID id){
-        model.addAttribute("listFavor",favoriteProductServiceimpl.getAll());
-        model.addAttribute("spyt",favoriteProductServiceimpl.getOne(id));
+        model.addAttribute("listFavor", wishListServiceimpl.getAll());
+        model.addAttribute("spyt", wishListServiceimpl.getOne(id));
         model.addAttribute("listCustomer", customerServiceimpl.findAll());
         model.addAttribute("listProduct", productServiceimpl.getAll());
         model.addAttribute("view", "/FavoriteProduct/index.jsp");
@@ -71,14 +68,14 @@ public class FavoriteProductsController {
     @GetMapping("delete")
     public String delete(Model model,
                          @RequestParam("id") UUID id){
-        favoriteProductServiceimpl.delete(id);
+        wishListServiceimpl.delete(id);
         return "redirect:/favor/index";
     }
     @PostMapping("/update/{id}")
     public String update(Model model,
                          @PathVariable("id") UUID id,
-                         @ModelAttribute("favoriteProducts") FavoriteProducts favoriteProducts){
-        favoriteProductServiceimpl.update(id,favoriteProducts);
+                         @ModelAttribute("favoriteProducts") WishList wishList){
+        wishListServiceimpl.update(id, wishList);
         return "redirect:/favor/index";
     }
 }
