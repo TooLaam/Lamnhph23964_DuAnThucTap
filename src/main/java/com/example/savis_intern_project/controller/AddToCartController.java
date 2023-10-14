@@ -40,14 +40,14 @@ public class AddToCartController {
 
         UUID productId1 = product.getId();
         String tenSanPham = product.getName();
-        BigDecimal price = product.getPrice();
-        Item item = new Item(productId1, tenSanPham, 1, price);
+//        BigDecimal price = product.getPrice();
+//        Item item = new Item(productId1, tenSanPham, 1, price);
         OrderCart cartSession = (OrderCart) httpSession.getAttribute("OrderCart");
 
         if (cartSession == null) {
             OrderCart cart = new OrderCart();
             ArrayList<Item> list = new ArrayList<>();
-            list.add(item);
+//            list.add(item);
             cart.setItems(list);
             httpSession.setAttribute("OrderCart", cart);
         } else {
@@ -66,11 +66,11 @@ public class AddToCartController {
             for (Item itemTmp : listItem) {
                 if (itemTmp.getIdProduct().equals(productId1)) {
                     itemTmp.setQuantity(itemTmp.getQuantity() + 1);
-                    itemTmp.setPrice(price.multiply(BigDecimal.valueOf(itemTmp.getQuantity())));
+//                    itemTmp.setPrice(price.multiply(BigDecimal.valueOf(itemTmp.getQuantity())));
                     return "redirect:/viewOrderCart";
                 }
             }
-            listItem.add(item);
+//            listItem.add(item);
             cart.setItems(listItem);
         }
         return "redirect:/viewOrderCart";
@@ -79,14 +79,22 @@ public class AddToCartController {
     @GetMapping("/viewOrderCart")
     public String showCartItem(Model model) {
         OrderCart cart = (OrderCart) httpSession.getAttribute("OrderCart");
+
+        if (cart == null || cart.getItems().isEmpty()) {
+            // Giỏ hàng trống, thực hiện xử lý tại đây
+            model.addAttribute("emptyCart", true);
+            model.addAttribute("view", "/cart/index.jsp");
+            return "/customerFE/index";
+        }
+
         ArrayList<Item> list = cart.getItems();
         BigDecimal itemTotal = BigDecimal.ZERO;
         Integer quantity = 0;
 
         for (Item liItem : list) {
             BigDecimal total;
-            total = liItem.getPrice().multiply(BigDecimal.valueOf(liItem.getQuantity()));
-            quantity += liItem.getQuantity(); // Gán giá trị quantityTmp cho quantity
+            total = liItem.getPrice();
+            quantity += liItem.getQuantity();
             System.out.println("Total: " + total);
             System.out.println("Quantity: " + quantity);
             model.addAttribute("total", total);
@@ -95,8 +103,10 @@ public class AddToCartController {
 
         model.addAttribute("cartDetail", list);
         model.addAttribute("quantity", quantity);
-        return "/Cart/cartne";
+        model.addAttribute("view", "/cart/index.jsp");
+        return "/customerFE/index";
     }
+
 
 
     @GetMapping("/add")
@@ -110,13 +120,13 @@ public class AddToCartController {
 
         UUID productId1 = product.getId();
         String tenSanPham = product.getName();
-        BigDecimal price = product.getPrice();
-        Item item = new Item(productId1, tenSanPham, 1, price);
+//        BigDecimal price = product.getPrice();
+//        Item item = new Item(productId1, tenSanPham, 1, price);
 
         if (cartSession == null) {
             OrderCart cart = new OrderCart();
             ArrayList<Item> list = new ArrayList<>();
-            list.add(item);
+//            list.add(item);
             cart.setItems(list);
             httpSession.setAttribute("OrderCart", cart);
         } else {
@@ -135,11 +145,11 @@ public class AddToCartController {
             for (Item itemTmp : listItem) {
                 if (itemTmp.getIdProduct().equals(productId1)) {
                     itemTmp.setQuantity(itemTmp.getQuantity() + 1);
-                    itemTmp.setPrice(price.multiply(BigDecimal.valueOf(itemTmp.getQuantity())));
+//                    itemTmp.setPrice(price.multiply(BigDecimal.valueOf(itemTmp.getQuantity())));
                     return "redirect:/viewOrderCart";
                 }
             }
-            listItem.add(item);
+//            listItem.add(item);
             cartSession.setItems(listItem);
         }
         return "redirect:/viewOrderCart";

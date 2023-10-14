@@ -33,22 +33,25 @@ public class BillController {
     @PostMapping("/create_bill")
     public String create_bill(Model model,
                               @RequestParam("price") BigDecimal price,
-                              @RequestParam("address") String address,
+                              @RequestParam("receiverName") String receiverrame,
+                              @RequestParam("totalMoney") BigDecimal totalmoney,
+                              @RequestParam("customerPhone") String customerPhone,
+                              @RequestParam("addressDelivery") String addressDelivery,
                               @RequestParam("customerId") UUID Customer,
                               @RequestParam("employeeId") UUID Employee
 
     ) {
         Date currentDate = new Date(System.currentTimeMillis());
         Bill bill = new Bill();
-        bill.setPrice(price);
-        bill.setAddress(address);
-        bill.setBillStatus(billStatusService.findById(1));
+        bill.setReceiverName(receiverrame);
+        bill.setTotalMoney(totalmoney);
+        bill.setCustomerPhone(customerPhone);
+        bill.setAddressDelivery(addressDelivery);
+        bill.setReceiverName(receiverrame);
+        bill.setCreatedDate(currentDate);
+        bill.setBillStatus(billStatusService.findById(UUID.fromString("159b8bc3-5489-47c0-a115-b94a0cf6286f")));
         bill.setCustomer(customerService.detail(Customer));
         bill.setEmployee(employeeService.detail(Employee));
-        bill.setAddress(address);
-        bill.setCreateDate(currentDate);
-
-
         billService.create_new_bill(bill);
 
         System.out.println("Ngày hiện tại: " + currentDate);
@@ -58,7 +61,10 @@ public class BillController {
     @PostMapping("/update-bill/{billId}")
     public String update_bill(Model model,
                               @RequestParam("price") BigDecimal price,
-                              @RequestParam("address") String address,
+                              @RequestParam("receiverName") String receiverrame,
+                              @RequestParam("totalMoney") BigDecimal totalmoney,
+                              @RequestParam("customerPhone") String customerPhone,
+                              @RequestParam("addressDelivery") String addressDelivery,
                               @RequestParam("customerId") UUID Customer,
                               @RequestParam("employeeId") UUID Employee,
                               @PathVariable("billId") UUID billId
@@ -66,13 +72,16 @@ public class BillController {
     ) {
         Date currentDate = new Date(System.currentTimeMillis());
         Bill bill = billService.get_one_bill(billId);
-        bill.setPrice(price);
-        bill.setAddress(address);
-        bill.setBillStatus(billStatusService.findById(1));
+        bill.setReceiverName(receiverrame);
+        bill.setTotalMoney(totalmoney);
+        bill.setCustomerPhone(customerPhone);
+        bill.setAddressDelivery(addressDelivery);
+        bill.setReceiverName(receiverrame);
+        bill.setCreatedDate(currentDate);
+        bill.setBillStatus(billStatusService.findById(UUID.fromString("159b8bc3-5489-47c0-a115-b94a0cf6286f")));
         bill.setCustomer(customerService.detail(Customer));
         bill.setEmployee(employeeService.detail(Employee));
-        bill.setAddress(address);
-        bill.setCreateDate(currentDate);
+        billService.create_new_bill(bill);
         billService.create_new_bill(bill);
 
         System.out.println("Ngày hiện tại: " + currentDate);
@@ -111,9 +120,9 @@ public class BillController {
         double allPrice = 0; // Khởi tạo biến tổng giá trị hóa đơn
         for (BillDetail billDetail : billDetailList) {
             int quantity = billDetail.getQuantity();
-            BigDecimal price = billDetail.getProduct().getPrice();
-            BigDecimal totalPrice = price.multiply(BigDecimal.valueOf(quantity));
-            allPrice = allPrice + totalPrice.doubleValue();
+//            BigDecimal price = billDetail.getProduct().getPrice();
+//            BigDecimal totalPrice = price.multiply(BigDecimal.valueOf(quantity));
+//            allPrice = allPrice + totalPrice.doubleValue();
         }
 
         System.out.println(allPrice);

@@ -33,10 +33,10 @@ public class BilldetailController {
         double allPrice = 0; // Khởi tạo biến tổng giá trị hóa đơn
         for (BillDetail billDetail : billDetailList) {
             int quantity = billDetail.getQuantity();
-            BigDecimal price = billDetail.getProduct().getPrice();
-            BigDecimal totalPrice = price.multiply(BigDecimal.valueOf(quantity));
-            allPrice += totalPrice.doubleValue();
-            System.out.println("price" + price);
+//            BigDecimal price = billDetail.getProduct().getPrice();
+//            BigDecimal totalPrice = price.multiply(BigDecimal.valueOf(quantity));
+//            allPrice += totalPrice.doubleValue();
+//            System.out.println("price" + price);
             System.out.println("quantity" + quantity);
         }
 

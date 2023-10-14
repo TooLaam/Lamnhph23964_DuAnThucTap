@@ -64,7 +64,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/cart/indexcus">
+                        <a href="/viewOrderCart">
                             <span class="fa fa-shopping-cart"></span>
                         </a>
                     </li>
