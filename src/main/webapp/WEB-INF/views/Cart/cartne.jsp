@@ -101,6 +101,7 @@
                   <th scope="col" colspan="2">Product</th>
                   <th scope="col" class="text-sp">Quantity</th>
                   <th scope="col" class="text-sp">Total</th>
+                  <th scope="col" class="text-sp">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -109,6 +110,7 @@
                 <td>${gh.productName}</td>
                 <td>${gh.quantity}</td>
                 <td style="font-weight: bold;color: red">${gh.price}VND</td>
+                <td>${gh.status}</td>
               </tr>
               </c:forEach>
               </tbody>

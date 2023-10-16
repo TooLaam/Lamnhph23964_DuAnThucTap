@@ -6,6 +6,7 @@ import com.example.savis_intern_project.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,18 +14,19 @@ import java.util.UUID;
 public class CartServiceImpl implements CartService {
     @Autowired
     CartRepository responitory;
+
     @Override
     public ArrayList<Cart> getAll() {
         return (ArrayList<Cart>) responitory.findAll();
     }
 
     @Override
-    public void save(Cart cart)  {
+    public void save(Cart cart) {
         responitory.saveAndFlush(cart);
     }
 
     @Override
-    public void delete(UUID CartId)  {
+    public void delete(UUID CartId) {
         responitory.deleteById(CartId);
     }
 
@@ -39,10 +41,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Optional<Cart> getOne(UUID id)  {
+    public Optional<Cart> getOne(UUID id) {
         return responitory.findById(id);
-    }
-
-    public void update(UUID cartId, UUID customerid, String description) {
     }
 }

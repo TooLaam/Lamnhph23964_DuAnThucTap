@@ -66,8 +66,12 @@ public class CartController {
     public String update(Model model,
                          @PathVariable("CartId") UUID cartId,
                          @PathVariable("CustomerId") UUID customerid,
-                         @RequestParam("description") String description){
-        cartService.update(cartId,customerid,description);
+                         @RequestParam("Quantity") Integer Quantity,
+                         @RequestParam("TotalMoney") BigDecimal TotalMoney,
+                         @RequestParam("Status")Integer Status
+                         ){
+        Cart cart = new Cart();
+        cartService.update(cartId,cart);
         return "redirect:/cart/index";
     }
 }

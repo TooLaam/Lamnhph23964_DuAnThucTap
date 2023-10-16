@@ -102,14 +102,18 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Customer</th>
-                                        <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>TotalMoney</th>
+                                        <th>Status</th>
 
                                     </tr>
                                     <c:forEach items="${listCart}" var="cart">
                                         <tr>
                                             <td>${cart.id}</td>
                                             <td>${cart.customer.id}</td>
-                                            <td>${cart.description}</td>
+                                            <td>${cart.Quantity}</td>
+                                            <td>${cart.Totalmoney}</td>
+                                            <td>${cart.Status}</td>
                                             <td>
                                                 <a href="/cart/delete?id=${cart.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" style="text-decoration: none;color: white"><i class='bx bx-trash'></i></a><br>
                                                 <a href="/cart/detail/${cart.id}" class="btn btn-success" style="text-decoration: none;color: white; margin-top: 5px" ><i class='bi bi-arrow-repeat'></i></a>

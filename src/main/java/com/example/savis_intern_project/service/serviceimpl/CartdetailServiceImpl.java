@@ -7,6 +7,7 @@ import com.example.savis_intern_project.service.CartdetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
@@ -35,7 +36,9 @@ public class CartdetailServiceImpl implements CartdetailService  {
     public void update(UUID id, CartDetail cartdetail) {
         {
             CartDetail a = getOne(id).get();
+            a.setProductDetail(cartdetail.getProductDetail());
             a.setQuantity(cartdetail.getQuantity());
+            a.setPrice(cartdetail.getPrice());
             responitory.flush();
         }
     }
@@ -44,4 +47,5 @@ public class CartdetailServiceImpl implements CartdetailService  {
     public Optional<CartDetail> getOne(UUID id)  {
         return responitory.findById(id);
     }
+
 }
