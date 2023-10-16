@@ -49,13 +49,13 @@ public class BilldetailController {
 
     @PostMapping("/create_bill_detail")
     public String create_bill(Model model,
-                              @RequestParam("price") BigDecimal price,
+//                              @RequestParam("price") BigDecimal price,
                               @RequestParam("quantity") Integer quantity,
                               @RequestParam("billId") UUID billId,
                               @RequestParam("productId") UUID productId
     ) {
         BillDetail billDetail = new BillDetail();
-        billDetail.setPrice(price);
+//        billDetail.setPrice(price);
         billDetail.setQuantity(quantity);
         billDetail.setBill(billService.get_one_bill(billId));
 //        billDetail.setProduct(productId);

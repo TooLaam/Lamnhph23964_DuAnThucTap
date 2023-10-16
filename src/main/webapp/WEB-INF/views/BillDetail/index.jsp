@@ -40,13 +40,13 @@
                                     <c:forEach items="${billDetailD}" var="billDetailD">
                                         <tr>
                                                 <%--                                            <td>${bill.id}</td>--%>
-                                            <td>${billDetailD.price}</td>
+<%--                                            <td>${billDetailD.price}</td>--%>
                                             <td>${billDetailD.quantity}</td>
-                                            <td>${billDetailD.product.name}</td>
+                                            <td>${billDetailD.productDetail.product.name}</td>
                                         </tr>
                                     </c:forEach>
                                 </table>
-                                <h3>Tổng tiền khách phải trả : <fmt:formatNumber value="${allPrice}" type="currency" currencyCode="VND" /></h3>
+<%--                                <h3>Tổng tiền khách phải trả : <fmt:formatNumber value="${allPrice}" type="currency" currencyCode="VND" /></h3>--%>
                             </form><!-- End Multi Columns Form -->
 <%--                            <form method="post" enctype="multipart/form-data" action="import">--%>
 <%--                                Thêm từ file excel: <input class="form-control" name="file" type="file">--%>

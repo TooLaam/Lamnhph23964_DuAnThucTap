@@ -33,23 +33,23 @@ public class BillController {
     @PostMapping("/create_bill")
     public String create_bill(Model model,
                               @RequestParam("price") BigDecimal price,
-                              @RequestParam("receiverName") String receiverrame,
-                              @RequestParam("totalMoney") BigDecimal totalmoney,
-                              @RequestParam("customerPhone") String customerPhone,
-                              @RequestParam("addressDelivery") String addressDelivery,
+//                              @RequestParam("receiverName") String receiverrame,
+//                              @RequestParam("totalMoney") BigDecimal totalmoney,
+//                              @RequestParam("customerPhone") String customerPhone,
+//                              @RequestParam("addressDelivery") String addressDelivery,
                               @RequestParam("customerId") UUID Customer,
                               @RequestParam("employeeId") UUID Employee
 
     ) {
         Date currentDate = new Date(System.currentTimeMillis());
         Bill bill = new Bill();
-        bill.setReceiverName(receiverrame);
-        bill.setTotalMoney(totalmoney);
-        bill.setCustomerPhone(customerPhone);
-        bill.setAddressDelivery(addressDelivery);
-        bill.setReceiverName(receiverrame);
+        bill.setReceiverName(customerService.detail(Customer).getFullname());
+        bill.setTotalMoney(BigDecimal.valueOf(3333.0));
+        bill.setCustomerPhone(customerService.detail(Customer).getPhone());
+        bill.setAddressDelivery(customerService.detail(Customer).getAddress());
+//        bill.setReceiverName(receiverrame);
         bill.setCreatedDate(currentDate);
-        bill.setBillStatus(billStatusService.findById(UUID.fromString("159b8bc3-5489-47c0-a115-b94a0cf6286f")));
+//        bill.setBillStatus(billStatusService.findById(UUID.fromString("159b8bc3-5489-47c0-a115-b94a0cf6286f")));
         bill.setCustomer(customerService.detail(Customer));
         bill.setEmployee(employeeService.detail(Employee));
         billService.create_new_bill(bill);
@@ -72,9 +72,9 @@ public class BillController {
     ) {
         Date currentDate = new Date(System.currentTimeMillis());
         Bill bill = billService.get_one_bill(billId);
-        bill.setReceiverName(receiverrame);
-        bill.setTotalMoney(totalmoney);
-        bill.setCustomerPhone(customerPhone);
+        bill.setReceiverName(customerService.detail(Customer).getFullname());
+        bill.setTotalMoney(BigDecimal.valueOf(90000));
+        bill.setCustomerPhone(customerService.detail(Customer).getPhone());
         bill.setAddressDelivery(addressDelivery);
         bill.setReceiverName(receiverrame);
         bill.setCreatedDate(currentDate);

@@ -41,19 +41,19 @@
                                 <c:forEach items="${listBill}" var="bill">
                                     <tr onclick="goToPage('/bill_detail/index/${bill.id}')">
                                         <td>${bill.id}</td>
-                                        <td>${bill.price}</td>
-                                        <td>${bill.address}</td>
+<%--                                        <td>${bill.price}</td>--%>
+<%--                                        <td>${bill.address}</td>--%>
                                         <td>${bill.employee.fullName}</td>
                                         <td>${bill.customer.fullname}</td>
                                         <td>${bill.billStatus.name}</td>
                                         <td>
                                             <a href="/bill_detail/index/${bill.id}" class="btn btn-success">Detail</a>
 <%--                                            <a href="/bill/index/${bill.id}" class="btn btn-danger">Detail</a>--%>
-                                            <form action="/bill/change_bill_status/${bill.id}" method="post">
-                                                <button class=" ${bill.billStatus.id!=3?"btn btn-warning":"btn btn-dark"
-                                                }" onclick="return confirm('You want to change this status?')"
-                                                    ${bill.billStatus.id==3?"disabled":""}>${bill.billStatus.id==3?"Done":"Change Status"}</button>
-                                            </form>
+<%--                                            <form action="/bill/change_bill_status/${bill.id}" method="post">--%>
+<%--                                                <button class=" ${bill.billStatus.id!=3?"btn btn-warning":"btn btn-dark"--%>
+<%--                                                }" onclick="return confirm('You want to change this status?')"--%>
+<%--&lt;%&ndash;                                                    ${bill.billStatus.id==3?"disabled":""}>${bill.billStatus.id==3?"Done":"Change Status"}</button>&ndash;%&gt;--%>
+<%--                                            </form>--%>
                                         </td>
                                     </tr>
                                 </c:forEach>

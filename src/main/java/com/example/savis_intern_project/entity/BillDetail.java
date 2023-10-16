@@ -30,7 +30,7 @@ public class BillDetail {
     private Bill bill;
 
     @ManyToOne
-    @JoinColumn(name = "ProductId",referencedColumnName = "Id",nullable = true)
-    private Product product;
+    @JoinColumn(name = "ProductDetailId",referencedColumnName = "Id",nullable = true)
+    private ProductDetail productDetail;
 
 }
