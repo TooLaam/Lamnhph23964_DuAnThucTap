@@ -30,16 +30,13 @@ public class ProductServiceimpl implements ProductServie {
         Product pro = getOne(id);
         pro.setName(product.getName());
         pro.setDescripTion(product.getDescripTion());
-        pro.setManufacTurer(product.getManufacTurer());
         pro.setAvailableQuantity(product.getAvailableQuantity());
         pro.setSold(product.getSold());
-        pro.setPrice(product.getPrice());
-        pro.setImportPrice(product.getImportPrice());
-        pro.setDate(product.getDate());
-        pro.setStaTus(product.getStaTus());
-        pro.setImageUrl(product.getImageUrl());
-        pro.setColor(product.getColor());
-        pro.setCategory(product.getCategory());
+        pro.setLikes(product.getLikes());
+        pro.setCreatedDate(product.getCreatedDate());
+        pro.setStatus(product.getStatus());
+        pro.setDescripTion(product.getDescripTion());
+        pro.setBrand(product.getBrand());
         responsitory.flush();
     }
 

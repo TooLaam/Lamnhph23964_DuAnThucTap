@@ -1,0 +1,46 @@
+package com.example.savis_intern_project.service.serviceimpl;
+
+
+import com.example.savis_intern_project.entity.Brand;
+import com.example.savis_intern_project.repository.BrandResponsitory;
+import com.example.savis_intern_project.service.BrandService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class BrandServiceimpl implements BrandService {
+    @Autowired
+    BrandResponsitory responsitory;
+    @Override
+    public void add(Brand brand) {
+         responsitory.saveAndFlush(brand);
+    }
+
+    @Override
+    public void delete(UUID id) {
+            responsitory.deleteById(id);
+    }
+
+    @Override
+    public void update(UUID id, Brand brand) {
+        Brand bra = getOne(id);
+        bra.setName(brand.getName());
+        bra.setImage(brand.getImage());
+        bra.setStaTus(brand.getStaTus());
+        responsitory.flush();
+
+    }
+
+    @Override
+    public List<Brand> getAll() {
+        return responsitory.findAll();
+    }
+
+    @Override
+    public Brand getOne(UUID id) {
+        return responsitory.findById(id).get();
+    }
+}

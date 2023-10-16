@@ -32,6 +32,7 @@ public class CategoryServiceimpl implements CategoryService {
     public void update(UUID id, Category category) {
            Category a = getOne(id);
            a.setName(category.getName());
+        a.setStatus(category.getStatus());
            responsitory.flush();
     }
 

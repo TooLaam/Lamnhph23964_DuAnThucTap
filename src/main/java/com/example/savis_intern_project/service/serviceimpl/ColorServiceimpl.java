@@ -34,6 +34,10 @@ public class ColorServiceimpl implements ColorService {
     public void update(UUID id, Color color) {
          Color a = getOne(id);
          a.setName(color.getName());
+        a.setPrice(color.getPrice());
+        a.setImage(color.getImage());
+        a.setStatus(color.getStatus());
+        a.setBrand(color.getBrand());
          responsitory.flush();
     }
 

@@ -4,12 +4,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="pagetitle">
-    <h1>Category</h1>
+    <h1>Color</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
             <li class="breadcrumb-item active">Overview</li>
-            <li class="breadcrumb-item active">Category</li>
+            <li class="breadcrumb-item active">Brand</li>
         </ol>
     </nav>
 </div>
@@ -26,24 +26,26 @@
 
 
                         <div class="card-body">
-                            <h5 class="card-title">Category <span>| </span></h5>
+                            <h5 class="card-title">Brand <span>| </span></h5>
 
                             <table class="table table-borderless datatable">
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Ten</th>
-                                    <th>Status</th>
+
+                                    <th>Tên</th>
+                                    <th>Ảnh</th>
+                                    <th>Trạng thái</th>
                                     <th>Action</th>
 
                                 </tr>
-                                <c:forEach items="${listCategory}" var="loai">
+                                <c:forEach items="${listBrand}" var="bra">
                                     <tr>
-                                        <td>${loai.id}</td>
-                                        <td>${loai.name}</td>
-                                        <td>${loai.status == 0 ? "Còn hàng" : "Hết hàng"}</td>
+
+                                        <td>${bra.name}</td>
+                                        <td><img src="/assets/img/brand/${bra.image}" width="100px" height="100px"></td>
+                                        <td>${bra.staTus == 1 ? "Còn hàng" : "Hết hàng"}</td>
                                         <td>
-                                            <a href="/category/delete/${loai.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" >Delete</a>
-                                            <a href="/category/detail/${loai.id}" class="btn btn-success" >Detail</a>
+                                            <a href="/brand/delete/${bra.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')">Delete</a>
+                                            <a href="/brand/detail/${bra.id}" class="btn btn-success">Detail</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -97,16 +99,21 @@
                     <div class="tab-content pt-2" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel"
                              aria-labelledby="home-tab">
-                            <form method="post" action="/category/update/${loai.id}">
+                            <form method="post" action="/brand/update/${bra.id}">
 
                                 <div>
                                     Name :
-                                    <input class="form-control" name="name" value="${loai.name}">
+                                    <input class="form-control" name="name" value="${bra.name}">
                                 </div>
                                 <div>
-                                    Status :<br>
-                                    <input  type="radio" name="status" value="0" ${ loai.status == "0" ? "checked" : "" }> Còn Hàng <br>
-                                    <input   type="radio" name="status" value="1" ${ loai.status == "1" ? "checked" : "" }> Hết hàng
+                                    Image :
+                                    <img src="/assets/img/brand/${bra.image}" height="100px" width="100px">
+                                    <input class="form-control" name="image" type="file"  value="${bra.image}">
+                                </div>
+                                <div>
+                                    Status :
+                                    <input  type="radio" name="staTus" value="1" ${ bra.staTus == "1" ? "checked" : "" }> Còn Hàng <br>
+                                    <input   type="radio" name="staTus" value="0" ${ bra.staTus == "0" ? "checked" : "" }> Hết hàng
                                 </div>
                                 <input type="submit" class="btn btn-primary" value="Update"style="margin-top: 10px">
                             </form>
@@ -114,31 +121,36 @@
 
                         <%--create--%>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <form method="post" action="/category/add">
+                            <form method="post" action="/brand/add">
                                 <div>
                                     Name :
                                     <input class="form-control" name="name" >
                                 </div>
                                 <div>
-                                    Status :<br>
-                                    <input  type="radio" name="status" value="0" > Còn Hàng <br>
-                                    <input  type="radio" name="status" value="1"> Hết hàng
+                                    Image :
+
+                                    <input class="form-control" name="image" type="file"  >
+                                </div>
+                                <div>
+                                    Status :
+                                    <input  type="radio" name="staTus" value="1"> Còn Hàng <br>
+                                    <input   type="radio" name="staTus" value="0"> Hết hàng
                                 </div>
                                 <input type="submit" class="btn btn-primary" value="Add"style="margin-top: 10px">
                             </form>
                         </div>
                         <%--detail--%>
-                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                            <form class="row g-3" action="/category/detail/${loai.id}" method="get">
-                                <div class="form-group">
-                                    ID : ${loai.id}
-                                </div>
-                                <div class="form-group">
-                                    Name : ${loai.name}
-                                </div>
+<%--                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">--%>
+<%--                            <form class="row g-3" action="/favor/detail/${spyt.id}" method="get">--%>
+<%--                                <div class="form-group">--%>
+<%--                                    ID : ${mau.id}--%>
+<%--                                </div>--%>
+<%--                                <div class="form-group">--%>
+<%--                                    Name : ${mau.name}--%>
+<%--                                </div>--%>
 
-                            </form><!-- End Multi Columns Form -->
-                        </div>
+<%--                            </form><!-- End Multi Columns Form -->--%>
+<%--                        </div>--%>
                     </div><!-- End Default Tabs -->
 
 

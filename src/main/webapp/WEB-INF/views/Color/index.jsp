@@ -30,19 +30,26 @@
 
                             <table class="table table-borderless datatable">
                                 <tr>
-                                    <th>ID</th>
+
                                     <th>Ten</th>
+                                    <th>Gia</th>
+                                    <th>Anh</th>
+                                    <th>Trang Thai</th>
+                                    <th>Thuong Hieu</th>
                                     <th>Action</th>
 
                                 </tr>
                                 <c:forEach items="${listColor}" var="mau">
                                     <tr>
-                                        <td>${mau.id}</td>
-                                        <td>${mau.name}</td>
 
+                                        <td>${mau.name}</td>
+                                        <td>${mau.price}</td>
+                                        <td><img src="/assets/img/color/${mau.image}" width="100px" height="100px"></td>
+                                        <td>${mau.status}</td>
+                                        <td>${mau.brand.name}</td>
                                         <td>
-                                            <a href="/color/delete/${mau.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" style="text-decoration: none;color: white"><i class='bx bx-trash'></i></a>
-                                            <a href="/color/detail/${mau.id}" class="btn btn-success" style="text-decoration: none;color: white; margin-top: 5px" ><i class='bi bi-arrow-repeat'></i></a>
+                                            <a href="/color/delete/${mau.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')">Delete</a>
+                                            <a href="/color/detail/${mau.id}" class="btn btn-success" >Detail</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -99,8 +106,30 @@
                             <form method="post" action="/color/update/${mau.id}">
 
                                 <div>
-                                    Name :
+                                    Ten :
                                     <input class="form-control" name="name" value="${mau.name}">
+                                </div>
+                                <div>
+                                    Gia :
+                                    <input class="form-control" name="price" value="${mau.price}">
+                                </div>
+                                <div>
+                                    Image :
+                                    <img src="/assets/img/color/${mau.image}" height="100px" width="100px">
+                                    <input class="form-control" name="image" type="file"  value="${mau.image}">
+                                </div>
+                                <div>
+                                    Status :<br>
+                                    <input  type="radio" name="status" value="0" ${ mau.status == "0" ? "checked" : "" }> Còn Hàng <br>
+                                    <input   type="radio" name="status" value="1" ${mau.status == "1" ? "checked" : "" }> Hết hàng
+                                </div>
+                                <div class="form-group">
+                                    Brand :
+                                    <select name="brand" class="form-select"  aria-label="Default select example">
+                                        <c:forEach items="${listBrand}" var="brand">
+                                            <option value="${brand.id}">${brand.name}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                                 <input type="submit" class="btn btn-primary" value="Update"style="margin-top: 10px">
                             </form>
@@ -110,23 +139,44 @@
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <form method="post" action="/color/add">
                                 <div>
-                                    Name :
-                                    <input class="form-control" name="name" >
+                                    Ten :
+                                    <input class="form-control" name="name">
                                 </div>
-                                <input type="submit" class="btn btn-primary" value="Update"style="margin-top: 10px">
+                                <div>
+                                    Gia :
+                                    <input class="form-control" name="price">
+                                </div>
+                                <div>
+                                    Image :
+                                    <input class="form-control" name="image" type="file"  value="${mau.image}">
+                                </div>
+                                <div>
+                                    Status :<br>
+                                    <input  type="radio" name="status" value="0"> Còn Hàng <br>
+                                    <input   type="radio" name="status" value="1"> Hết hàng
+                                </div>
+                                <div class="form-group">
+                                    Brand :
+                                    <select name="brand" class="form-select"  aria-label="Default select example">
+                                        <c:forEach items="${listBrand}" var="brand">
+                                            <option value="${brand.id}">${brand.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <input type="submit" class="btn btn-primary" value="Add"style="margin-top: 10px">
                             </form>
                         </div>
                         <%--detail--%>
                         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                            <form class="row g-3" action="/favor/detail/${spyt.id}" method="get">
-                                <div class="form-group">
-                                    ID : ${mau.id}
-                                </div>
-                                <div class="form-group">
-                                    Name : ${mau.name}
-                                </div>
+<%--                            <form class="row g-3" action="/favor/detail/${spyt.id}" method="get">--%>
+<%--                                <div class="form-group">--%>
+<%--                                    ID : ${mau.id}--%>
+<%--                                </div>--%>
+<%--                                <div class="form-group">--%>
+<%--                                    Name : ${mau.name}--%>
+<%--                                </div>--%>
 
-                            </form><!-- End Multi Columns Form -->
+<%--                            </form><!-- End Multi Columns Form -->--%>
                         </div>
                     </div><!-- End Default Tabs -->
 

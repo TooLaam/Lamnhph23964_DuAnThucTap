@@ -26,24 +26,24 @@
 
 
                         <div class="card-body">
-                            <h5 class="card-title">Category <span>| </span></h5>
+                            <h5 class="card-title">CategoryDetail <span>| </span></h5>
 
                             <table class="table table-borderless datatable">
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Ten</th>
-                                    <th>Status</th>
+                                    <th>So luong</th>
+                                    <th>San Pham</th>
+                                    <th>Loai</th>
                                     <th>Action</th>
 
                                 </tr>
-                                <c:forEach items="${listCategory}" var="loai">
+                                <c:forEach items="${listCategoryDetail}" var="detail">
                                     <tr>
-                                        <td>${loai.id}</td>
-                                        <td>${loai.name}</td>
-                                        <td>${loai.status == 0 ? "Còn hàng" : "Hết hàng"}</td>
+                                        <td>${detail.quanTity}</td>
+                                        <td>${detail.product.name}</td>
+                                        <td>${detail.category.name}</td>
                                         <td>
-                                            <a href="/category/delete/${loai.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" >Delete</a>
-                                            <a href="/category/detail/${loai.id}" class="btn btn-success" >Detail</a>
+                                            <a href="/category_detail/delete/${detail.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" >Delete</a>
+                                            <a href="/category_detail/detail/${detail.id}" class="btn btn-success" >Detail</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -97,16 +97,27 @@
                     <div class="tab-content pt-2" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel"
                              aria-labelledby="home-tab">
-                            <form method="post" action="/category/update/${loai.id}">
+                            <form method="post" action="/category_detail/update/${detail.id}">
 
                                 <div>
-                                    Name :
-                                    <input class="form-control" name="name" value="${loai.name}">
+                                    So Luong :
+                                    <input class="form-control" name="quanTity" value="${detail.quanTity}">
                                 </div>
-                                <div>
-                                    Status :<br>
-                                    <input  type="radio" name="status" value="0" ${ loai.status == "0" ? "checked" : "" }> Còn Hàng <br>
-                                    <input   type="radio" name="status" value="1" ${ loai.status == "1" ? "checked" : "" }> Hết hàng
+                                <div class="form-group">
+                                    San Pham :
+                                    <select name="product" class="form-select"  aria-label="Default select example">
+                                        <c:forEach items="${listProduct}" var="product">
+                                            <option value="${product.id}">${product.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    Loai :
+                                    <select name="category" class="form-select"  aria-label="Default select example">
+                                        <c:forEach items="${listCategory}" var="category">
+                                            <option value="${category.id}">${category.name}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                                 <input type="submit" class="btn btn-primary" value="Update"style="margin-top: 10px">
                             </form>
@@ -114,30 +125,41 @@
 
                         <%--create--%>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <form method="post" action="/category/add">
+                            <form method="post" action="/category_detail/add">
                                 <div>
-                                    Name :
-                                    <input class="form-control" name="name" >
+                                    So Luong :
+                                    <input class="form-control" name="quanTity">
                                 </div>
-                                <div>
-                                    Status :<br>
-                                    <input  type="radio" name="status" value="0" > Còn Hàng <br>
-                                    <input  type="radio" name="status" value="1"> Hết hàng
+                                <div class="form-group">
+                                    San Pham :
+                                    <select name="product" class="form-select"  aria-label="Default select example">
+                                        <c:forEach items="${listProduct}" var="product">
+                                            <option value="${product.id}">${product.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    Loai :
+                                    <select name="category" class="form-select"  aria-label="Default select example">
+                                        <c:forEach items="${listCategory}" var="category">
+                                            <option value="${category.id}">${category.name}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                                 <input type="submit" class="btn btn-primary" value="Add"style="margin-top: 10px">
                             </form>
                         </div>
                         <%--detail--%>
                         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                            <form class="row g-3" action="/category/detail/${loai.id}" method="get">
-                                <div class="form-group">
-                                    ID : ${loai.id}
-                                </div>
-                                <div class="form-group">
-                                    Name : ${loai.name}
-                                </div>
+<%--                            <form class="row g-3" action="/category_detail/detail/${loai.id}" method="get">--%>
+<%--                                <div class="form-group">--%>
+<%--                                    ID : ${loai.id}--%>
+<%--                                </div>--%>
+<%--                                <div class="form-group">--%>
+<%--                                    Name : ${loai.name}--%>
+<%--                                </div>--%>
 
-                            </form><!-- End Multi Columns Form -->
+<%--                            </form><!-- End Multi Columns Form -->--%>
                         </div>
                     </div><!-- End Default Tabs -->
 

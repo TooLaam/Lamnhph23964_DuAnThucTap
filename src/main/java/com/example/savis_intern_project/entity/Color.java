@@ -22,16 +22,16 @@ public class Color {
     private UUID Id;
 
     @Column(name = "Name")
-    private String Name;
+    private String name;
 
     @Column(name = "Price")
-    private BigDecimal Price;
+    private BigDecimal price;
 
     @Column(name = "Image")
-    private String Image;
+    private String image;
 
     @Column(name = "Status")
-    private Integer Status;
+    private Integer status;
 
     @ManyToOne()
     @JoinColumn(
@@ -40,4 +40,13 @@ public class Color {
             nullable = true
     )
     private Brand brand;
+
+    public Color( String name, BigDecimal price, String image, Integer status, Brand brand) {
+
+        this.name = name;
+        this.price = price;
+        this.image = image;
+        this.status = status;
+        this.brand = brand;
+    }
 }

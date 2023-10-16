@@ -20,7 +20,7 @@ public class CategoryDetail {
     private UUID id;
 
     @Column(name = "Quantity")
-    private Integer Quantity;
+    private Integer quanTity;
 
     @ManyToOne()
     @JoinColumn(
@@ -40,7 +40,7 @@ public class CategoryDetail {
 
     public CategoryDetail(Integer Quantity, Product product, Category category) {
 
-        this.Quantity = Quantity;
+        this.quanTity = Quantity;
         this.product = product;
         this.category = category;
     }

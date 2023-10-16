@@ -21,12 +21,14 @@ public class Category {
     private UUID Id;
 
     @Column(name = "Name")
-    private String Name;
+    private String name;
 
     @Column(name = "Status")
-    private Integer Status;
+    private Integer status;
 
-    public Category(String Name) {
-        this.Name = Name;
+    public Category( String name, Integer status) {
+
+        this.name = name;
+        this.status = status;
     }
 }

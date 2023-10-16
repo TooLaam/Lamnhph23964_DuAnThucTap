@@ -20,15 +20,15 @@ public class ProductDetail {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Column(name = "ImportPrice")
-    private BigDecimal ImportPrice;
+    private BigDecimal importPrice;
     @Column(name = "Price")
-    private BigDecimal Price;
+    private BigDecimal price;
     @Column(name = "Quantity")
-    private Integer Quantity;
+    private Integer quantity;
     @Column(name = "CreatedDate")
-    private Date CreatedDate;
+    private Date createdDate;
     @Column(name = "Status")
-    private Integer Status;
+    private Integer status;
     @Column(name = "Description")
     private String descripTion;
 
@@ -48,13 +48,13 @@ public class ProductDetail {
     )
     private Color color;
 
-    public ProductDetail(BigDecimal ImportPrice, BigDecimal Price, Integer Quantity, Date CreatedDate, Integer Status, String descripTion, Product product, Color color) {
+    public ProductDetail( BigDecimal importPrice, BigDecimal price, Integer quantity, Date createdDate, Integer status, String descripTion, Product product, Color color) {
 
-        this.ImportPrice = ImportPrice;
-        this.Price = Price;
-        this.Quantity = Quantity;
-        this.CreatedDate = CreatedDate;
-        this.Status = Status;
+        this.importPrice = importPrice;
+        this.price = price;
+        this.quantity = quantity;
+        this.createdDate = createdDate;
+        this.status = status;
         this.descripTion = descripTion;
         this.product = product;
         this.color = color;

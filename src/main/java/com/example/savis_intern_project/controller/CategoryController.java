@@ -29,9 +29,10 @@ public class CategoryController {
     }
     @PostMapping("/add")
     public String add(Model model,
-                      @RequestParam(value = "name") String name
+                      @RequestParam(value = "name") String name,
+                      @RequestParam(value = "status") Integer status
     ){
-        categoryServiceimpl.save(new Category(name));
+        categoryServiceimpl.save(new Category(name,status));
         return "redirect:/category/index";
     }
     @GetMapping("/delete/{id}")
@@ -54,8 +55,9 @@ public class CategoryController {
     @PostMapping("/update/{id}")
     public String update(Model model,
                          @PathVariable("id") String id,
-                         @RequestParam("name") String name){
-        Category cv = new Category(name);
+                         @RequestParam("name") String name,
+                         @RequestParam("status") Integer status){
+        Category cv = new Category(name,status);
         categoryServiceimpl.update(UUID.fromString(id),cv);
         return "redirect:/category/index";
     }

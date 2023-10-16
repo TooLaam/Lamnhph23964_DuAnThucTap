@@ -1,9 +1,9 @@
 package com.example.savis_intern_project.entity;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
@@ -12,27 +12,32 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "Brand")
-public class Brand {
+@Table(name = "ProductImage")
+public class ProductImage {
 
-    @jakarta.persistence.Id
+    @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID Id;
+    private UUID id;
 
     @Column(name = "Name")
     private String name;
 
-    @Column(name = "Image")
-    private String image;
-
     @Column(name = "Status")
     private Integer staTus;
 
-    public Brand( String name, String image, Integer staTus) {
+    @ManyToOne()
+    @JoinColumn(
+            name = "ProductDetailId",
+            referencedColumnName = "Id",
+            nullable = true
+    )
+    private ProductDetail productDetail;
+
+    public ProductImage( String name, Integer staTus, ProductDetail productDetail) {
 
         this.name = name;
-        this.image = image;
         this.staTus = staTus;
+        this.productDetail = productDetail;
     }
 }

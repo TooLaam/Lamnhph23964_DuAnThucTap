@@ -25,11 +25,11 @@ public class Product {
     @Column(name = "Sold")
     private Integer sold;
     @Column(name = "Likes")
-    private Integer Likes;
+    private Integer likes;
     @Column(name = "CreatedDate")
-    private Date CreatedDate;
+    private Date createdDate;
     @Column(name = "Status")
-    private Integer Status;
+    private Integer status;
     @Column(name = "Description")
     private String descripTion;
 
@@ -41,14 +41,15 @@ public class Product {
     )
     private Brand brand;
 
-    public Product( String name, Integer availableQuantity, Integer sold, Integer Likes, Date CreatedDate, Integer Status, String descripTion, Brand brand) {
+
+    public Product( String name, Integer availableQuantity, Integer sold, Integer likes, Date createdDate, Integer status, String descripTion, Brand brand) {
 
         this.name = name;
         this.availableQuantity = availableQuantity;
         this.sold = sold;
-        this.Likes = Likes;
-        this.CreatedDate = CreatedDate;
-        this.Status = Status;
+        this.likes = likes;
+        this.createdDate = createdDate;
+        this.status = status;
         this.descripTion = descripTion;
         this.brand = brand;
     }
