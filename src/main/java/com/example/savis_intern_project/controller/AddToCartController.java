@@ -4,6 +4,8 @@ package com.example.savis_intern_project.controller;
 import com.example.savis_intern_project.entity.Item;
 import com.example.savis_intern_project.entity.OrderCart;
 import com.example.savis_intern_project.entity.Product;
+import com.example.savis_intern_project.entity.ProductDetail;
+import com.example.savis_intern_project.service.serviceimpl.ProductDetailServiceimpl;
 import com.example.savis_intern_project.service.serviceimpl.ProductServiceimpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,24 +26,24 @@ public class AddToCartController {
     @Autowired
     private HttpSession httpSession;
     @Autowired
-    ProductServiceimpl productServie;
+    ProductDetailServiceimpl productDetailServiceimpl;
 
-    UUID productId = UUID.fromString("60975438-e58b-47a7-8c71-42726ea92e7c");
+    UUID productId = UUID.fromString("f548c39d-d212-45c3-b191-a2a80f8d9d3b");
 
 
     @GetMapping("/cart/add")
     public String themGioHang() {
-        Product product = productServie.getOne(productId);
+        ProductDetail productDetail = productDetailServiceimpl.getOne(productId);
 
-        if (product == null) {
+        if (productDetail == null) {
             // Xử lý trường hợp sản phẩm không tồn tại, ví dụ: thông báo lỗi.
             return "redirect:/error";
         }
 
-        UUID productId1 = product.getId();
-        String tenSanPham = product.getName();
-//        BigDecimal price = product.getPrice();
-//        Item item = new Item(productId1, tenSanPham, 1, price);
+        UUID productId1 = productDetail.getId();
+        String tenSanPham = productDetail.getProduct().getName();
+        BigDecimal price = productDetail.getPrice();
+        Item item = new Item(productId1, tenSanPham, 1, price);
         OrderCart cartSession = (OrderCart) httpSession.getAttribute("OrderCart");
 
         if (cartSession == null) {
@@ -111,15 +113,15 @@ public class AddToCartController {
 
     @GetMapping("/add")
     public String themGioHang1() {
-        Product product = productServie.getOne(productId);
+        ProductDetail productDetail = productDetailServiceimpl.getOne(productId);
         OrderCart cartSession = (OrderCart) httpSession.getAttribute("OrderCart");
-        if (product == null) {
+        if (productDetail == null) {
             // Xử lý trường hợp sản phẩm không tồn tại, ví dụ: thông báo lỗi.
             return "redirect:/error";
         }
 
-        UUID productId1 = product.getId();
-        String tenSanPham = product.getName();
+        UUID productId1 = productDetail.getId();
+        String tenSanPham = productDetail.getProduct().getName();
 //        BigDecimal price = product.getPrice();
 //        Item item = new Item(productId1, tenSanPham, 1, price);
 

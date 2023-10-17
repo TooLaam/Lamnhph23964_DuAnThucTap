@@ -88,7 +88,7 @@ public class EmployeeController {
         employee.setDateOfBirth(dateOfBirth );
         employee.setAddress(address);
         employee.setPhoneNumber(phoneNumber);
-        employee.setDatecreated(String.valueOf(currentDate));
+        employee.setDatecreated((currentDate));
         employee.setEmail(email);
         employee.setGender(gender);
         employee.setStatus(1);

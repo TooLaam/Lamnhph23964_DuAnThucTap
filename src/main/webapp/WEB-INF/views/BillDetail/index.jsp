@@ -32,19 +32,25 @@
                                 <table class="table table-borderless">
                                     <tr>
                                         <%--                                        <td>Id</td>--%>
-                                        <td>Price</td>
+                                        <td>Id</td>
                                         <td>Quantity</td>
                                         <td>Product</td>
+                                        <td>Price</td>
 
                                     </tr>
                                     <c:forEach items="${billDetailD}" var="billDetailD">
                                         <tr>
                                                 <%--                                            <td>${bill.id}</td>--%>
-<%--                                            <td>${billDetailD.price}</td>--%>
+                                            <td>${billDetailD.id}</td>
                                             <td>${billDetailD.quantity}</td>
                                             <td>${billDetailD.productDetail.product.name}</td>
+                                            <td>${billDetailD.productDetail.price}</td>
+
                                         </tr>
                                     </c:forEach>
+                                  <div >
+                                        <b>Total: ${total} VND</b>
+                                  </div>
                                 </table>
 <%--                                <h3>Tổng tiền khách phải trả : <fmt:formatNumber value="${allPrice}" type="currency" currencyCode="VND" /></h3>--%>
                             </form><!-- End Multi Columns Form -->

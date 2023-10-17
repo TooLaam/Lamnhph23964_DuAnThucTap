@@ -49,7 +49,7 @@ public class BillController {
         bill.setAddressDelivery(customerService.detail(Customer).getAddress());
 //        bill.setReceiverName(receiverrame);
         bill.setCreatedDate(currentDate);
-//        bill.setBillStatus(billStatusService.findById(UUID.fromString("159b8bc3-5489-47c0-a115-b94a0cf6286f")));
+        bill.setBillStatus(billStatusService.findById(UUID.fromString("159b8bc3-5489-47c0-a115-b94a0cf6286f")));
         bill.setCustomer(customerService.detail(Customer));
         bill.setEmployee(employeeService.detail(Employee));
         billService.create_new_bill(bill);
@@ -62,9 +62,9 @@ public class BillController {
     public String update_bill(Model model,
                               @RequestParam("price") BigDecimal price,
                               @RequestParam("receiverName") String receiverrame,
-                              @RequestParam("totalMoney") BigDecimal totalmoney,
-                              @RequestParam("customerPhone") String customerPhone,
-                              @RequestParam("addressDelivery") String addressDelivery,
+//                              @RequestParam("totalMoney") BigDecimal totalmoney,
+//                              @RequestParam("customerPhone") String customerPhone,
+//                              @RequestParam("addressDelivery") String addressDelivery,
                               @RequestParam("customerId") UUID Customer,
                               @RequestParam("employeeId") UUID Employee,
                               @PathVariable("billId") UUID billId
@@ -75,7 +75,7 @@ public class BillController {
         bill.setReceiverName(customerService.detail(Customer).getFullname());
         bill.setTotalMoney(BigDecimal.valueOf(90000));
         bill.setCustomerPhone(customerService.detail(Customer).getPhone());
-        bill.setAddressDelivery(addressDelivery);
+        bill.setAddressDelivery(customerService.detail(Customer).getAddress());
         bill.setReceiverName(receiverrame);
         bill.setCreatedDate(currentDate);
         bill.setBillStatus(billStatusService.findById(UUID.fromString("159b8bc3-5489-47c0-a115-b94a0cf6286f")));
@@ -95,6 +95,17 @@ public class BillController {
         model.addAttribute("listEmployee", employeeService.findAll());
         model.addAttribute("listBillStatus", billStatusService.get_all_bill_status());
         model.addAttribute("view", "/Bill/index.jsp");
+        for (Bill bill : billService.get_all_bill()
+        ) {
+            System.out.println(bill.getReceiverName());
+            System.out.println(bill.getEmployee().getFullName());
+            System.out.println(bill.getCustomer().getFullname());
+            System.out.println(bill.getCustomerPhone());
+            System.out.println(bill.getAddressDelivery());
+            System.out.println(bill.getTotalMoney());
+            System.out.println(bill.getCreatedDate());
+            System.out.println(bill.getBillStatus());
+        }
         return "index";
     }
 

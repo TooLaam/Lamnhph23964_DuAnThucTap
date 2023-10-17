@@ -30,19 +30,19 @@ public class BilldetailController {
     public String show_data_bill(Model model,@PathVariable("billId")UUID billId) {
         model.addAttribute("listBill", billService.get_all_bill());
         List<BillDetail> billDetailList = billDetailService.get_all_by_billId(billId);
-        double allPrice = 0; // Khởi tạo biến tổng giá trị hóa đơn
+        double total = 0; // Khởi tạo biến tổng giá trị hóa đơn
         for (BillDetail billDetail : billDetailList) {
             int quantity = billDetail.getQuantity();
-//            BigDecimal price = billDetail.getProduct().getPrice();
-//            BigDecimal totalPrice = price.multiply(BigDecimal.valueOf(quantity));
-//            allPrice += totalPrice.doubleValue();
+            BigDecimal price = billDetail.getProductDetail().getPrice();
+            BigDecimal totalPrice = price.multiply(BigDecimal.valueOf(quantity));
+            total += totalPrice.doubleValue();
 //            System.out.println("price" + price);
             System.out.println("quantity" + quantity);
         }
 
-        System.out.println(allPrice);
+        System.out.println(total);
         model.addAttribute("billDetailD", billDetailList);
-        model.addAttribute("allPrice", allPrice);
+        model.addAttribute("total", total);
         model.addAttribute("view", "/BillDetail/index.jsp");
         return "index";
     }
