@@ -20,8 +20,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "RoleName")
-    private String roleName;
+    @Column(name = "Name")
+    private String Name;
 
     @Column(name = "Description")
     private String description;

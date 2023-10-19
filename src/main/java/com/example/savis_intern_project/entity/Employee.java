@@ -4,6 +4,7 @@ package com.example.savis_intern_project.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
 import java.util.UUID;
 
 @Data
@@ -37,8 +38,8 @@ public class Employee {
     @Column(name = "Gender")
     private Integer gender;
 
-    @Column(name = "Datecreated")
-    private String datecreated;
+    @Column(name = "CreatedDate")
+    private Date datecreated;
 
     @Column(name = "PhoneNumber")
     private String phoneNumber;

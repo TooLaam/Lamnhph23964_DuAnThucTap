@@ -30,7 +30,7 @@ public class Customer {
     @Column(name = "PhoneNumber")
     private String phone;
 
-    @Column(name = "Datecreated")
+    @Column(name = "CreatedDate")
     private String datecreated;
 
 
