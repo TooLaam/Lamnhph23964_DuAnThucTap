@@ -31,13 +31,14 @@
                             <table class="table table-hover datatable">
                                 <tr>
                                     <td>Receiver Name</td>
-                                    <td>Employee</td>
-                                    <td>Customer</td>
+<%--                                    <td>Employee</td>--%>
+<%--                                    <td>Customer</td>--%>
                                     <td>Customer Phone</td>
 
                                     <td>Total Money</td>
                                     <td>Address Delivery</td>
                                     <td>Created Date</td>
+                                    <td>Payment</td>
                                     <td>Status</td>
                                     <td>Action</td>
                                 </tr>
@@ -45,13 +46,14 @@
                                     <tr onclick="goToPage('/bill_detail/index/${bill.id}')">
 <%--                                        <td>${bill.id}</td>--%>
                                         <td>${bill.receiverName}</td>
-                                        <td>${bill.employee.fullName}</td>
-                                        <td>${bill.customer.fullname}</td>
+<%--                                        <td>${bill.employee.fullName}</td>--%>
+<%--                                        <td>${bill.customer.fullname}</td>--%>
                                         <td>${bill.customerPhone}</td>
                                         <td>${bill.addressDelivery}</td>
                                         <td>${bill.totalMoney}</td>
                                         <td>${bill.createdDate}</td>
                                         <td>${bill.billStatus.name}</td>
+                                        <td>${bill.payment.name}</td>
                                         <td>
                                             <a href="/bill_detail/index/${bill.id}" class="btn btn-success">Detail</a>
 <%--                                            <a href="/bill/index/${bill.id}" class="btn btn-danger">Detail</a>--%>

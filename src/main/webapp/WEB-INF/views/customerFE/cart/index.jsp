@@ -59,7 +59,7 @@
                         <span class="after">${total}</span>
                     </div>
                     <div class="d-grid">
-                        <button class="btn" type="button">CHECK OUT</button>
+                        <a href="/bill/payment" class="btn btn-success">Check out</a>
                     </div>
                 </div>
             </div>

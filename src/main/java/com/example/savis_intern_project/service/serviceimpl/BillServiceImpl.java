@@ -24,8 +24,18 @@ public class BillServiceImpl implements BillService {
     BillStatusRepository billStatusRepository;
 
     @Override
-    public void create_new_bill(Bill bill) {
-        billRepository.save(bill);
+    public Bill create_new_bill(Bill bill) {
+       return billRepository.save(bill);
+    }
+
+    @Override
+    public Bill update_bill(Bill bill) {
+        Bill bill1 = billRepository.findById(bill.getId()).get();
+            bill1.setReceiverName(bill.getReceiverName());
+            bill1.setTotalMoney(bill.getTotalMoney());
+            bill1.setCustomerPhone(bill.getCustomerPhone());
+            bill1.setAddressDelivery(bill.getAddressDelivery());
+            return billRepository.save(bill1);
     }
 
     @Override

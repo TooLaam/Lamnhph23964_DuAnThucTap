@@ -37,15 +37,19 @@ public class Bill {
     private Date CreatedDate;
 
     @ManyToOne
-    @JoinColumn(name = "BillStatusId",referencedColumnName = "Id",nullable = true)
+    @JoinColumn(name = "BillStatusId", referencedColumnName = "Id", nullable = true)
     private BillStatus billStatus;
 
     @ManyToOne
-    @JoinColumn(name = "EmployeeId",referencedColumnName = "Id",nullable = true)
+    @JoinColumn(name = "EmployeeId", referencedColumnName = "Id", nullable = true)
     private Employee employee;
 
     @ManyToOne
-    @JoinColumn(name = "CustomerId",referencedColumnName = "Id",nullable = true)
+    @JoinColumn(name = "CustomerId", referencedColumnName = "Id", nullable = true)
     private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "PaymentId", referencedColumnName = "Id", nullable = true)
+    private Payment payment;
 
 }

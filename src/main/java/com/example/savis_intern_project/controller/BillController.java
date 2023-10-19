@@ -98,8 +98,8 @@ public class BillController {
         for (Bill bill : billService.get_all_bill()
         ) {
             System.out.println(bill.getReceiverName());
-            System.out.println(bill.getEmployee().getFullName());
-            System.out.println(bill.getCustomer().getFullname());
+//            System.out.println(bill.getEmployee().getFullName());
+//            System.out.println(bill.getCustomer().getFullname());
             System.out.println(bill.getCustomerPhone());
             System.out.println(bill.getAddressDelivery());
             System.out.println(bill.getTotalMoney());
@@ -129,12 +129,6 @@ public class BillController {
         model.addAttribute("billD", billService.get_one_bill(billId));
         List<BillDetail> billDetailList = billDetailService.get_all_by_billId(billId);
         double allPrice = 0; // Khởi tạo biến tổng giá trị hóa đơn
-        for (BillDetail billDetail : billDetailList) {
-            int quantity = billDetail.getQuantity();
-//            BigDecimal price = billDetail.getProduct().getPrice();
-//            BigDecimal totalPrice = price.multiply(BigDecimal.valueOf(quantity));
-//            allPrice = allPrice + totalPrice.doubleValue();
-        }
 
         System.out.println(allPrice);
         model.addAttribute("billDetailD", billDetailList);

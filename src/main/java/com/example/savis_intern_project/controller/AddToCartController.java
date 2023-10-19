@@ -49,7 +49,7 @@ public class AddToCartController {
         if (cartSession == null) {
             OrderCart cart = new OrderCart();
             ArrayList<Item> list = new ArrayList<>();
-//            list.add(item);
+            list.add(item);
             cart.setItems(list);
             httpSession.setAttribute("OrderCart", cart);
         } else {
@@ -68,7 +68,7 @@ public class AddToCartController {
             for (Item itemTmp : listItem) {
                 if (itemTmp.getIdProduct().equals(productId1)) {
                     itemTmp.setQuantity(itemTmp.getQuantity() + 1);
-//                    itemTmp.setPrice(price.multiply(BigDecimal.valueOf(itemTmp.getQuantity())));
+                    itemTmp.setPrice(price.multiply(BigDecimal.valueOf(itemTmp.getQuantity())));
                     return "redirect:/viewOrderCart";
                 }
             }
@@ -122,13 +122,13 @@ public class AddToCartController {
 
         UUID productId1 = productDetail.getId();
         String tenSanPham = productDetail.getProduct().getName();
-//        BigDecimal price = product.getPrice();
-//        Item item = new Item(productId1, tenSanPham, 1, price);
+        BigDecimal price = productDetail.getPrice();
+        Item item = new Item(productId1, tenSanPham, 1, price);
 
         if (cartSession == null) {
             OrderCart cart = new OrderCart();
             ArrayList<Item> list = new ArrayList<>();
-//            list.add(item);
+            list.add(item);
             cart.setItems(list);
             httpSession.setAttribute("OrderCart", cart);
         } else {
@@ -147,11 +147,11 @@ public class AddToCartController {
             for (Item itemTmp : listItem) {
                 if (itemTmp.getIdProduct().equals(productId1)) {
                     itemTmp.setQuantity(itemTmp.getQuantity() + 1);
-//                    itemTmp.setPrice(price.multiply(BigDecimal.valueOf(itemTmp.getQuantity())));
+                    itemTmp.setPrice(price.multiply(BigDecimal.valueOf(itemTmp.getQuantity())));
                     return "redirect:/viewOrderCart";
                 }
             }
-//            listItem.add(item);
+            listItem.add(item);
             cartSession.setItems(listItem);
         }
         return "redirect:/viewOrderCart";
