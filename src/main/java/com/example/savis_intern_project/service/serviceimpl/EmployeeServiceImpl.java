@@ -48,6 +48,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<Employee> getByUserName(String username) {
+        return employeeRepository.getByUserName(username);
+    }
+
+    @Override
+    public Employee login(String username, String password) {
+        return employeeRepository.login(username,password);
+    }
+
+    @Override
+    public Employee checkRole(String username) {
+        return employeeRepository.checkRole(username);
+    }
+
+    @Override
     public void update(Employee cs) {
 
         this.employeeRepository.save(cs);

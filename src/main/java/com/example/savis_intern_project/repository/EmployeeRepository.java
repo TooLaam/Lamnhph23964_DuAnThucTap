@@ -14,4 +14,13 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
 
     @Query("SELECT e from Employee e WHERE e.fullName=?1 or e.phoneNumber=?2")
     List<Employee> timKiem2(String name,String phone);
+
+    @Query("SELECT c from Employee c where c.username=?1")
+    List<Employee> getByUserName(String username);
+
+    @Query("SELECT c from Employee c where c.username=?1 and c.password=?2")
+    Employee login(String username, String password);
+
+    @Query("SELECT c from Employee c where c.username=?1 and c.role.roleName='Staff'")
+    Employee checkRole(String username);
 }

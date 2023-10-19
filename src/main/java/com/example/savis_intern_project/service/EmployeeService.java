@@ -16,4 +16,7 @@ public interface EmployeeService  {
     Employee detail(UUID id);
     List<Employee> timKiem(String name,String phone);
     List<Employee> timKiem2(String name,String phone);
+    List<Employee> getByUserName(String username);
+    Employee login(String username, String password);
+    Employee checkRole(String username);
 }

@@ -5,6 +5,7 @@ import com.example.savis_intern_project.entity.Employee;
 import com.example.savis_intern_project.entity.Role;
 import com.example.savis_intern_project.service.EmployeeService;
 import com.example.savis_intern_project.service.RoleService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,13 +24,64 @@ public class EmployeeController {
     @Autowired
     RoleService roleService;
 
-    @GetMapping("/employee/index")
-    public String HienThi(Model model) {
-        List<Employee> customerList = employeeService.findAll() ;
-        model.addAttribute("empList", customerList);
-
-        return "/Employee/index";
+    @GetMapping("/Login")
+    public String login(){
+        return "login";
     }
+
+
+    @PostMapping("/loginOK")
+    public String loginOK(@RequestParam("username")String username,
+                          @RequestParam("password")String password,
+                          HttpSession session,
+                          Model model){
+        if (username == ""||password == ""){
+            model.addAttribute("erTrong", "Please enter complete information !!!");
+            return "login";
+        }
+        else {
+            Employee checkLogin = employeeService.login(username,password);
+            session.setAttribute("checkRole",employeeService.checkRole(username));
+            if (!(checkLogin == null)){
+                session.setAttribute("Name", checkLogin);
+                return "index";
+            }
+            else {
+                model.addAttribute("erCheck","Username and password are incorrect");
+                return "login";
+            }
+        }
+
+    }
+    @GetMapping("/logout")
+    public String loguot(HttpSession session){
+        session.removeAttribute("Name");
+        return "redirect:/Login";
+    }
+
+    @GetMapping("/employee/index")
+    public String HienThi(Model model,HttpSession session) {
+
+
+        if (session.getAttribute("Name") != null){
+            if (session.getAttribute("checkRole") == null){
+                if (employeeService.findAll().isEmpty()){
+                    model.addAttribute("erList","Empty list");
+                }
+                List<Employee> customerList = employeeService.findAll() ;
+                model.addAttribute("empList", customerList);
+
+                return "/Employee/index";
+            }
+            else {
+                model.addAttribute("erCheckRole","Employees cannot use this function");
+                return "login";
+            }
+
+        }
+        return "login";
+    }
+
 
     @PostMapping("/employee/update")
     public String updte(Model model,
@@ -88,7 +140,7 @@ public class EmployeeController {
         employee.setDateOfBirth(dateOfBirth );
         employee.setAddress(address);
         employee.setPhoneNumber(phoneNumber);
-        employee.setDatecreated((currentDate));
+        employee.setDatecreated(String.valueOf(currentDate));
         employee.setEmail(email);
         employee.setGender(gender);
         employee.setStatus(1);
