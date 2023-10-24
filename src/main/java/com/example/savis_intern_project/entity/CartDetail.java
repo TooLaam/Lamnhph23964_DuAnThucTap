@@ -26,7 +26,7 @@ public class CartDetail {
     private BigDecimal Price;
 
     @ManyToOne
-    @JoinColumn(name = "Cartdetail",referencedColumnName = "id",nullable = true)
+    @JoinColumn(name = "CustomerId",referencedColumnName = "id",nullable = true)
     private Cart cart;
 
     @ManyToOne

@@ -1,6 +1,7 @@
 package com.example.savis_intern_project.controller;
 
 import com.example.savis_intern_project.entity.Customer;
+import com.example.savis_intern_project.entity.Employee;
 import com.example.savis_intern_project.entity.Product;
 import com.example.savis_intern_project.repository.CustomerRepository;
 import com.example.savis_intern_project.service.CustomerService;
@@ -60,6 +61,34 @@ public class CustomerController {
     public String login(Model model){
         model.addAttribute("view", "/login/index.jsp");
         return "/customerFE/login/index";
+    }
+
+    @PostMapping("/loginOK")
+    public String loginOK(@RequestParam("username")String username,
+                          @RequestParam("password")String password,
+                          HttpSession session,
+                          Model model){
+        if (username == ""||password == ""){
+            model.addAttribute("erTrongCustomer", "Please enter complete information !!!");
+            return "/customerFE/login/index";
+        }
+        else {
+            Customer checkLogin = customerService.login(username,password);
+            if (!(checkLogin == null)){
+                session.setAttribute("CustomerName", username);
+                return "/customerFE/index";
+            }
+            else {
+                model.addAttribute("erCheckCustomer","Username and password are incorrect");
+                return "/customerFE/login/index";
+            }
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.removeAttribute("CustomerName");
+        return "redirect:/customer/login";
     }
 
     @GetMapping("/viewAdd")

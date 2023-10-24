@@ -18,15 +18,24 @@
                         <%--                  <th scope="col">--%>
                         <%--                    <input class="form-check-input" type="checkbox" onchange="checkAll(this)" />--%>
                         <%--                  </th>--%>
-                        <th scope="col" colspan="2">Product</th>
+                        <th scope="col" class="text-sp">Product</th>
                         <th scope="col" class="text-sp">Quantity</th>
                         <th scope="col" class="text-sp">Total</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <%--<tbody>
                     <c:forEach items="${cartDetail}" var="gh">
                         <tr>
                             <td>${gh.productName}</td>
+                            <td>${gh.quantity}</td>
+                            <td style="font-weight: bold;color: red">${gh.price}VND</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>--%>
+                    <tbody>
+                    <c:forEach items="${listCartDetail}" var="gh">
+                        <tr>
+                            <td>${gh.name}</td>
                             <td>${gh.quantity}</td>
                             <td style="font-weight: bold;color: red">${gh.price}VND</td>
                         </tr>
@@ -41,7 +50,7 @@
                     <p>Congratulations! You've got free shipping!</p>
                     <div class="total">
                         <span>Item(s) total</span>
-                        <span class="after">${total}</span>
+                        <span class="after">${cart.totalMoney}</span>
                     </div>
                     <div class="ship">
                         <div>
@@ -49,14 +58,14 @@
                             <span class="after">$0</span>
                         </div>
                         <div>
-                            <span class="location">(To Vietnam)</span>
-                            <span class="delivery-fee">$50000</span>
+                            <span class="location">(To Hanoi)</span>
+                            <span class="delivery-fee">$1</span>
                         </div>
                     </div>
                     <hr/>
                     <div class="total-item">
-                        <span>Total (${quantity} items)</span>
-                        <span class="after">${total}</span>
+                        <span>Total (${cart.quantity} items)</span>
+                        <span class="after">${cart.totalMoney}</span>
                     </div>
                     <div class="d-grid">
                         <a href="/bill/payment" class="btn btn-success">Check out</a>

@@ -16,19 +16,21 @@
 
                 <table class="table table-hover datatable" >
                     <tr>
-                        <td>Price</td>
-                        <td>Address</td>
-<%--                        <td>Customer</td>--%>
-<%--                        <td>Employee</td>--%>
+                        <td>ReceiverName</td>
+                        <td>TotalMoney</td>
+                        <td>CustomerPhone</td>
+                        <td>AddressDelivery</td>
+                        <td>CreatedDate</td>
                         <td>Status</td>
                         <td>Action</td>
                     </tr>
                     <c:forEach items="${listBill}" var="bill">
                         <tr onclick="goToPage('/bill_detail/index/${bill.id}')">
-                            <td>${bill.price}</td>
-                            <td>${bill.address}</td>
-<%--                            <td>${bill.employee.fullName}</td>--%>
-<%--                            <td>${bill.customer.fullname}</td>--%>
+                            <td>${bill.receiverName}</td>
+                            <td>${bill.totalMoney}</td>
+                            <td>${bill.customerPhone}</td>
+                            <td>${bill.addressDelivery}</td>
+                            <td>${bill.createdDate}</td>
                             <td>${bill.billStatus.name}</td>
                             <td>
                                 <a href="/bill_detail/index/${bill.id}" class="btn btn-success">Detail</a>
