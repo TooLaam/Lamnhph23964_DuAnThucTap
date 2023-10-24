@@ -1,6 +1,7 @@
 package com.example.savis_intern_project.service;
 
 import com.example.savis_intern_project.entity.Product;
+import com.example.savis_intern_project.entity.ProductDetail;
 
 import java.util.ArrayList;
 import java.util.List;

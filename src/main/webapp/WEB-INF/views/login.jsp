@@ -7,7 +7,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <style><%@include file="customerFE/login/style.css"%></style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
@@ -15,64 +15,6 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <title>Login</title>
-    <style>
-        .logo{
-            width: 100%;
-        }
-        .nav-search{
-            margin: 1rem 0;
-        }
-        .link-text{
-            text-decoration: none;
-            color: #00575C;
-        }
-        .link-text:hover{
-            text-decoration: underline;
-        }
-        #help{
-            float: right;
-            margin: 1rem 0;
-        }
-        .main{
-            background-image: url('/images/banner/banner_log.png');
-            background-repeat: no-repeat;
-            background-size: 100%;
-        }
-        .form{
-            margin: 3rem 0 1rem 0;
-            padding: 3rem;
-            height: 400px;
-            background-color: white;
-        }
-        .btn{
-            color: white !important;
-            background-color: #00575C !important;
-        }
-        .btn:hover{
-            background-color: #FFB800 !important;
-        }
-        .login{
-            height: 46px;
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 19px;
-            letter-spacing: 0em;
-            border-radius: 30px !important;
-        }
-        .text-log{
-            margin: 1rem 0 1rem 0;
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 19px;
-            letter-spacing: 0em;
-            text-align: left;
-
-        }
-        .text-log>span{
-            font-weight: 400;
-            color: #7A7A7A;
-        }
-    </style>
 </head>
 
 <body>
@@ -80,7 +22,7 @@
     <nav class="nav-search">
         <div class="row">
             <div class="col-md-2 col-4">
-                <a href="/home/index.html"><img src="../images/logo.png" class="logo" alt="logo" />
+                <a href="/home/index.html"><img src="/assets/img/logo.png" class="logo" alt="logo" />
                 </a>
             </div>
             <div class="col-md-10 col-8">

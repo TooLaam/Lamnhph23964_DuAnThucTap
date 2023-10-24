@@ -1,11 +1,9 @@
 package com.example.savis_intern_project.service.serviceimpl;
 
-import com.example.savis_intern_project.entity.Bill;
-import com.example.savis_intern_project.entity.BillStatus;
+import com.example.savis_intern_project.entity.*;
 import com.example.savis_intern_project.repository.BillRepository;
 import com.example.savis_intern_project.repository.BillStatusRepository;
 import com.example.savis_intern_project.service.BillService;
-import com.oracle.wls.shaded.org.apache.xpath.operations.String;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

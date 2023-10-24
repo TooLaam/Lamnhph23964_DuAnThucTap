@@ -32,7 +32,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void update(UUID CartId, Cart cart) {
-        Cart a = getOne(CartId).get();
+        Cart a = getOne(CartId);
         a.setQuantity(cart.getQuantity());
         a.setTotalMoney(cart.getTotalMoney());
         a.setStatus(cart.getStatus());
@@ -41,7 +41,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Optional<Cart> getOne(UUID id) {
-        return responitory.findById(id);
+    public Cart getOne(UUID id) {
+        return responitory.findById(id).get();
     }
 }

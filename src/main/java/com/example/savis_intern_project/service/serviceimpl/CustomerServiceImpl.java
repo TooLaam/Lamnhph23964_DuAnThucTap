@@ -1,6 +1,7 @@
 package com.example.savis_intern_project.service.serviceimpl;
 
 import com.example.savis_intern_project.entity.Customer;
+import com.example.savis_intern_project.entity.Employee;
 import com.example.savis_intern_project.repository.CustomerRepository;
 import com.example.savis_intern_project.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,13 @@ public class CustomerServiceImpl implements CustomerService {
        customerRepository.save(cs);
 
     }
+
+    @Override
+    public Customer login(String username, String password) {
+        return customerRepository.login(username,password);
+    }
+
+    @Override
+    public Customer getCustomerByName(String username) { return customerRepository.getCustomerByName(username); }
 
 }

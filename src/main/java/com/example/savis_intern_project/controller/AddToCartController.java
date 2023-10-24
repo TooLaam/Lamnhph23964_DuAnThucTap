@@ -1,12 +1,9 @@
 package com.example.savis_intern_project.controller;
 
 
-import com.example.savis_intern_project.entity.Item;
-import com.example.savis_intern_project.entity.OrderCart;
-import com.example.savis_intern_project.entity.Product;
-import com.example.savis_intern_project.entity.ProductDetail;
-import com.example.savis_intern_project.service.serviceimpl.ProductDetailServiceimpl;
-import com.example.savis_intern_project.service.serviceimpl.ProductServiceimpl;
+import com.example.savis_intern_project.entity.*;
+import com.example.savis_intern_project.entity.ViewModels.CartDetailView;
+import com.example.savis_intern_project.service.serviceimpl.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -27,6 +25,12 @@ public class AddToCartController {
     private HttpSession httpSession;
     @Autowired
     ProductDetailServiceimpl productDetailServiceimpl;
+    @Autowired
+    CustomerServiceImpl customerService;
+    @Autowired
+    CartServiceImpl cartService;
+    @Autowired
+    CartdetailServiceImpl cartDetailService;
 
     UUID productId = UUID.fromString("f548c39d-d212-45c3-b191-a2a80f8d9d3b");
 
@@ -39,6 +43,41 @@ public class AddToCartController {
             // Xử lý trường hợp sản phẩm không tồn tại, ví dụ: thông báo lỗi.
             return "redirect:/error";
         }
+
+        /*CartDetailView cartDetailView = new CartDetailView();
+        cartDetailView.setId(productDetail.getId());
+        cartDetailView.setName(productDetail.getProduct().getName());
+        cartDetailView.setPrice(productDetail.getPrice());
+        cartDetailView.setQuantity(1);
+        ArrayList<CartDetailView> cartSession = (ArrayList<CartDetailView>) httpSession.getAttribute("OrderCart");
+
+        if (cartSession == null) {
+            ArrayList<CartDetailView> list = new ArrayList<CartDetailView>();
+            list.add(cartDetailView);
+            httpSession.setAttribute("OrderCart", list);
+        } else {
+            ArrayList<CartDetailView> cart = (ArrayList<CartDetailView>) httpSession.getAttribute("OrderCart");
+            if (cart == null) {
+                // Xử lý trường hợp giỏ hàng không tồn tại, ví dụ: thông báo lỗi.
+                return "redirect:/error";
+            }
+
+            ArrayList<CartDetailView> listItem = cart;
+            if (listItem == null) {
+                // Tạo danh sách mới nếu nó chưa tồn tại.
+                listItem = new ArrayList<CartDetailView>();
+            }
+
+            for (CartDetailView itemTmp : listItem) {
+                if (itemTmp.getProductId().equals(cartDetailView.getId())) {
+                    itemTmp.setQuantity(itemTmp.getQuantity() + 1);
+                    itemTmp.setPrice(cartDetailView.getPrice().multiply(BigDecimal.valueOf(itemTmp.getQuantity())));
+                    return "redirect:/viewOrderCart";
+                }
+            }
+//            listItem.add(itemTmp);
+            cart.setItems(listItem);
+        }*/
 
         UUID productId1 = productDetail.getId();
         String tenSanPham = productDetail.getProduct().getName();
@@ -80,31 +119,41 @@ public class AddToCartController {
 
     @GetMapping("/viewOrderCart")
     public String showCartItem(Model model) {
-        OrderCart cart = (OrderCart) httpSession.getAttribute("OrderCart");
-
-        if (cart == null || cart.getItems().isEmpty()) {
-            // Giỏ hàng trống, thực hiện xử lý tại đây
-            model.addAttribute("emptyCart", true);
-            model.addAttribute("view", "/cart/index.jsp");
-            return "/customerFE/index";
+        if (httpSession.getAttribute("CustomerName") != null)
+        {
+            String username = (String) httpSession.getAttribute("CustomerName");
+            Customer customer = customerService.getCustomerByName(username);
+            model.addAttribute("cart", cartService.getOne(customer.getId()));
+            model.addAttribute("listCartDetail", cartDetailService.getCartDetailByCustomerId(customer.getId()));
+            model.addAttribute("listProductDetail", productDetailServiceimpl.getAll());
         }
+        else {
+            OrderCart cart = (OrderCart) httpSession.getAttribute("OrderCart");
 
-        ArrayList<Item> list = cart.getItems();
-        BigDecimal itemTotal = BigDecimal.ZERO;
-        Integer quantity = 0;
+            if (cart == null || cart.getItems().isEmpty()) {
+                // Giỏ hàng trống, thực hiện xử lý tại đây
+                model.addAttribute("emptyCart", true);
+                model.addAttribute("view", "/cart/index.jsp");
+                return "/customerFE/index";
+            }
 
-        for (Item liItem : list) {
-            BigDecimal total;
-            total = liItem.getPrice();
-            quantity += liItem.getQuantity();
-            System.out.println("Total: " + total);
-            System.out.println("Quantity: " + quantity);
-            model.addAttribute("total", total);
-            break;
+            ArrayList<Item> list = cart.getItems();
+            BigDecimal itemTotal = BigDecimal.ZERO;
+            Integer quantity = 0;
+
+            for (Item liItem : list) {
+                BigDecimal total;
+                total = liItem.getPrice();
+                quantity += liItem.getQuantity();
+                System.out.println("Total: " + total);
+                System.out.println("Quantity: " + quantity);
+                model.addAttribute("total", total);
+                break;
+            }
+
+            model.addAttribute("cartDetail", list);
+            model.addAttribute("quantity", quantity);
         }
-
-        model.addAttribute("cartDetail", list);
-        model.addAttribute("quantity", quantity);
         model.addAttribute("view", "/cart/index.jsp");
         return "/customerFE/index";
     }

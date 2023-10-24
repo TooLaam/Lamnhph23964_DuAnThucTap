@@ -27,12 +27,21 @@
         <li class="nav-item">
             <a class="nav-link" href="#">Help</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/customer/signup">Sign Up</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/customer/login">Login</a>
-        </li>
+        <c:choose>
+            <c:when test="${CustomerName == null}">
+                <li class="nav-item">
+                    <a class="nav-link" href="/customer/signup">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/customer/login">Login</a>
+                </li>
+            </c:when>
+            <c:otherwise>
+                <li class="nav-item">
+                    <a class="nav-link" href="/customer/logout">Sign Out</a>
+                </li>
+            </c:otherwise>
+        </c:choose>
     </ul>
     <nav class="nav-search">
         <div class="row">
@@ -53,6 +62,7 @@
             <div class="col-md-1 col-0"></div>
             <div class="col-md-2 col-4">
                 <ul class="list-unstyled" style="display: flex;">
+                    <c:if test="${CustomerName != null}" >
                     <li>
                         <a href="/customer/indexcus">
                             <span class="fa fa-user"></span>
@@ -63,6 +73,7 @@
                             <span class="fa fa-heart"></span>
                         </a>
                     </li>
+                    </c:if>
                     <li>
                         <a href="/viewOrderCart">
                             <span class="fa fa-shopping-cart"></span>

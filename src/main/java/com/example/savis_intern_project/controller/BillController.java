@@ -3,6 +3,7 @@ package com.example.savis_intern_project.controller;
 
 import com.example.savis_intern_project.entity.*;
 import com.example.savis_intern_project.service.serviceimpl.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -110,12 +111,17 @@ public class BillController {
     }
 
     @GetMapping("/indexcus")
-    public String show_data_bill_cus(Model model/*,@PathVariable("idCus")UUID idCus*/) {
+    public String show_data_bill_cus(Model model, HttpSession session/*,@PathVariable("idCus")UUID idCus*/) {
 
-//        model.addAttribute("listBill", billService.get_all_byCusId(idCus));
-//        model.addAttribute("listCustomer", customerService.findAll());
-//        model.addAttribute("listEmployee", employeeService.findAll());
-//        model.addAttribute("listBillStatus", billStatusService.get_all_bill_status());
+        if (session.getAttribute("CustomerName") != null)
+        {
+            String username = (String) session.getAttribute("CustomerName");
+            Customer customer = customerService.getCustomerByName(username);
+            model.addAttribute("listCustomer", customer);
+            model.addAttribute("listBill", billService.get_all_byCusId(customer.getId()));
+            model.addAttribute("listEmployee", employeeService.findAll());
+            model.addAttribute("listBillStatus", billStatusService.get_all_bill_status());
+        }
         model.addAttribute("view", "/bill/index.jsp");
         return "/customerFE/index";
     }

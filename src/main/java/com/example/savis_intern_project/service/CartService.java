@@ -17,5 +17,5 @@ public interface CartService {
 
     void update(UUID id, Cart cart);
 
-    Optional<Cart> getOne(UUID id);
+    Cart getOne(UUID id);
 }
