@@ -60,9 +60,9 @@
 
                 <b><label class="form-label">Role</label></b>
                 <select class="form-select" aria-label="Default select example" name="idRole">
-                    <option value="${emp.role.id}">${emp.role.roleName} </option>
+                    <option value="${emp.role.id}">${emp.role.name} </option>
                     <c:forEach items="${role}" var="r">
-                        <option value="${r.id}">${r.roleName}</option>
+                        <option value="${r.id}">${r.name}</option>
                     </c:forEach>
                 </select>
 
@@ -88,7 +88,9 @@
             </div>
         </div>
     </div>
-
+    <c:if test="${erCheckRole != null}" >
+        <p style="color: red">${erCheckRole}</p>
+    </c:if>
 
     <button type="submit" class="btn btn-primary">Edit</button>
 </form>
