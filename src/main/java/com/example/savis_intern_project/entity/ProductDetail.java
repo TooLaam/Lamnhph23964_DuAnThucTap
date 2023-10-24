@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -48,7 +50,10 @@ public class ProductDetail {
     )
     private Color color;
 
-    public ProductDetail( BigDecimal importPrice, BigDecimal price, Integer quantity, Date createdDate, Integer status, String descripTion, Product product, Color color) {
+    @OneToMany(mappedBy = "productDetail", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductImage> listImages = new ArrayList<>();
+
+    public ProductDetail( BigDecimal importPrice, BigDecimal price, Integer quantity, Date createdDate, Integer status, String descripTion, Product product, Color color, List<ProductImage> listImages) {
 
         this.importPrice = importPrice;
         this.price = price;
@@ -58,5 +63,6 @@ public class ProductDetail {
         this.descripTion = descripTion;
         this.product = product;
         this.color = color;
+        this.listImages = listImages;
     }
 }

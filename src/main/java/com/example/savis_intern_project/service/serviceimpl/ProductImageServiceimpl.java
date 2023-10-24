@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,11 +27,11 @@ public class ProductImageServiceimpl implements ProductImageService {
 
     @Override
     public void update(UUID id, ProductImage productImage) {
-           ProductImage image = getOne(id);
+            ProductImage image = getOne(id);
            image.setName(productImage.getName());
-        image.setStaTus(productImage.getStaTus());
-        image.setProductDetail(productImage.getProductDetail());
-        responsitory.flush();
+           image.setStaTus(productImage.getStaTus());
+           image.setProductDetail(productImage.getProductDetail());
+            responsitory.flush();
     }
 
     @Override

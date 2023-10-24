@@ -30,30 +30,33 @@
 
                             <table class="table table-borderless datatable">
                                 <tr>
-                                    <th>Gia nhap</th>
-                                    <th>Gia ban</th>
-                                    <th>So luong</th>
-                                    <th>Ngay tao</th>
-                                    <th>Trang thai</th>
-                                    <th>Mo ta</th>
-                                    <th>San pham</th>
-                                    <th>Mau sac</th>
+<%--                                    <th>ImportPrice</th>--%>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>CreateDate</th>
+                                    <th>Status</th>
+                                    <th>Product</th>
+                                    <th>Color</th>
+                                    <th>Image</th>
                                     <th>Action</th>
-
                                 </tr>
                                 <c:forEach items="${listProductDetail}" var="detailSP">
                                     <tr>
 
-                                        <td>${detailSP.importPrice}</td>
+<%--                                        <td>${detailSP.importPrice}</td>--%>
                                         <td>${detailSP.price}</td>
                                         <td>${detailSP.quantity}</td>
                                         <td>${detailSP.createdDate}</td>
                                         <td>${detailSP.status == 0 ? "Còn hàng" : "Hết hàng"}</td>
-                                        <td>${detailSP.descripTion}</td>
                                         <td>${detailSP.product.name}</td>
                                         <td>${detailSP.color.name}</td>
-                                            <%--                                        <td>${sp.brand.name}</td>--%>
-
+                                        <td>
+                                            <c:forEach items="${detailSP.listImages}" var="image" varStatus="loop">
+                                                <c:if test="${loop.index == 0}">
+                                                    <img src="/assets/img/product/${image.name}" height="100px" width="100px">
+                                                </c:if>
+                                            </c:forEach>
+                                        </td>
                                         <td>
                                             <a href="/product_detail/delete/${detailSP.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" style="text-decoration: none;color: white">Delete</a>
                                             <a href="/product_detail/detail/${detailSP.id}" class="btn btn-success" style="text-decoration: none;color: white; margin-top: 5px" >Detail</a>
@@ -110,7 +113,7 @@
                     <div class="tab-content pt-2" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel"
                              aria-labelledby="home-tab">
-                            <form method="post" action="/product_detail/update/${detailSP.id}">
+                            <form method="post" action="/product_detail/update/${detailSP.id}" enctype="multipart/form-data">
                                 <div class="form-group">
                                     Mau :
                                     <select name="color" class="form-select"  aria-label="Default select example">
@@ -152,13 +155,24 @@
                                     <input  type="radio" name="status" value="0" ${ detailSP.status == "0" ? "checked" : "" }> Còn Hàng <br>
                                     <input   type="radio" name="status" value="1" ${ detailSP.status == "1" ? "checked" : "" }> Hết hàng
                                 </div>
+                                <div class="form-group">
+                                    Image :
+<%--                                    <label for="listImages"> <img src="/assets/img/product/${detailSP.listImages.name}" height="45xp" width="45px"></label>--%>
+                                           <c:forEach items="${listProductImage}" var="listImages">
+                                               <input type="checkbox" id="listImages" name="listImages" value="${listImages.id}"  multiple>
+                                               <label for="listImages"> <img src="/assets/img/product/${listImages.name}" height="45xp" width="45px"></label>
+                                           </c:forEach>
+
+                                    <input class="form-control" type="file" name="files"  multiple>
+
+                                </div>
                                 <input type="submit" class="btn btn-primary" value="Update" style="margin-top: 10px">
                             </form>
                         </div>
 
                         <%--create--%>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <form method="post" action="/product_detail/add">
+                            <form method="post" action="/product_detail/add" enctype="multipart/form-data">
                                 <div class="form-group">
                                     Mau :
                                     <select name="color" class="form-select"  aria-label="Default select example">
@@ -199,6 +213,17 @@
                                     Trang thai :<br>
                                     <input  type="radio" name="status" value="0" > Còn Hàng <br>
                                     <input   type="radio" name="status" value="1"> Hết hàng
+                                </div>
+                                <div class="form-group">
+                                    Image :
+                                    <%--                                    <label for="listImages"> <img src="/assets/img/product/${detailSP.listImages.name}" height="45xp" width="45px"></label>--%>
+                                    <c:forEach items="${listProductImage}" var="listImages">
+                                        <input type="checkbox" id="listImages" name="listImages" value="${listImages.id}"  multiple>
+                                        <label for="listImages"> <img src="/assets/img/product/${listImages.name}" height="45xp" width="45px"></label>
+                                    </c:forEach>
+
+                                    <input class="form-control" type="file" name="files"  multiple>
+
                                 </div>
                                 <input type="submit" class="btn btn-primary" value="Add" style="margin-top: 10px">
                             </form>
@@ -257,6 +282,9 @@
 
     </div>
 </section>
+
+
+
 
 
 

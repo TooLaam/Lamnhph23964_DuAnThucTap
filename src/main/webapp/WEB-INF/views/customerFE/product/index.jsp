@@ -106,7 +106,7 @@
                                 <tr>
                                     <div class="thumnail" style="margin-left: 10px ; margin-top: 10px">
                                     <a href="/detail/index.html">
-                                        <td><img src="/assets/img/${sp.imageUrl}"></td>
+<%--                                        <td><img src="/assets/img/${sp.imageUrl}"></td>--%>
                                         <div class="caption">
                                             <p>${sp.name}</p>
                                             <span class="price">$${sp.price}</span>

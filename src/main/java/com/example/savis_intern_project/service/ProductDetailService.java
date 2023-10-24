@@ -12,4 +12,5 @@ public interface ProductDetailService {
     void update(UUID id, ProductDetail productDetail);
     List<ProductDetail> getAll();
     ProductDetail getOne(UUID id);
+//    List<ProductDetail> getAnh();
 }

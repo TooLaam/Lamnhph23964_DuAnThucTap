@@ -11,10 +11,7 @@ import com.example.savis_intern_project.repository.ColorResponsitory;
 import com.example.savis_intern_project.service.CategoryService;
 import com.example.savis_intern_project.service.ColorService;
 import com.example.savis_intern_project.service.ProductServie;
-import com.example.savis_intern_project.service.serviceimpl.BrandServiceimpl;
-import com.example.savis_intern_project.service.serviceimpl.CategoryServiceimpl;
-import com.example.savis_intern_project.service.serviceimpl.ColorServiceimpl;
-import com.example.savis_intern_project.service.serviceimpl.ProductServiceimpl;
+import com.example.savis_intern_project.service.serviceimpl.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,17 +34,20 @@ public class ProductController {
     @Autowired
     private BrandServiceimpl brandServiceimpl;
     @Autowired
+    private CategoryDetailServiceimpl categoryDetailServiceimpl;
+    @Autowired
     private BrandResponsitory responsitory;
     @GetMapping("/index")
     public String hienThi(Model model){
         model.addAttribute("listProduct",productServiceimpl.getAll());
         model.addAttribute("listBrand",brandServiceimpl.getAll());
+        model.addAttribute("listCategoryDetail",categoryDetailServiceimpl.getAll());
         model.addAttribute("Product",new Product());
         model.addAttribute("view", "/Product/index.jsp");
         return "index";
     }
 
-//    @GetMapping("/indexcus" )
+//    @GetMapping("/index1" )
 //    public String show_data_product_cus(Model model){
 //
 //        model.addAttribute("listProduct",productServiceimpl.getAll());
@@ -58,22 +58,22 @@ public class ProductController {
 //        return "/customerFE/index";
 //    }
 
-    @PostMapping("/add")
-    public String add(Model model,
-                      @RequestParam("name") String name,
-                      @RequestParam("availableQuantity") Integer availableQuantity,
-                      @RequestParam("sold") Integer sold,
-                      @RequestParam("likes") Integer likes,
-                      @RequestParam("createdDate") Date createdDate,
-                      @RequestParam("status") Integer status,
-                      @RequestParam("descripTion") String descripTion,
-                      @RequestParam("brand")String brand
-                      ){
-         Brand brand1 = responsitory.findById(UUID.fromString(brand)).orElse(null);
-         Product product = new Product(name,availableQuantity,sold,likes,createdDate,status,descripTion,brand1);
-         productServiceimpl.add(product);
-        return "redirect:/product/index";
-    }
+//    @PostMapping("/add")
+//    public String add(Model model,
+//                      @RequestParam("name") String name,
+//                      @RequestParam("availableQuantity") Integer availableQuantity,
+//                      @RequestParam("sold") Integer sold,
+//                      @RequestParam("likes") Integer likes,
+//                      @RequestParam("createdDate") Date createdDate,
+//                      @RequestParam("status") Integer status,
+//                      @RequestParam("descripTion") String descripTion,
+//                      @RequestParam("brand")String brand
+//                      ){
+//         Brand brand1 = responsitory.findById(UUID.fromString(brand)).orElse(null);
+//         Product product = new Product(name,availableQuantity,sold,likes,createdDate,status,descripTion,brand1);
+//         productServiceimpl.add(product);
+//        return "redirect:/product/index";
+//    }
     @GetMapping("/detail/{id}")
     public String detail(Model model,
                           @PathVariable("id") UUID id){

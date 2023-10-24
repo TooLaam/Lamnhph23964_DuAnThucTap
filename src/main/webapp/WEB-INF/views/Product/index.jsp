@@ -37,6 +37,7 @@
                                     <th>CreatedDate</th>
                                     <th>Brand</th>
                                     <th>Status</th>
+                                    <th>Category</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -49,8 +50,14 @@
                                         <td>${sp.likes}</td>
                                         <td>${sp.createdDate}</td>
                                         <td>${sp.brand.name}</td>
+
 <%--                                        <td>${sp.brand.name}</td>--%>
                                         <td>${sp.status == 0 ? "Còn hàng" : "Hết hàng"}</td>
+                                        <td>
+                                            <c:forEach items="${sp.list}" var="cate">
+                                                <option value="${cate.id}">${cate.category.name}</option>
+                                            </c:forEach>
+                                        </td>
                                         <td>
                                             <a href="/product/delete/${sp.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" style="text-decoration: none;color: white">Delete</a>
                                             <a href="/product/detail/${sp.id}" class="btn btn-success" style="text-decoration: none;color: white; margin-top: 5px" >Detail</a>

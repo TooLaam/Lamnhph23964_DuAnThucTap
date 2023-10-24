@@ -34,6 +34,7 @@ public class ProductDetailServiceimpl implements ProductDetailService {
         detail.setDescripTion(productDetail.getDescripTion());
         detail.setProduct(productDetail.getProduct());
         detail.setColor(productDetail.getColor());
+        detail.setListImages(productDetail.getListImages());
         responsitory.flush();
     }
 
@@ -46,4 +47,11 @@ public class ProductDetailServiceimpl implements ProductDetailService {
     public ProductDetail getOne(UUID id) {
         return responsitory.findById(id).get();
     }
+
+//    @Override
+//    public List<ProductDetail> getAnh() {
+//        return responsitory.getAnh();
+//    }
+
+
 }
