@@ -6,6 +6,7 @@ import com.example.savis_intern_project.repository.CustomerRepository;
 import com.example.savis_intern_project.service.CustomerService;
 import com.example.savis_intern_project.service.serviceimpl.CustomerServiceImpl;
 import jakarta.persistence.Id;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,11 +30,17 @@ public class CustomerController {
 //    private ModelMapper modelMapper;
 
     @GetMapping("/index")
-    public String HienThi(Model model) {
-        List<Customer> customerList = customerService.findAll() ;
-        model.addAttribute("cusList", customerService.findAll());
+    public String HienThi(Model model, HttpSession session) {
+        if (session.getAttribute("Name") != null){
+            //Nếu đã đăng nhập vào trang index
+            List<Customer> customerList = customerService.findAll() ;
+            model.addAttribute("cusList", customerService.findAll());
 
-        return "/Customer/index";
+            return "/Customer/index";
+        }
+        //Nếu chưa đăng nhập thì return về trang login
+        return "login";
+
     }
 
     @GetMapping("/indexcus" )
@@ -102,7 +109,7 @@ public class CustomerController {
                          @RequestParam("password") String password
     ) {
         Customer customer = new Customer();
-
+        Date currentDate = new Date(System.currentTimeMillis());
         customer.setFullname(fullname);
         customer.setDateofbirth(Date.valueOf(dateofbirth) );
         customer.setAddress(address);
@@ -113,6 +120,7 @@ public class CustomerController {
         customer.setStatus(status);
         customer.setUsername(username);
         customer.setPassword(password);
+
 
         customerService.update(customer);
         return "redirect:/customer/index";

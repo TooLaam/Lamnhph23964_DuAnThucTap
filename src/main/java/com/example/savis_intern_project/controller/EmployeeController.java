@@ -29,6 +29,20 @@ public class EmployeeController {
         return "login";
     }
 
+    @GetMapping("/indexxx")
+    public String indexxx(HttpSession session, Model model){
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+        Employee checkLogin = employeeService.login(username,password);
+        session.setAttribute("checkRole",employeeService.checkRole(username));
+
+        session.setAttribute("Name", checkLogin);
+        model.addAttribute("empLogin",checkLogin);
+        return "index";
+
+
+    }
+
 
     @PostMapping("/loginOK")
     public String loginOK(@RequestParam("username")String username,
@@ -40,10 +54,13 @@ public class EmployeeController {
             return "login";
         }
         else {
+            session.setAttribute("username",username);
+            session.setAttribute("password",password);
             Employee checkLogin = employeeService.login(username,password);
             session.setAttribute("checkRole",employeeService.checkRole(username));
             if (!(checkLogin == null)){
                 session.setAttribute("Name", checkLogin);
+                model.addAttribute("empLogin",checkLogin);
                 return "index";
             }
             else {
@@ -80,56 +97,74 @@ public class EmployeeController {
 
         }
         return "login";
+
+
     }
 
 
     @PostMapping("/employee/update")
     public String updte(Model model,
-                          @RequestParam("id") UUID id,
-                          @RequestParam("fullName") String fullName,
-                          @RequestParam("username") String username,
-                          @RequestParam("password") String password,
-                          @RequestParam("image") String image,
-                          @RequestParam("dateOfBirth") String dateOfBirth,
-                          @RequestParam("gender") int gender,
-
-                          @RequestParam("phoneNumber") String phoneNumber,
-                          @RequestParam("email") String email,
-                          @RequestParam("address") String address,
-                          @RequestParam("status") int status,
-                          @RequestParam("idRole")String idRole
-                          ) {
-        Employee employee = new Employee();
-        Role rl = roleService.detail(UUID.fromString(idRole));
-        employee.setId(id);
-        employee.setFullName(fullName);
-        employee.setDateOfBirth(dateOfBirth );
-        employee.setAddress(address);
-        employee.setPhoneNumber(phoneNumber);
-
-        employee.setEmail(email);
-        employee.setGender(gender);
-        employee.setStatus(status);
-        employee.setUsername(username);
-        employee.setPassword(password);
-        employee.setImage(image);
-        employee.setRole(rl);
-        employeeService.add(employee);
-        return "redirect:/employee/index";
-    }
-
-    @PostMapping("/employee/add")
-    public String add(
+                        @RequestParam("id") UUID id,
                         @RequestParam("fullName") String fullName,
                         @RequestParam("username") String username,
                         @RequestParam("password") String password,
                         @RequestParam("image") String image,
                         @RequestParam("dateOfBirth") String dateOfBirth,
                         @RequestParam("gender") int gender,
+
                         @RequestParam("phoneNumber") String phoneNumber,
                         @RequestParam("email") String email,
                         @RequestParam("address") String address,
-                        @RequestParam("idRole")String idRole
+                        @RequestParam("status") int status,
+                        @RequestParam("idRole")String idRole,
+                        HttpSession session
+    ) {
+        if (session.getAttribute("Name") != null){
+            if (session.getAttribute("checkRole") == null){
+                Employee employee = new Employee();
+                Date currentDate = new Date(System.currentTimeMillis());
+
+                Role rl = roleService.detail(UUID.fromString(idRole));
+                employee.setId(id);
+                employee.setFullName(fullName);
+                employee.setDateOfBirth(dateOfBirth );
+                employee.setAddress(address);
+                employee.setPhoneNumber(phoneNumber);
+                employee.setDatecreated(currentDate);
+                employee.setEmail(email);
+                employee.setGender(gender);
+                employee.setStatus(status);
+                employee.setUsername(username);
+                employee.setPassword(password);
+                employee.setImage(image);
+                employee.setRole(rl);
+                employeeService.add(employee);
+                return "redirect:/employee/index";
+            }
+            else {
+                model.addAttribute("erCheckRole","Employees cannot use this function");
+                return "login";
+            }
+
+        }else{
+            return "login";
+        }
+
+
+    }
+
+    @PostMapping("/employee/add")
+    public String add(
+            @RequestParam("fullName") String fullName,
+            @RequestParam("username") String username,
+            @RequestParam("password") String password,
+            @RequestParam("image") String image,
+            @RequestParam("dateOfBirth") String dateOfBirth,
+            @RequestParam("gender") int gender,
+            @RequestParam("phoneNumber") String phoneNumber,
+            @RequestParam("email") String email,
+            @RequestParam("address") String address,
+            @RequestParam("idRole")String idRole
     ) {
         Employee employee = new Employee();
 

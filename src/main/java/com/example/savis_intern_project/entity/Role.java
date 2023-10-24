@@ -21,10 +21,8 @@ public class Role {
     private UUID id;
 
     @Column(name = "Name")
-    private String Name;
+    private String name;
 
-    @Column(name = "Description")
-    private String description;
 
     @Column(name = "Status")
     private Integer status;

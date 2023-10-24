@@ -59,7 +59,7 @@
             <td>${cu.gender==1?"Male":"Female"}</td>
             <td>${cu.phone}</td>
             <td>
-                <a class="btn btn-danger" href="/Customer/detail/${cu.id}">Chi tiết</a>
+                <a class="btn btn-danger" href="/customer/detail/${cu.id}">Chi tiết</a>
             </td>
 
         </tr>
@@ -73,7 +73,7 @@
             <td>${cu.gender==1?"Male":"Female"}</td>
             <td>${cu.phone}</td>
             <td>
-                <a class="btn btn-danger" href="/Customer/detail/${cu.id}">Chi tiết</a>
+                <a class="btn btn-danger" href="/customer/detail/${cu.id}">Chi tiết</a>
             </td>
 
         </tr>
