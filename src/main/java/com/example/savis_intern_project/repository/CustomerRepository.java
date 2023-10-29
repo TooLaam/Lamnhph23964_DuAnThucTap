@@ -12,4 +12,10 @@ import java.util.UUID;
 public interface CustomerRepository extends JpaRepository<Customer,UUID> {
     @Query("SELECT c from Customer c WHERE c.phone=?1")
     List<Customer> timKiem(String phone);
+
+    @Query("SELECT c from Customer c where c.username=?1 and c.password=?2")
+    Customer login(String username, String password);
+
+    @Query("SELECT c from Customer c where c.username = ?1")
+    Customer getCustomerByName(String username);
 }

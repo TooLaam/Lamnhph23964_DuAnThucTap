@@ -7,27 +7,55 @@
             <form method="post" action="/bill/placeorder">
                 <div class="form-group">
                     <label for="receiverName">Receiver Name:</label>
-                    <input type="text" class="form-control" value="${inputReceiverName}" id="receiverName"
+                    <%--<input type="text" class="form-control" value="${inputReceiverName}" id="receiverName"
                            name="receiverName">
                     <c:if test="${not empty receiverNameError}">
                         <div class="alert alert-danger">${receiverNameError}</div>
-                    </c:if>
+                    </c:if>--%>
+                    <c:choose>
+                        <c:when test="${not empty customer}">
+                            <input type="text" class="form-control" value="${customer.fullname}" id="receiverName"
+                                   name="receiverName">
+                        </c:when>
+                        <c:otherwise>
+                            <input type="text" class="form-control" value="${inputReceiverName}" id="receiverName"
+                                   name="receiverName">
+                            <c:if test="${not empty receiverNameError}">
+                                <div class="alert alert-danger">${receiverNameError}</div>
+                            </c:if>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 <div class="form-group">
                     <label for="customerPhone">Customer Phone:</label>
-                    <input type="text" class="form-control" value="${inputCustomerPhone}" id="customerPhone"
-                           name="customerPhone">
-                    <c:if test="${not empty customerPhoneError}">
-                        <div class="alert alert-danger">${customerPhoneError}</div>
-                    </c:if>
+                    <c:choose>
+                        <c:when test="${not empty customer}">
+                            <input type="text" class="form-control" value="${customer.phone}" id="customerPhone"
+                                   name="customerPhone">
+                        </c:when>
+                        <c:otherwise>
+                            <input type="text" class="form-control" value="${inputCustomerPhone}" id="customerPhone"
+                                   name="customerPhone">
+                            <c:if test="${not empty customerPhoneError}">
+                                <div class="alert alert-danger">${customerPhoneError}</div>
+                            </c:if>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 <div class="form-group">
                     <label for="addressDelivery">Address Delivery:</label>
+                    <c:choose>
+                        <c:when test="${not empty customer}">
+                            <textarea type="text" class="form-control" id="addressDelivery" name="addressDelivery">${customer.address}</textarea>
+                        </c:when>
+                        <c:otherwise>
                     <textarea class="form-control" id="addressDelivery" data-value="${inputReceiverName}"
                               name="addressDelivery"></textarea>
-                    <c:if test="${not empty addressDeliveryError}">
-                        <div class="alert alert-danger">${addressDeliveryError}</div>
-                    </c:if>
+                            <c:if test="${not empty addressDeliveryError}">
+                                <div class="alert alert-danger">${addressDeliveryError}</div>
+                            </c:if>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 <div class="form-group">
                     <label for="addressDelivery">Payment:</label>
@@ -64,15 +92,20 @@
                 <tbody>
                 <c:forEach items="${cartDetail}" var="gh">
                     <tr>
-                        <td>${gh.productName}</td>
+                        <%--<td>${gh.productName}</td>
                         <td>${gh.price}</td>
                         <td>${gh.quantity}</td>
+                        <td style="font-weight: bold;color: red">${gh.price}VND</td>--%>
+                        <td>${gh.name}</td>
+                            <td>${gh.quantity}</td>
+                        <td>${gh.price}</td>
                         <td style="font-weight: bold;color: red">${gh.price}VND</td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
-            <h4>Total: ${total}</h4>
+            <%--<h4>Total: ${total}</h4>--%>
+            <h4>Total: ${cart.totalMoney}</h4>
         </div>
     </div>
 </div>

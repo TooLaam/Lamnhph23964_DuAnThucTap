@@ -16,8 +16,8 @@ import java.util.UUID;
 @Data
 public class Cart {
     @Id
-    @Column(name = "Cartid")
-    private UUID Cartid;
+    @Column(name = "id")
+    private UUID id;
 
     @Column(name = "Quantity")
     private Integer Quantity;

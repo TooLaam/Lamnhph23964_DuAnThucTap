@@ -29,6 +29,7 @@
                             <h5 class="card-title">Product <span>| </span></h5>
 
                             <table class="table table-borderless datatable">
+                                <thead>
                                 <tr>
                                     <th>Ten</th>
                                     <th>Trang thai</th>
@@ -36,20 +37,24 @@
                                     <th>Action</th>
 
                                 </tr>
-                                <c:forEach items="${listProductImage}" var="imageSP">
-                                    <tr>
+                                </thead>
+                <tbody>
+                <c:forEach items="${listProductImage}" var="imageSP">
+                    <tr>
 
-                                        <td>${imageSP.name}</td>
-                                        <td>${imageSP.staTus == 0 ? "Còn hàng" : "Hết hàng"}</td>
-                                        <td>${imageSP.productDetail.product.name}</td>
-                                            <%--                                        <td>${sp.brand.name}</td>--%>
+                        <td><img src="/assets/img/product/${imageSP.name}" height="100px" width="100px"></td>
+                        <td>${imageSP.staTus == 0 ? "Còn hàng" : "Hết hàng"}</td>
+                        <td>${imageSP.productDetail.product.name}</td>
+                            <%--                                        <td>${sp.brand.name}</td>--%>
 
-                                        <td>
-                                            <a href="/product_image/delete/${imageSP.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" style="text-decoration: none;color: white">Delete</a>
-                                            <a href="/product_image/detail/${imageSP.id}" class="btn btn-success" style="text-decoration: none;color: white; margin-top: 5px" >Detail</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                        <td>
+                            <a href="/product_image/delete/${imageSP.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" style="text-decoration: none;color: white">Delete</a>
+                            <a href="/product_image/detail/${imageSP.id}" class="btn btn-success" style="text-decoration: none;color: white; margin-top: 5px" >Detail</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+
                             </table>
                             <%--                            <form method="post" enctype="multipart/form-data" action="import">--%>
                             <%--                                Thêm từ file excel: <input class="form-control" name="file" type="file">--%>
@@ -100,7 +105,7 @@
                     <div class="tab-content pt-2" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel"
                              aria-labelledby="home-tab">
-                            <form method="post" action="/product_image/update/${imageSP.id}">
+                            <form method="post" action="/product_image/update/${imageSP.id}" enctype="multipart/form-data">
                                 <div class="form-group">
                                     SPCT :
                                     <select name="productDetail" class="form-select"  aria-label="Default select example">
@@ -111,7 +116,8 @@
                                 </div>
                                 <div>
                                     Ten :
-                                    <input class="form-control" name="name" value="${imageSP.name}">
+                                    <label><img src="/assets/img/product/${imageSP.name}" height="100px" width="100px"></label>
+                                    <input class="form-control" type="file" name="files"  multiple value="${imageSP.name}">
                                 </div>
                                 <div>
                                     Trang thai :<br>
@@ -124,7 +130,7 @@
 
                         <%--create--%>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <form method="post" action="/product_image/add">
+                            <form method="post" action="/product_image/add"  enctype="multipart/form-data">
                                 <div class="form-group">
                                     SPCT :
                                     <select name="productDetail" class="form-select"  aria-label="Default select example">
@@ -135,7 +141,8 @@
                                 </div>
                                 <div>
                                     Ten :
-                                    <input class="form-control" name="name">
+
+                                    <input class="form-control" type="file" name="files"  multiple>
                                 </div>
                                 <div>
                                     Trang thai :<br>

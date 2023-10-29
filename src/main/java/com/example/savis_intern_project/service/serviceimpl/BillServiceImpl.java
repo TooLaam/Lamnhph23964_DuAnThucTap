@@ -1,9 +1,13 @@
 package com.example.savis_intern_project.service.serviceimpl;
 
+<<<<<<< HEAD
 import com.example.savis_intern_project.entity.Bill;
 import com.example.savis_intern_project.entity.BillDetail;
 import com.example.savis_intern_project.entity.Product;
 import com.example.savis_intern_project.repository.BillDetailRepository;
+=======
+import com.example.savis_intern_project.entity.*;
+>>>>>>> master
 import com.example.savis_intern_project.repository.BillRepository;
 import com.example.savis_intern_project.repository.BillStatusRepository;
 import com.example.savis_intern_project.repository.ProductResponsitory;

@@ -11,7 +11,7 @@
         <c:forEach items="${listProduct}" var="sp">
             <div class="col-md-3 col-6">
                 <a href="/product/index.html" class="link-recommend">
-                    <img src="/assets/img/${sp.imageUrl}" class="img-recommend" alt="" />
+<%--                    <img src="/assets/img/${sp.imageUrl}" class="img-recommend" alt="" />--%>
                     <div class="overlay">${sp.category.name}</div>
                 </a>
             </div>
@@ -24,7 +24,7 @@
                 <div class="col-md-3 col-6">
                     <div class="thumnail">
                         <a href="../detail/${sp.id}">
-                            <img src="/assets/img/${sp.imageUrl}" alt="" />
+<%--                            <img src="/assets/img/${sp.imageUrl}" alt="" />--%>
                             <div class="caption">
                                 <p>${sp.name}</p>
                                 <span class="price">$${sp.price}</span>
@@ -43,7 +43,7 @@
                 <div class="col-md-3 col-6">
                     <div class="thumnail">
                         <a href="../detail/${sp.id}">
-                            <img src="/assets/img/${sp.imageUrl}" alt="" />
+<%--                            <img src="/assets/img/${sp.imageUrl}" alt="" />--%>
                             <div class="caption">
                                 <p>${sp.name}</p>
                                 <span class="price">$${sp.price}</span>
@@ -62,7 +62,7 @@
                 <div class="col-md-3 col-6">
                     <div class="thumnail">
                         <a href="../detail/${sp.id}">
-                            <img src="/assets/img/${sp.imageUrl}" alt="" />
+<%--                            <img src="/assets/img/${sp.imageUrl}" alt="" />--%>
                             <div class="caption">
                                 <p>${sp.name}</p>
                                 <span class="price">$${sp.price}</span>

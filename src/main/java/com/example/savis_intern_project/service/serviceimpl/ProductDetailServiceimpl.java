@@ -1,11 +1,14 @@
 package com.example.savis_intern_project.service.serviceimpl;
 
 import com.example.savis_intern_project.entity.ProductDetail;
+import com.example.savis_intern_project.entity.ProductImage;
 import com.example.savis_intern_project.repository.ProductDetailResponsitory;
 import com.example.savis_intern_project.service.ProductDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,6 +18,7 @@ public class ProductDetailServiceimpl implements ProductDetailService {
     ProductDetailResponsitory responsitory;
     @Override
     public void add(ProductDetail productDetail) {
+        productDetail.setCreatedDate(Date.valueOf(LocalDate.now()));
         responsitory.saveAndFlush(productDetail);
     }
 
@@ -29,11 +33,12 @@ public class ProductDetailServiceimpl implements ProductDetailService {
        detail.setImportPrice(productDetail.getImportPrice());
         detail.setPrice(productDetail.getPrice());
         detail.setQuantity(productDetail.getQuantity());
-        detail.setCreatedDate(productDetail.getCreatedDate());
+//        detail.setCreatedDate(productDetail.getCreatedDate());
         detail.setStatus(productDetail.getStatus());
         detail.setDescripTion(productDetail.getDescripTion());
         detail.setProduct(productDetail.getProduct());
         detail.setColor(productDetail.getColor());
+        detail.setListImages(productDetail.getListImages());
         responsitory.flush();
     }
 
@@ -46,4 +51,12 @@ public class ProductDetailServiceimpl implements ProductDetailService {
     public ProductDetail getOne(UUID id) {
         return responsitory.findById(id).get();
     }
+
+
+//    @Override
+//    public List<ProductDetail> getAnh() {
+//        return responsitory.getAnh();
+//    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.savis_intern_project.service;
 
 import com.example.savis_intern_project.entity.Customer;
+import com.example.savis_intern_project.entity.Employee;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface CustomerService {
     void delete(UUID id);
     void update(Customer cs);
     Customer detail(UUID id);
+    Customer login(String username, String password);
+    Customer getCustomerByName(String username);
 }

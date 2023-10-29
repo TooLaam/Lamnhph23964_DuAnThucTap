@@ -29,6 +29,7 @@
                             <h5 class="card-title">Color <span>| </span></h5>
 
                             <table class="table table-borderless datatable">
+                                <thead>
                                 <tr>
 
                                     <th>Ten</th>
@@ -39,20 +40,24 @@
                                     <th>Action</th>
 
                                 </tr>
-                                <c:forEach items="${listColor}" var="mau">
-                                    <tr>
+                                </thead>
+                                    <tbody>
+                                    <c:forEach items="${listColor}" var="mau">
+                                        <tr>
 
-                                        <td>${mau.name}</td>
-                                        <td>${mau.price}</td>
-                                        <td><img src="/assets/img/color/${mau.image}" width="100px" height="100px"></td>
-                                        <td>${mau.status}</td>
-                                        <td>${mau.brand.name}</td>
-                                        <td>
-                                            <a href="/color/delete/${mau.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')">Delete</a>
-                                            <a href="/color/detail/${mau.id}" class="btn btn-success" >Detail</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                                            <td>${mau.name}</td>
+                                            <td>${mau.price}</td>
+                                            <td><img src="/assets/img/color/${mau.image}" width="100px" height="100px"></td>
+                                            <td>${mau.status == 0 ? "Còn hàng" : "Hết hàng"}</td>
+                                            <td>${mau.brand.name}</td>
+                                            <td>
+                                                <a href="/color/delete/${mau.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')">Delete</a>
+                                                <a href="/color/detail/${mau.id}" class="btn btn-success" >Detail</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+
                             </table>
                             <%--                            <form method="post" enctype="multipart/form-data" action="import">--%>
                             <%--                                Thêm từ file excel: <input class="form-control" name="file" type="file">--%>

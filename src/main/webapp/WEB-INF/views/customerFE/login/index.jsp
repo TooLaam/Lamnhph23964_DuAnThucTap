@@ -41,19 +41,26 @@
                         <span>New to Meow Shop?</span>
                         <a href="/customer/signup" class="link-text">Sign up</a>
                     </div>
-                    <form>
-                        <div class="mb-3">
-                            <label for="exampleInputUsername" class="form-label">Username</label>
-                            <input class="form-control" id="exampleInputUsername" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword"/>
-                        </div>
-                        <div class="d-grid">
-                        <button type="submit" class="btn login">LOG IN</button>
-                          </div>
-                      </form>
+                        <form action="/customer/loginOK" method="post">
+                            <div class="mb-3">
+                                <label for="exampleInputUsername" class="form-label">Username</label>
+                                <input class="form-control" id="exampleInputUsername" name="username" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword" name="password"/>
+                            </div>
+                            <c:if test="${erTrongCustomer != null}" >
+                                <p style="color: red">${erTrong}</p>
+                            </c:if>
+                            <c:if test="${erCheckCustomer != null}" >
+                                <p style="color: red">${erCheck}</p>
+                            </c:if>
+                            <div class="d-grid">
+                                <button type="submit" class="btn login">LOG IN</button>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
                 <div class="col-1"></div>

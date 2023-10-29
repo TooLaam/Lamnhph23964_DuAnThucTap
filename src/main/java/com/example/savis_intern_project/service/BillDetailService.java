@@ -1,6 +1,7 @@
 package com.example.savis_intern_project.service;
 
 import com.example.savis_intern_project.entity.BillDetail;
+import com.example.savis_intern_project.entity.ViewModels.BillDetailView;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -14,6 +15,7 @@ public interface BillDetailService {
     List<BillDetail> get_all_billdetail();
 
     List<BillDetail> get_all_by_billId(UUID billId);
+    List<BillDetailView> getByBillId(UUID billId);
 
     List<Object[]> get_all_product_sale_by_Date(Date startDate, Date endDate);
 

@@ -1,24 +1,29 @@
 package com.example.savis_intern_project.controller;
 
 
-import com.example.savis_intern_project.entity.Brand;
-import com.example.savis_intern_project.entity.Color;
-import com.example.savis_intern_project.entity.Product;
-import com.example.savis_intern_project.entity.ProductDetail;
+import com.example.savis_intern_project.entity.*;
 import com.example.savis_intern_project.repository.BrandResponsitory;
 import com.example.savis_intern_project.repository.ColorResponsitory;
+import com.example.savis_intern_project.repository.ProductImageResponsitory;
 import com.example.savis_intern_project.repository.ProductResponsitory;
-import com.example.savis_intern_project.service.serviceimpl.BrandServiceimpl;
-import com.example.savis_intern_project.service.serviceimpl.ColorServiceimpl;
-import com.example.savis_intern_project.service.serviceimpl.ProductDetailServiceimpl;
-import com.example.savis_intern_project.service.serviceimpl.ProductServiceimpl;
+import com.example.savis_intern_project.service.serviceimpl.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -31,18 +36,35 @@ public class ProductDetailController {
     @Autowired
     private ProductDetailServiceimpl productDetailServiceimpl;
     @Autowired
+    private ProductImageServiceimpl productImageServiceimpl;
+    @Autowired
     private ProductResponsitory productResponsitory;
     @Autowired
     private ColorResponsitory colorResponsitory;
+    @Autowired
+    private ProductImageResponsitory productImageResponsitory;
+    private final Path root = Paths.get("src/main/resources/static/assets/img/product");
     @GetMapping("/index")
     public String hienThi(Model model){
         model.addAttribute("listProduct",productServiceimpl.getAll());
         model.addAttribute("listColor",colorServiceimpl.getAll());
+        model.addAttribute("listProductImage",productImageServiceimpl.getAll());
         model.addAttribute("listProductDetail",productDetailServiceimpl.getAll());
         model.addAttribute("ProductDetail",new ProductDetail());
         model.addAttribute("view", "/ProductDetail/index.jsp");
         return "index";
     }
+    @GetMapping("/create")
+    public String create(Model model){
+        model.addAttribute("listProduct",productServiceimpl.getAll());
+        model.addAttribute("listColor",colorServiceimpl.getAll());
+        model.addAttribute("listProductImage",productImageServiceimpl.getAll());
+        model.addAttribute("listProductDetail",productDetailServiceimpl.getAll());
+        model.addAttribute("ProductDetail",new ProductDetail());
+        model.addAttribute("view", "/ProductDetail/createProductDetail.jsp");
+        return "index";
+    }
+
 
 //    @GetMapping("/indexcus" )
 //    public String show_data_product_cus(Model model){
@@ -55,33 +77,89 @@ public class ProductDetailController {
 //        return "/customerFE/index";
 //    }
 
-    @PostMapping("/add")
-    public String add(Model model,
-                      @RequestParam("importPrice") BigDecimal importPrice,
+//    @PostMapping("/add")
+//    public String add(Model model,
+//                      @RequestParam("importPrice") BigDecimal importPrice,
+//                      @RequestParam("price") BigDecimal price,
+//                      @RequestParam("quantity") Integer quantity,
+//                      @RequestParam("createdDate") Date createdDate,
+//                      @RequestParam("descripTion") String descripTion,
+//                      @RequestParam("status") Integer status,
+//                      @RequestParam("product") String product,
+//                      @RequestParam("color")String color,
+//                      @RequestParam("listImages")String listImages
+//    ){
+//
+//        Product product1 = productResponsitory.findById(UUID.fromString(product)).orElse(null);
+//        Color color1 = colorResponsitory.findById(UUID.fromString(color)).orElse(null);
+//        ProductImage productImage = productImageResponsitory.findById(UUID.fromString(listImages)).orElse(null);
+//        ProductDetail productDetail = new ProductDetail(importPrice,price,quantity,createdDate,status,descripTion,product1,color1, (List<ProductImage>) productImage);
+//        productDetailServiceimpl.add(productDetail);
+//        System.out.println(productDetail.toString());
+//        return "redirect:/product_detail/index";
+//    }
+@PostMapping(value = "add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+public String upload(Model model,
+                     @RequestParam("files") MultipartFile[] files,
+                     @RequestParam("importPrice") BigDecimal importPrice,
                       @RequestParam("price") BigDecimal price,
                       @RequestParam("quantity") Integer quantity,
                       @RequestParam("createdDate") Date createdDate,
                       @RequestParam("descripTion") String descripTion,
                       @RequestParam("status") Integer status,
                       @RequestParam("product") String product,
-                      @RequestParam("color")String color
-    ){
+                      @RequestParam("color")String color,
+                      @RequestParam("listImages")String listImages) {
+    ProductImage productImage = productImageResponsitory.findById(UUID.fromString(listImages)).orElse(null);
+    Product product1 = productResponsitory.findById(UUID.fromString(product)).orElse(null);
+    Color color1 = colorResponsitory.findById(UUID.fromString(color)).orElse(null);
+    String message = "";
+    try {
+        String fileNames = null;
 
-        Product product1 = productResponsitory.findById(UUID.fromString(product)).orElse(null);
-        Color color1 = colorResponsitory.findById(UUID.fromString(color)).orElse(null);
-        ProductDetail productDetail = new ProductDetail(importPrice,price,quantity,createdDate,status,descripTion,product1,color1);
-        productDetailServiceimpl.add(productDetail);
-        System.out.println(productDetail.toString());
-        return "redirect:/product_detail/index";
+        Arrays.asList(files).stream().forEach(file -> {
+            ProductDetail a = new ProductDetail();
+            File uploadRootDir = new File(String.valueOf(root));
+            if (!uploadRootDir.exists()) {
+                uploadRootDir.mkdirs();
+            }
+            try {
+                String filename = file.getOriginalFilename();
+                File serverFile = new File(uploadRootDir.getAbsoluteFile() + File.separator + filename);
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+                stream.write(file.getBytes());
+                a.setImportPrice(importPrice);
+                a.setPrice(price);
+                a.setQuantity(quantity);
+                a.setCreatedDate(createdDate);
+                a.setDescripTion(descripTion);
+                a.setStatus(status);
+                a.setProduct(product1);
+                a.setColor(color1);
+//                a.setListImages((List<ProductImage>) fileNames);
+                productDetailServiceimpl.add(a);
+                stream.close();
+            } catch (Exception e) {
+
+            }
+        });
+
+        message = "Uploaded the files successfully: " + fileNames;
+    } catch (Exception e) {
+        message = "Fail to upload files!";
     }
+    return "redirect:/product_detail/index";
+}
     @GetMapping("/detail/{id}")
     public String detail(Model model,
-                         @PathVariable("id") UUID id){
+                         @PathVariable("id") UUID id
+                         ){
         model.addAttribute("listProduct",productServiceimpl.getAll());
         model.addAttribute("listColor",colorServiceimpl.getAll());
+        model.addAttribute("listProductImage",productImageServiceimpl.getAll());
         model.addAttribute("listProductDetail",productDetailServiceimpl.getAll());
         model.addAttribute("detailSP",productDetailServiceimpl.getOne(id));
-        model.addAttribute("view", "/ProductDetail/index.jsp");
+        model.addAttribute("view", "/ProductDetail/createProductDetail.jsp");
         return "index";
     }
     @GetMapping("/delete/{id}")

@@ -2,8 +2,11 @@ package com.example.savis_intern_project.entity;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -20,18 +23,16 @@ public class ProductImage {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "Name")
-    private String name;
 
+    @NotBlank(message = "Không được để trống") // Thêm @NotBlank để kiểm tra trường trống
+    @Column(name = "Name", unique = true)
+    private String name;
+    @NotBlank(message = "Không được để trống")
     @Column(name = "Status")
     private Integer staTus;
-
-    @ManyToOne()
-    @JoinColumn(
-            name = "ProductDetailId",
-            referencedColumnName = "Id",
-            nullable = true
-    )
+    @NotBlank(message = "Không được để trống")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ProductDetailId" ,referencedColumnName = "Id", nullable = true)
     private ProductDetail productDetail;
 
     public ProductImage( String name, Integer staTus, ProductDetail productDetail) {

@@ -59,7 +59,7 @@
                 <select class="form-select" aria-label="Default select example" name="idRole">
 
                     <c:forEach items="${role}" var="r">
-                        <option value="${r.id}">${r.roleName}</option>
+                        <option value="${r.id}">${r.name}</option>
                     </c:forEach>
                 </select>
 

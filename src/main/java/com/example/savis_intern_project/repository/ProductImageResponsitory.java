@@ -11,5 +11,5 @@ import java.util.UUID;
 
 @Repository
 public interface ProductImageResponsitory extends JpaRepository<ProductImage, UUID> {
-
+        boolean existsByName(String name);
 }

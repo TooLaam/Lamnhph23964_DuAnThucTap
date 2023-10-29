@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -42,15 +44,18 @@ public class Product {
     private Brand brand;
 
 
-    public Product( String name, Integer availableQuantity, Integer sold, Integer likes, Date createdDate, Integer status, String descripTion, Brand brand) {
+
+    public Product( String name, Integer availableQuantity, Integer sold, Integer likes,  Integer status, String descripTion, Brand brand, List<CategoryDetail> list) {
 
         this.name = name;
         this.availableQuantity = availableQuantity;
         this.sold = sold;
         this.likes = likes;
-        this.createdDate = createdDate;
+
         this.status = status;
         this.descripTion = descripTion;
         this.brand = brand;
+
     }
+
 }
