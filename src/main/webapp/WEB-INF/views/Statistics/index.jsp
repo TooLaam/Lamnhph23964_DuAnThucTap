@@ -25,7 +25,8 @@
 
 
                         <div class="card-body">
-                            <h5 class="card-title">Bill Statistics <span>| <b>From: ${startDate} To: ${endDate} </b>  </span></h5>
+                            <h5 class="card-title">Bill Statistics
+                                <span>| <b>From: ${startDate} To: ${endDate} </b>  </span></h5>
                             <form action="/statisticsResultBill" method="get">
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
@@ -44,6 +45,7 @@
 
                             <table class="table table-hover datatable">
                                 <b>From: ${startDate} To: ${endDate} </b>
+                                <thead>
                                 <tr>
                                     <th>Receiver Name</th>
                                     <%--                                    <th>Employee</th>--%>
@@ -55,6 +57,8 @@
                                     <th>Payment</th>
                                     <th>Status</th>
                                 </tr>
+                                </thead>
+                                <tbody>
                                 <c:forEach items="${statisticsResult}" var="bill">
                                     <tr onclick="goToPage('/bill_detail/index/${bill.id}')">
                                             <%--                                        <td>${bill.id}</td>--%>
@@ -70,6 +74,7 @@
                                     </tr>
                                 </c:forEach>
 
+                                </tbody>
                             </table>
                             <b>Total Revenue: ${total}</b>
                         </div>
@@ -92,9 +97,9 @@
                 <div class="col-12">
                     <div class="card recent-sales overflow-auto">
                         <div class="card-body">
-                            <h5 class="card-title">Product Statistics <span>| <b>From: ${startDateProduct} To: ${endDateProduct} </b> </span></h5>
+                            <h5 class="card-title">Product Statistics
+                                <span>| <b>From: ${startDateProduct} To: ${endDateProduct} </b> </span></h5>
                             <form action="/statisticsResultProduct" method="get">
-
                                 <div class="form-row">
                                     <div class="col-md-6 form-group">
                                         <label for="startDate">Start Date:</label>
@@ -103,17 +108,22 @@
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <label for="endDate">End Date:</label>
-                                        <input type="date" id="endDate" name="endDateProduct" class="form-control datepicker">
+                                        <input type="date" id="endDate" name="endDateProduct"
+                                               class="form-control datepicker">
                                     </div>
                                 </div>
                                 <button id="applyDateRange" class="btn btn-primary">Apply</button>
                             </form>
 
                             <table class="table table-hover datatable">
+                                <thead>
                                 <tr>
                                     <th>Product</th>
                                     <th>Total Sales</th>
                                 </tr>
+                                </thead>
+
+                                <tbody>
                                 <c:forEach items="${statisticsResultProduct}" var="pro">
                                     <tr>
                                             <%--                                        <td>${pro.id}</td>--%>
@@ -121,6 +131,7 @@
                                         <td>${pro[1]}</td>
                                     </tr>
                                 </c:forEach>
+                                </tbody>
 
                             </table>
                         </div>
