@@ -43,19 +43,19 @@ public class Product {
     )
     private Brand brand;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CategoryDetail> list = new ArrayList<>();
 
-    public Product( String name, Integer availableQuantity, Integer sold, Integer likes, Date createdDate, Integer status, String descripTion, Brand brand, List<CategoryDetail> list) {
+
+    public Product( String name, Integer availableQuantity, Integer sold, Integer likes,  Integer status, String descripTion, Brand brand, List<CategoryDetail> list) {
 
         this.name = name;
         this.availableQuantity = availableQuantity;
         this.sold = sold;
         this.likes = likes;
-        this.createdDate = createdDate;
+
         this.status = status;
         this.descripTion = descripTion;
         this.brand = brand;
-        this.list = list;
+
     }
+
 }

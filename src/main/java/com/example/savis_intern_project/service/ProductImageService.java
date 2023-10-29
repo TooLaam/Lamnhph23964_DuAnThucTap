@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ProductImageService {
+
     void add(ProductImage productImage);
     void delete(UUID id);
     void update(UUID id, ProductImage productImage);

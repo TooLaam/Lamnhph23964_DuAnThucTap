@@ -146,7 +146,7 @@ public class ProductImageController {
     @PostMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String update(Model model,
                          @PathVariable("id") UUID id,
-                         @RequestParam("files") MultipartFile[] files,
+                         @RequestParam("files") List<MultipartFile> files,
                          @RequestParam("staTus") Integer staTus,
                          @RequestParam("productDetail") UUID idSP) {
 
@@ -154,7 +154,7 @@ public class ProductImageController {
         try {
             List<String> fileNames = new ArrayList<>();
 
-            Arrays.asList(files).stream().forEach(file -> {
+            for (MultipartFile file : files) {
                 ProductImage a = new ProductImage();
                 File uploadRootDir = new File(String.valueOf(root));
                 if (!uploadRootDir.exists()) {
@@ -162,7 +162,7 @@ public class ProductImageController {
                 }
                 try {
                     String filename = file.getOriginalFilename();
-                    File serverFile = new File(uploadRootDir.getAbsoluteFile() + File.separator + filename);
+                    File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + filename);
                     BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
                     stream.write(file.getBytes());
                     a.setName(filename);
@@ -170,16 +170,22 @@ public class ProductImageController {
                     a.setProductDetail(productDetailServiceimpl.getOne(idSP));
                     productImageService.update(id, a);
                     stream.close();
+                    fileNames.add(filename);
                 } catch (Exception e) {
-
+                    // Xử lý lỗi tải lên ảnh
+                    // Ví dụ: ghi log hoặc thông báo lỗi
+                    e.printStackTrace();
                 }
-            });
+            }
 
             message = "Uploaded the files successfully: " + fileNames;
         } catch (Exception e) {
+            // Xử lý lỗi chung
+            // Ví dụ: ghi log hoặc thông báo lỗi
+            e.printStackTrace();
             message = "Fail to upload files!";
         }
         return "redirect:/product_image/index";
-
     }
+
 }

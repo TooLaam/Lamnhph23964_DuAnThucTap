@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -38,8 +39,14 @@ public class CategoryServiceimpl implements CategoryService {
 
     @Override
     public Category getOne(UUID id) {
-        return responsitory.findById(id).get();
+        Optional<Category> categoryOptional = responsitory.findById(id);
+        if (categoryOptional.isPresent()) {
+            return categoryOptional.get();
+        } else {
+           return categoryOptional.get();
+        }
     }
+
 
 
 }

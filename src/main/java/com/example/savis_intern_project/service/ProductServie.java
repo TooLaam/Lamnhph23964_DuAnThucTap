@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface ProductServie {
 
-    void add(Product product);
+    Product add(Product product);
     void delete(UUID id);
     void update(UUID id, Product product);
     List<Product> getAll();

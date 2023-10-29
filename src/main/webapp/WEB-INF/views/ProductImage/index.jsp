@@ -29,6 +29,7 @@
                             <h5 class="card-title">Product <span>| </span></h5>
 
                             <table class="table table-borderless datatable">
+                                <thead>
                                 <tr>
                                     <th>Ten</th>
                                     <th>Trang thai</th>
@@ -36,20 +37,24 @@
                                     <th>Action</th>
 
                                 </tr>
-                                <c:forEach items="${listProductImage}" var="imageSP">
-                                    <tr>
+                                </thead>
+                <tbody>
+                <c:forEach items="${listProductImage}" var="imageSP">
+                    <tr>
 
-                                        <td><img src="/assets/img/product/${imageSP.name}" height="100px" width="100px"></td>
-                                        <td>${imageSP.staTus == 0 ? "Còn hàng" : "Hết hàng"}</td>
-                                        <td>${imageSP.productDetail.product.name}</td>
-                                            <%--                                        <td>${sp.brand.name}</td>--%>
+                        <td><img src="/assets/img/product/${imageSP.name}" height="100px" width="100px"></td>
+                        <td>${imageSP.staTus == 0 ? "Còn hàng" : "Hết hàng"}</td>
+                        <td>${imageSP.productDetail.product.name}</td>
+                            <%--                                        <td>${sp.brand.name}</td>--%>
 
-                                        <td>
-                                            <a href="/product_image/delete/${imageSP.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" style="text-decoration: none;color: white">Delete</a>
-                                            <a href="/product_image/detail/${imageSP.id}" class="btn btn-success" style="text-decoration: none;color: white; margin-top: 5px" >Detail</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                        <td>
+                            <a href="/product_image/delete/${imageSP.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" style="text-decoration: none;color: white">Delete</a>
+                            <a href="/product_image/detail/${imageSP.id}" class="btn btn-success" style="text-decoration: none;color: white; margin-top: 5px" >Detail</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+
                             </table>
                             <%--                            <form method="post" enctype="multipart/form-data" action="import">--%>
                             <%--                                Thêm từ file excel: <input class="form-control" name="file" type="file">--%>

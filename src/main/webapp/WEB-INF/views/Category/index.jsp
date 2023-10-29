@@ -29,6 +29,7 @@
                             <h5 class="card-title">Category <span>| </span></h5>
 
                             <table class="table table-borderless datatable">
+                                <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Ten</th>
@@ -36,17 +37,21 @@
                                     <th>Action</th>
 
                                 </tr>
-                                <c:forEach items="${listCategory}" var="loai">
-                                    <tr>
-                                        <td>${loai.id}</td>
-                                        <td>${loai.name}</td>
-                                        <td>${loai.status == 0 ? "Còn hàng" : "Hết hàng"}</td>
-                                        <td>
-                                            <a href="/category/delete/${loai.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" >Delete</a>
-                                            <a href="/category/detail/${loai.id}" class="btn btn-success" >Detail</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                                </thead>
+                                     <tbody>
+                                     <c:forEach items="${listCategory}" var="loai">
+                                         <tr>
+                                             <td>${loai.id}</td>
+                                             <td>${loai.name}</td>
+                                             <td>${loai.status == 0 ? "Còn hàng" : "Hết hàng"}</td>
+                                             <td>
+                                                 <a href="/category/delete/${loai.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" >Delete</a>
+                                                 <a href="/category/detail/${loai.id}" class="btn btn-success" >Detail</a>
+                                             </td>
+                                         </tr>
+                                     </c:forEach>
+                                     </tbody>
+
                             </table>
                             <%--                            <form method="post" enctype="multipart/form-data" action="import">--%>
                             <%--                                Thêm từ file excel: <input class="form-control" name="file" type="file">--%>

@@ -54,6 +54,17 @@ public class ProductDetailController {
         model.addAttribute("view", "/ProductDetail/index.jsp");
         return "index";
     }
+    @GetMapping("/create")
+    public String create(Model model){
+        model.addAttribute("listProduct",productServiceimpl.getAll());
+        model.addAttribute("listColor",colorServiceimpl.getAll());
+        model.addAttribute("listProductImage",productImageServiceimpl.getAll());
+        model.addAttribute("listProductDetail",productDetailServiceimpl.getAll());
+        model.addAttribute("ProductDetail",new ProductDetail());
+        model.addAttribute("view", "/ProductDetail/createProductDetail.jsp");
+        return "index";
+    }
+
 
 //    @GetMapping("/indexcus" )
 //    public String show_data_product_cus(Model model){
@@ -104,7 +115,7 @@ public String upload(Model model,
     Color color1 = colorResponsitory.findById(UUID.fromString(color)).orElse(null);
     String message = "";
     try {
-        List<String> fileNames = new ArrayList<>();
+        String fileNames = null;
 
         Arrays.asList(files).stream().forEach(file -> {
             ProductDetail a = new ProductDetail();
@@ -117,7 +128,6 @@ public String upload(Model model,
                 File serverFile = new File(uploadRootDir.getAbsoluteFile() + File.separator + filename);
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
                 stream.write(file.getBytes());
-//                a.setListImages(filename);
                 a.setImportPrice(importPrice);
                 a.setPrice(price);
                 a.setQuantity(quantity);
@@ -126,8 +136,7 @@ public String upload(Model model,
                 a.setStatus(status);
                 a.setProduct(product1);
                 a.setColor(color1);
-                a.setListImages((List<ProductImage>) productImage);
-//                a.setListImages(filename);
+//                a.setListImages((List<ProductImage>) fileNames);
                 productDetailServiceimpl.add(a);
                 stream.close();
             } catch (Exception e) {
@@ -150,7 +159,7 @@ public String upload(Model model,
         model.addAttribute("listProductImage",productImageServiceimpl.getAll());
         model.addAttribute("listProductDetail",productDetailServiceimpl.getAll());
         model.addAttribute("detailSP",productDetailServiceimpl.getOne(id));
-        model.addAttribute("view", "/ProductDetail/index.jsp");
+        model.addAttribute("view", "/ProductDetail/createProductDetail.jsp");
         return "index";
     }
     @GetMapping("/delete/{id}")

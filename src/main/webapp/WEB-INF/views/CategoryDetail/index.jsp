@@ -29,6 +29,7 @@
                             <h5 class="card-title">CategoryDetail <span>| </span></h5>
 
                             <table class="table table-borderless datatable">
+                                <thead>
                                 <tr>
                                     <th>So luong</th>
                                     <th>San Pham</th>
@@ -36,17 +37,21 @@
                                     <th>Action</th>
 
                                 </tr>
-                                <c:forEach items="${listCategoryDetail}" var="detail">
-                                    <tr>
-                                        <td>${detail.quanTity}</td>
-                                        <td>${detail.product.name}</td>
-                                        <td>${detail.category.name}</td>
-                                        <td>
-                                            <a href="/category_detail/delete/${detail.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" >Delete</a>
-                                            <a href="/category_detail/detail/${detail.id}" class="btn btn-success" >Detail</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                                </thead>
+                       <tbody>
+                       <c:forEach items="${listCategoryDetail}" var="detail">
+                           <tr>
+                               <td>${detail.quanTity}</td>
+                               <td>${detail.product.name}</td>
+                               <td>${detail.category.name}</td>
+                               <td>
+                                   <a href="/category_detail/delete/${detail.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" >Delete</a>
+                                   <a href="/category_detail/detail/${detail.id}" class="btn btn-success" >Detail</a>
+                               </td>
+                           </tr>
+                       </c:forEach>
+                       </tbody>
+
                             </table>
                             <%--                            <form method="post" enctype="multipart/form-data" action="import">--%>
                             <%--                                Thêm từ file excel: <input class="form-control" name="file" type="file">--%>
