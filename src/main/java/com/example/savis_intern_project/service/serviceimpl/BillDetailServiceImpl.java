@@ -1,12 +1,9 @@
 package com.example.savis_intern_project.service.serviceimpl;
 
-<<<<<<< HEAD
 import com.example.savis_intern_project.entity.BillDetail;
-=======
 import com.example.savis_intern_project.entity.*;
 import com.example.savis_intern_project.entity.ViewModels.BillDetailView;
 import com.example.savis_intern_project.entity.ViewModels.CartDetailView;
->>>>>>> master
 import com.example.savis_intern_project.repository.BillDetailRepository;
 import com.example.savis_intern_project.repository.ColorResponsitory;
 import com.example.savis_intern_project.repository.ProductDetailResponsitory;
@@ -15,11 +12,11 @@ import com.example.savis_intern_project.service.BillDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-<<<<<<< HEAD
+
 import java.sql.Date;
-=======
+
 import java.util.ArrayList;
->>>>>>> master
+
 import java.util.List;
 import java.util.UUID;
 
@@ -52,10 +49,12 @@ public class BillDetailServiceImpl implements BillDetailService {
     }
 
     @Override
-<<<<<<< HEAD
+
     public List<Object[]> get_all_product_sale_by_Date(Date startDate, Date endDate) {
-        return billDetailRepository.getProductSalesData(startDate,endDate);
-=======
+        return billDetailRepository.getProductSalesData(startDate, endDate);
+    }
+
+    @Override
     public List<BillDetailView> getByBillId(UUID billId) {
         List<BillDetail> billDetails = billDetailRepository.getBillDetailByBillId(billId);
 
@@ -88,7 +87,6 @@ public class BillDetailServiceImpl implements BillDetailService {
         }
 
         return billDetailViews;
->>>>>>> master
     }
 
 

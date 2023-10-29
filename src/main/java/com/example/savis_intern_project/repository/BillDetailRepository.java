@@ -3,11 +3,7 @@ package com.example.savis_intern_project.repository;
 
 import com.example.savis_intern_project.entity.Bill;
 import com.example.savis_intern_project.entity.BillDetail;
-<<<<<<< HEAD
-import com.example.savis_intern_project.entity.ProductSales;
-=======
-import com.example.savis_intern_project.entity.CartDetail;
->>>>>>> master
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,8 +14,7 @@ import java.util.UUID;
 
 @Repository
 public interface BillDetailRepository extends JpaRepository<BillDetail, UUID> {
-<<<<<<< HEAD
-    List<BillDetail> getAllByBillId(UUID uuid);
+
 
     @Query("SELECT BD.productDetail.product.name, SUM(BD.Quantity) AS TotalQuantitySold\n" +
             "FROM BillDetail BD\n" +
@@ -28,13 +23,14 @@ public interface BillDetailRepository extends JpaRepository<BillDetail, UUID> {
     List<Object[]> getProductSalesData(
             @Param("startDate") java.sql.Date startDate,
             @Param("endDate") java.sql.Date endDate);
-=======
+
     @Query("SELECT c from BillDetail c where c.bill.Id = ?1")
     List<BillDetail> getAllByBillId(UUID id);
+
     @Query("SELECT a FROM BillDetail a " +
             "JOIN Bill b ON a.bill.Id = b.Id " +
             "JOIN ProductDetail c ON a.productDetail.id = c.id " +
             "WHERE b.Id = ?1")
     List<BillDetail> getBillDetailByBillId(UUID id);
->>>>>>> master
+
 }
