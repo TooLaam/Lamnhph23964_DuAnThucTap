@@ -1,12 +1,12 @@
 package com.example.savis_intern_project.service.serviceimpl;
 
-import com.example.savis_intern_project.entity.Bill;
 import com.example.savis_intern_project.entity.BillDetail;
 import com.example.savis_intern_project.repository.BillDetailRepository;
 import com.example.savis_intern_project.service.BillDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,6 +30,11 @@ public class BillDetailServiceImpl implements BillDetailService {
     @Override
     public List<BillDetail> get_all_by_billId(UUID billId) {
         return billDetailRepository.getAllByBillId(billId);
+    }
+
+    @Override
+    public List<Object[]> get_all_product_sale_by_Date(Date startDate, Date endDate) {
+        return billDetailRepository.getProductSalesData(startDate,endDate);
     }
 
 

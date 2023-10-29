@@ -1,14 +1,17 @@
 package com.example.savis_intern_project.service.serviceimpl;
 
 import com.example.savis_intern_project.entity.Bill;
-import com.example.savis_intern_project.entity.BillStatus;
+import com.example.savis_intern_project.entity.BillDetail;
+import com.example.savis_intern_project.entity.Product;
+import com.example.savis_intern_project.repository.BillDetailRepository;
 import com.example.savis_intern_project.repository.BillRepository;
 import com.example.savis_intern_project.repository.BillStatusRepository;
+import com.example.savis_intern_project.repository.ProductResponsitory;
 import com.example.savis_intern_project.service.BillService;
-import com.oracle.wls.shaded.org.apache.xpath.operations.String;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,6 +22,8 @@ public class BillServiceImpl implements BillService {
 
     @Autowired
     BillRepository billRepository;
+    @Autowired
+    BillDetailRepository billDetailRepository;
 
     @Autowired
     BillStatusRepository billStatusRepository;
@@ -47,6 +52,12 @@ public class BillServiceImpl implements BillService {
     public List<Bill> get_all_byCusId(UUID cusId) {
         return billRepository.getAllByCustomerId(cusId);
     }
+
+    @Override
+    public List<Bill> get_all_by_Date(Date startDate, Date endDate) {
+        return billRepository.getAllBillsInDateRange(startDate,endDate);
+    }
+
 
     @Override
     public Bill get_one_bill(UUID billId) {
