@@ -12,7 +12,7 @@
             <div class="col-md-3 col-6">
                 <a href="/product/index.html" class="link-recommend">
 <%--                    <img src="/assets/img/${sp.imageUrl}" class="img-recommend" alt="" />--%>
-                    <div class="overlay">${sp.category.name}</div>
+                    <div class="overlay">${sp.name}</div>
                 </a>
             </div>
         </c:forEach>
@@ -27,7 +27,7 @@
 <%--                            <img src="/assets/img/${sp.imageUrl}" alt="" />--%>
                             <div class="caption">
                                 <p>${sp.name}</p>
-                                <span class="price">$${sp.price}</span>
+                                <td><img src="/assets/img/brand/${sp.brand.image}" width="100px" height="100px"></td>
                                 <span class="sold">${sp.sold} sold</span>
                             </div>
                         </a>
@@ -46,7 +46,7 @@
 <%--                            <img src="/assets/img/${sp.imageUrl}" alt="" />--%>
                             <div class="caption">
                                 <p>${sp.name}</p>
-                                <span class="price">$${sp.price}</span>
+                                <td><img src="/assets/img/brand/${sp.brand.image}" width="100px" height="100px"></td>
                                 <span class="sold">${sp.sold} sold</span>
                             </div>
                         </a>
@@ -65,7 +65,7 @@
 <%--                            <img src="/assets/img/${sp.imageUrl}" alt="" />--%>
                             <div class="caption">
                                 <p>${sp.name}</p>
-                                <span class="price">$${sp.price}</span>
+                                <td><img src="/assets/img/brand/${sp.brand.image}" width="100px" height="100px"></td>
                                 <span class="sold">${sp.sold} sold</span>
                             </div>
                         </a>

@@ -1,6 +1,8 @@
 package com.example.savis_intern_project.controller;
 
+import com.example.savis_intern_project.entity.Brand;
 import com.example.savis_intern_project.entity.Product;
+import com.example.savis_intern_project.service.serviceimpl.BrandServiceimpl;
 import com.example.savis_intern_project.service.serviceimpl.CategoryServiceimpl;
 import com.example.savis_intern_project.service.serviceimpl.ColorServiceimpl;
 import com.example.savis_intern_project.service.serviceimpl.ProductServiceimpl;
@@ -17,15 +19,14 @@ public class homeController {
     @Autowired
     ColorServiceimpl colorServiceimpl;
     @Autowired
-    CategoryServiceimpl categoryServiceimpl;
+    BrandServiceimpl brandServiceimpl;
     @Autowired
     private ProductServiceimpl productServiceimpl;
     @GetMapping("/home" )
     public String home(Model model){
         model.addAttribute("listProduct",productServiceimpl.getAll());
         model.addAttribute("Product",new Product());
-        model.addAttribute("listCategory",categoryServiceimpl.getAll());
-        model.addAttribute("listColor",colorServiceimpl.getAll());
+        model.addAttribute("listBrand",brandServiceimpl.getAll());
         model.addAttribute("view", "/home/index.jsp");
         return "/customerFE/index";
     }
