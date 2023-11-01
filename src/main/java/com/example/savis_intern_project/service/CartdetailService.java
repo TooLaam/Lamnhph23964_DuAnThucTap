@@ -12,13 +12,22 @@ import java.util.UUID;
 @Service
 public interface CartdetailService {
     ArrayList<CartDetail> getAll();
+
     ArrayList<CartDetailView> getCartDetailByCustomerId(UUID customerId);
+
+    List<CartDetail> getCartDetailByCusId(UUID customerId);
+
+    CartDetail getOneCartDetail(UUID customerId, UUID productDetailId);
 
     void save(CartDetail cartdetail);
 
     void delete(UUID id);
 
+    void deleteAll(UUID id);
+
     void update(UUID id, CartDetail cartdetail);
 
     Optional<CartDetail> getOne(UUID id);
+
+    boolean checkExistCartDetail(UUID customerId, UUID productDetailId);
 }

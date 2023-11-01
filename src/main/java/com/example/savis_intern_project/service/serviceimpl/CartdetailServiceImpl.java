@@ -1,13 +1,7 @@
 package com.example.savis_intern_project.service.serviceimpl;
-import com.example.savis_intern_project.entity.Cart;
-import com.example.savis_intern_project.entity.CartDetail;
-import com.example.savis_intern_project.entity.Product;
-import com.example.savis_intern_project.entity.ProductDetail;
+import com.example.savis_intern_project.entity.*;
 import com.example.savis_intern_project.entity.ViewModels.CartDetailView;
-import com.example.savis_intern_project.repository.CartRepository;
-import com.example.savis_intern_project.repository.CartdetailRepository;
-import com.example.savis_intern_project.repository.ProductDetailResponsitory;
-import com.example.savis_intern_project.repository.ProductResponsitory;
+import com.example.savis_intern_project.repository.*;
 import com.example.savis_intern_project.service.CartdetailService;
 import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +23,10 @@ public class CartdetailServiceImpl implements CartdetailService  {
     ProductResponsitory productResponsitory;
     @Autowired
     CartRepository cartRepository;
+    @Autowired
+    ColorResponsitory colorRepository;
+    @Autowired
+    CustomerRepository customerRepository;
 
     @Override
     public ArrayList<CartDetail> getAll() {
@@ -49,14 +47,19 @@ public class CartdetailServiceImpl implements CartdetailService  {
                 UUID productId = productDetail.getProduct().getId();
                 Product product = productResponsitory.findById(productId).orElse(null);
 
+                UUID colorId = productDetail.getColor().getId();
+                Color color = colorRepository.findById(colorId).orElse(null);
+
                 if (product != null) {
                     Cart cart = cartRepository.findById(productDetailId).orElse(null);
-                    // Create a CartDetailView and set its properties
+
                     CartDetailView c = new CartDetailView();
                     c.setId(cartDetail.getId());
                     c.setName(product.getName());
+                    c.setColorName(color.getName());
                     c.setQuantity(cartDetail.getQuantity());
                     c.setPrice(cartDetail.getPrice());
+                    c.setProductPrice(productDetail.getPrice());
                     c.setProductId(product.getId());
                     c.setProductDetailId(productDetail.getId());
                     c.setCart(cart);
@@ -71,6 +74,21 @@ public class CartdetailServiceImpl implements CartdetailService  {
     }
 
     @Override
+    public List<CartDetail> getCartDetailByCusId(UUID customerId) {
+        List<CartDetail> cartDetails = responitory.getCartDetailsByCustomerId(customerId);
+        return cartDetails;
+    }
+
+    @Override
+    public CartDetail getOneCartDetail(UUID customerId, UUID productDetailId) {
+        var cartDetail = responitory.getOneCartDetail(customerId, productDetailId);
+        if(cartDetail == null){
+            return new CartDetail();
+        }
+        return cartDetail;
+    }
+
+    @Override
     public void save(CartDetail cartdetail)   {
         responitory.saveAndFlush(cartdetail);
     }
@@ -78,6 +96,14 @@ public class CartdetailServiceImpl implements CartdetailService  {
     @Override
     public void delete(UUID id)   {
         responitory.deleteById(id);
+    }
+
+    @Override
+    public void deleteAll(UUID id) {
+        var cartDetails = responitory.getCartDetailsByCustomerId(id);
+        for (CartDetail cartDetail: cartDetails) {
+            responitory.deleteById(cartDetail.getId());
+        }
     }
 
     @Override
@@ -94,6 +120,15 @@ public class CartdetailServiceImpl implements CartdetailService  {
     @Override
     public Optional<CartDetail> getOne(UUID id)  {
         return responitory.findById(id);
+    }
+
+    @Override
+    public boolean checkExistCartDetail(UUID customerId, UUID productDetailId) {
+        var check = responitory.getOneCartDetail(customerId, productDetailId);
+        if(check == null){
+            return false;
+        }
+        return true;
     }
 
 }

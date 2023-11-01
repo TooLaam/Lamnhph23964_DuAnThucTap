@@ -12,5 +12,6 @@ public interface ProductImageService {
     void delete(UUID id);
     void update(UUID id, ProductImage productImage);
     List<ProductImage> getAll();
+    List<ProductImage> getByProductDetailId(UUID id);
     ProductImage getOne(UUID id);
 }

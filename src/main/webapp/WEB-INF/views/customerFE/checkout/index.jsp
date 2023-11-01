@@ -2,11 +2,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <head>
-    <style><%@include file="style.css"%></style>
+    <style>
+        <%@include file="style.css" %>
+    </style>
 </head>
 
 <div class="container">
-    <br />
+    <br/>
     <div class="row main-checkout">
         <div class="col-7">
             <h2>Order details</h2>
@@ -30,8 +32,8 @@
                                 </li>
                             </ul>
                         </td>
-                        <td>
-                            <span><bdi><span>$</span>${b.productDetail.price}</bdi></span>
+                        <td style="text-align: right">
+                            <span><bdi class="money"><span>$</span>${b.productDetail.price}</bdi></span>
                         </td>
                     </tr>
                 </c:forEach>
@@ -41,7 +43,7 @@
                 <tfoot>
                 <tr>
                     <th scope="row">Subtotal:</th>
-                    <td class="text-end"><span><span>$</span>${bill.totalMoney}</span></td>
+                    <td class="text-end"><span class="money"><span>$</span>${bill.totalMoney}</span></td>
                 </tr>
                 <tr>
                     <th scope="row">Shipping:</th>
@@ -53,7 +55,7 @@
                 </tr>
                 <tr>
                     <th scope="row">Total Money:</th>
-                    <td class="text-end"><span><span>$</span>${bill.totalMoney}</span></td>
+                    <td class="text-end"><span class="money"><span>$</span>${bill.totalMoney}</span></td>
                 </tr>
                 </tfoot>
             </table>
@@ -72,7 +74,7 @@
                         Day: <strong>${bill.createdDate}</strong>
                     </li>
                     <li>
-                        Total Money: <strong><span ><bdi><span>$</span>${bill.totalMoney}</bdi></span></strong>
+                        Total Money: <strong><span><bdi class="money"><span>$</span>${bill.totalMoney}</bdi></span></strong>
                     </li>
                     <li>
                         Payment methods: <strong>${bill.payment.name}</strong>
@@ -81,6 +83,6 @@
             </div>
         </div>
     </div>
-    <br />
+    <br/>
 </div>
-<br />
+<br/>

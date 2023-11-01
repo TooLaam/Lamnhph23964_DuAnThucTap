@@ -2,7 +2,10 @@ package com.example.savis_intern_project.service.serviceimpl;
 
 
 import com.example.savis_intern_project.entity.Color;
+import com.example.savis_intern_project.entity.ProductDetail;
+import com.example.savis_intern_project.entity.ViewModels.ColorView;
 import com.example.savis_intern_project.repository.ColorResponsitory;
+import com.example.savis_intern_project.repository.ProductDetailResponsitory;
 import com.example.savis_intern_project.service.ColorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +18,30 @@ import java.util.UUID;
 public class ColorServiceimpl implements ColorService {
     @Autowired
     ColorResponsitory  responsitory;
+    @Autowired
+    ProductDetailResponsitory productDetailResponsitory;
     @Override
     public ArrayList<Color> getAll() {
         return (ArrayList<Color>) responsitory.findAll();
+    }
+
+    @Override
+    public ArrayList<ColorView> getAllByProductDetailId(UUID id) {
+        var productDetail = productDetailResponsitory.findById(id).get();
+        var productDetails = productDetailResponsitory.findByProductId(productDetail.getProduct().getId());
+        ArrayList<ColorView> colors = new ArrayList<>();
+        for (ProductDetail pd : productDetails){
+            ColorView color = new ColorView();
+            color.setId(pd.getColor().getId());
+            color.setName(pd.getColor().getName());
+            color.setPrice(pd.getColor().getPrice());
+            color.setImage(pd.getColor().getImage());
+            color.setStatus(pd.getColor().getStatus());
+            color.setProductDetailId(pd.getId());
+            color.setBrand(pd.getColor().getBrand());
+            colors.add(color);
+        }
+        return colors;
     }
 
     @Override

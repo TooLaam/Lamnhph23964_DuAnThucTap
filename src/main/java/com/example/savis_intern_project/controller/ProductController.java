@@ -55,16 +55,13 @@ public class ProductController {
         return "index";
     }
 
-//    @GetMapping("/index1" )
-//    public String show_data_product_cus(Model model){
-//
-//        model.addAttribute("listProduct",productServiceimpl.getAll());
-//        model.addAttribute("Product",new Product());
-//        model.addAttribute("listCategory",categoryServiceimpl.getAll());
-//        model.addAttribute("listColor",colorServiceimpl.getAll());
-//        model.addAttribute("view", "/product/index.jsp");
-//        return "/customerFE/index";
-//    }
+    @GetMapping("/indexcus" )
+    public String show_data_product_cus(Model model){
+
+        model.addAttribute("listProduct",productServiceimpl.getAllProduct());
+        model.addAttribute("view", "/product/index.jsp");
+        return "/customerFE/index";
+    }
 
     //    @PostMapping("/add")
 //    public String add(Model model,

@@ -75,7 +75,7 @@ public class BillDetailServiceImpl implements BillDetailService {
                     BillDetailView c = new BillDetailView();
                     c.setId(billDetail.getId());
                     c.setProductName(product.getName());
-                    c.setColorName(product.getName());
+                    c.setColorName(color.getName());
                     c.setQuantity(billDetail.getQuantity());
                     c.setPrice(billDetail.getPrice());
                     c.setBill(billDetail.getBill());

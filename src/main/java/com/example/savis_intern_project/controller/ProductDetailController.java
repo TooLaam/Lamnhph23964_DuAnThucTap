@@ -66,16 +66,17 @@ public class ProductDetailController {
     }
 
 
-//    @GetMapping("/indexcus" )
-//    public String show_data_product_cus(Model model){
-//
-//        model.addAttribute("listProduct",productServiceimpl.getAll());
-//        model.addAttribute("Product",new Product());
-//        model.addAttribute("listCategory",categoryServiceimpl.getAll());
-//        model.addAttribute("listColor",colorServiceimpl.getAll());
-//        model.addAttribute("view", "/product/index.jsp");
-//        return "/customerFE/index";
-//    }
+    @GetMapping("/indexcus/{productDetailId}" )
+    public String show_data_product_cus(@PathVariable("productDetailId") UUID productDetailId, Model model){
+
+        model.addAttribute("listProduct",productServiceimpl.getAllProduct().subList(0, 4));
+        model.addAttribute("productDetail",productDetailServiceimpl.getProductDetailById(productDetailId));
+        model.addAttribute("image",productImageServiceimpl.getByProductDetailId(productDetailId).get(0));
+        model.addAttribute("listImage",productImageServiceimpl.getByProductDetailId(productDetailId));
+        model.addAttribute("listColor",colorServiceimpl.getAllByProductDetailId(productDetailId));
+        model.addAttribute("view", "/detail/index.jsp");
+        return "/customerFE/index";
+    }
 
 //    @PostMapping("/add")
 //    public String add(Model model,
