@@ -41,22 +41,23 @@
 
                                 </tr>
                                 </thead>
-                                    <tbody>
-                                    <c:forEach items="${listColor}" var="mau">
-                                        <tr>
+                                <tbody>
+                                <c:forEach items="${listColor}" var="mau">
+                                    <tr>
 
-                                            <td>${mau.name}</td>
-                                            <td>${mau.price}</td>
-                                            <td><img src="/assets/img/color/${mau.image}" width="100px" height="100px"></td>
-                                            <td>${mau.status == 0 ? "Còn hàng" : "Hết hàng"}</td>
-                                            <td>${mau.brand.name}</td>
-                                            <td>
-                                                <a href="/color/delete/${mau.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')">Delete</a>
-                                                <a href="/color/detail/${mau.id}" class="btn btn-success" >Detail</a>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
+                                        <td>${mau.name}</td>
+                                        <td>${mau.price}</td>
+                                        <td><img src="/assets/img/color/${mau.image}" width="100px" height="100px"></td>
+                                        <td>${mau.status == 0 ? "Còn hàng" : "Hết hàng"}</td>
+                                        <td>${mau.brand.name}</td>
+                                        <td>
+                                            <a href="/color/delete/${mau.id}" class="btn btn-danger"
+                                               onclick="return confirm('Bạn chắc chắn có muốn xóa??')">Delete</a>
+                                            <a href="/color/detail/${mau.id}" class="btn btn-success">Detail</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
 
                             </table>
                             <%--                            <form method="post" enctype="multipart/form-data" action="import">--%>
@@ -108,7 +109,7 @@
                     <div class="tab-content pt-2" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel"
                              aria-labelledby="home-tab">
-                            <form method="post" action="/color/update/${mau.id}">
+                            <form method="post" action="/color/update/${mau.id}" enctype="multipart/form-data">
 
                                 <div>
                                     Ten :
@@ -121,28 +122,31 @@
                                 <div>
                                     Image :
                                     <img src="/assets/img/color/${mau.image}" height="100px" width="100px">
-                                    <input class="form-control" name="image" type="file"  value="${mau.image}">
+<%--                                    <input class="form-control" name="image" type="file" value="${mau.image}">--%>
+                                    <input type="file" name="image" accept="image/*" class="form-control" value="${mau.image}">
                                 </div>
                                 <div>
                                     Status :<br>
-                                    <input  type="radio" name="status" value="0" ${ mau.status == "0" ? "checked" : "" }> Còn Hàng <br>
-                                    <input   type="radio" name="status" value="1" ${mau.status == "1" ? "checked" : "" }> Hết hàng
+                                    <input type="radio" name="status" value="0" ${ mau.status == "0" ? "checked" : "" }>
+                                    Còn Hàng <br>
+                                    <input type="radio" name="status" value="1" ${mau.status == "1" ? "checked" : "" }>
+                                    Hết hàng
                                 </div>
                                 <div class="form-group">
                                     Brand :
-                                    <select name="brand" class="form-select"  aria-label="Default select example">
+                                    <select name="brand" class="form-select" aria-label="Default select example">
                                         <c:forEach items="${listBrand}" var="brand">
                                             <option value="${brand.id}">${brand.name}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
-                                <input type="submit" class="btn btn-primary" value="Update"style="margin-top: 10px">
+                                <input type="submit" class="btn btn-primary" value="Update" style="margin-top: 10px">
                             </form>
                         </div>
 
                         <%--create--%>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <form method="post" action="/color/add">
+                            <form method="post" action="/color/add" enctype="multipart/form-data">
                                 <div>
                                     Ten :
                                     <input class="form-control" name="name">
@@ -153,35 +157,34 @@
                                 </div>
                                 <div>
                                     Image :
-                                    <input class="form-control" name="image" type="file"  value="${mau.image}">
-                                </div>
+                                    <input type="file" name="image" accept="image/*" class="form-control"></div>
                                 <div>
                                     Status :<br>
-                                    <input  type="radio" name="status" value="0"> Còn Hàng <br>
-                                    <input   type="radio" name="status" value="1"> Hết hàng
+                                    <input type="radio" name="status" value="0"> Còn Hàng <br>
+                                    <input type="radio" name="status" value="1"> Hết hàng
                                 </div>
                                 <div class="form-group">
                                     Brand :
-                                    <select name="brand" class="form-select"  aria-label="Default select example">
+                                    <select name="brand" class="form-select" aria-label="Default select example">
                                         <c:forEach items="${listBrand}" var="brand">
                                             <option value="${brand.id}">${brand.name}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
-                                <input type="submit" class="btn btn-primary" value="Add"style="margin-top: 10px">
+                                <input type="submit" class="btn btn-primary" value="Add" style="margin-top: 10px">
                             </form>
                         </div>
                         <%--detail--%>
                         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-<%--                            <form class="row g-3" action="/favor/detail/${spyt.id}" method="get">--%>
-<%--                                <div class="form-group">--%>
-<%--                                    ID : ${mau.id}--%>
-<%--                                </div>--%>
-<%--                                <div class="form-group">--%>
-<%--                                    Name : ${mau.name}--%>
-<%--                                </div>--%>
+                            <%--                            <form class="row g-3" action="/favor/detail/${spyt.id}" method="get">--%>
+                            <%--                                <div class="form-group">--%>
+                            <%--                                    ID : ${mau.id}--%>
+                            <%--                                </div>--%>
+                            <%--                                <div class="form-group">--%>
+                            <%--                                    Name : ${mau.name}--%>
+                            <%--                                </div>--%>
 
-<%--                            </form><!-- End Multi Columns Form -->--%>
+                            <%--                            </form><!-- End Multi Columns Form -->--%>
                         </div>
                     </div><!-- End Default Tabs -->
 
