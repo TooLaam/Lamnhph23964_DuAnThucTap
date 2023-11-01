@@ -31,13 +31,10 @@ public class PaymentC {
     CartdetailServiceImpl cartDetailService;
     @Autowired
     ProductServiceimpl productService;
-
     @Autowired
     BillStatusServiceImpl billStatusService;
-
     @Autowired
     BillServiceImpl billService;
-
     @Autowired
     BillDetailServiceImpl billDetailService;
     @Autowired

@@ -40,6 +40,11 @@ public class ProductImageServiceimpl implements ProductImageService {
     }
 
     @Override
+    public List<ProductImage> getByProductDetailId(UUID id) {
+        return responsitory.findByProductDetailId(id);
+    }
+
+    @Override
     public ProductImage getOne(UUID id) {
         return responsitory.findById(id).get();
     }

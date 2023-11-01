@@ -4,16 +4,16 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/assets/css/styleFE.css" />
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/assets/css/styleFE.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <title>MEOW</title>
 </head>
 
@@ -46,14 +46,14 @@
     <nav class="nav-search">
         <div class="row">
             <div class="col-md-2 col-4">
-                <a href="/home"><img src="/assets/img/logo.png" class="logo" alt="logo" />
+                <a href="/home"><img src="/assets/img/logo.png" class="logo" alt="logo"/>
                 </a>
             </div>
             <div class="col-md-1 col-0"></div>
             <div class="col-md-6 col-4">
                 <div class="input-group mb-3" id="nav-search">
                     <input type="text" class="form-control" placeholder="What can we help you find?"
-                           aria-label="Recipient's username" />
+                           aria-label="Recipient's username"/>
                     <button class="btn" type="button">
                         SEARCH
                     </button>
@@ -62,17 +62,17 @@
             <div class="col-md-1 col-0"></div>
             <div class="col-md-2 col-4">
                 <ul class="list-unstyled" style="display: flex;">
-                    <c:if test="${CustomerName != null}" >
-                    <li>
-                        <a href="/customer/indexcus">
-                            <span class="fa fa-user"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/favor/indexcus">
-                            <span class="fa fa-heart"></span>
-                        </a>
-                    </li>
+                    <c:if test="${CustomerName != null}">
+                        <li>
+                            <a href="/customer/indexcus">
+                                <span class="fa fa-user"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/favor/indexcus">
+                                <span class="fa fa-heart"></span>
+                            </a>
+                        </li>
                     </c:if>
                     <li>
                         <a href="/viewOrderCart">
@@ -117,7 +117,7 @@
             <div class="col-md-4 col-12">
                 <div class="row">
                     <div class="col-md-12 col-12">
-                        <img src="/assets/img/logo.png" class="logo" alt="logo" />
+                        <img src="/assets/img/logo.png" class="logo" alt="logo"/>
                         <p id="text_logo">We Have Everything For Lipstick Here!</p>
                     </div>
                     <div class="col-md-12 col-12">
@@ -125,7 +125,7 @@
                         <p id="text_blog">New blogs about lipsticks every week!</p>
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" placeholder="YOUR EMAIL ADDRESS"
-                                   aria-label="Recipient's username" aria-describedby="button-addon2" />
+                                   aria-label="Recipient's username" aria-describedby="button-addon2"/>
                             <button class="btn" type="button" id="button-addon2">
                                 SUBSCRIBE
                             </button>
@@ -157,7 +157,7 @@
                             Try our View in Your Room feature, manage registries and save
                             payment info.
                         </p>
-                        <img src="/assets/img/logo_appstore.png" id="logo_appstore" />
+                        <img src="/assets/img/logo_appstore.png" id="logo_appstore"/>
                     </div>
                     <div class="col-md-4 col-6">
                         <p class="text_content_footer">Our Company</p>
@@ -202,7 +202,7 @@
                         </ul>
                         <span class="text_footer">Show us your cat with:</span>
                         <span class="text_footer">#meowshop</span>
-                        <br />
+                        <br/>
                         <span class="text_footer">#themeowshop</span>
                     </div>
                     <div class="col-md-4 col-6">
@@ -225,8 +225,8 @@
                 </div>
             </div>
         </div>
-        <br />
-        <hr />
+        <br/>
+        <hr/>
         <div id="Copyright">
             Copyright © 2023 The Meow Shop. All rights reserved
         </div>

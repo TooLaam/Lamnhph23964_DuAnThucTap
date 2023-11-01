@@ -19,25 +19,31 @@
                         <%--                    <input class="form-check-input" type="checkbox" onchange="checkAll(this)" />--%>
                         <%--                  </th>--%>
                         <th scope="col" class="text-sp">Product</th>
+                        <th scope="col" class="text-sp">Color</th>
                         <th scope="col" class="text-sp">Quantity</th>
                         <th scope="col" class="text-sp">Total</th>
                     </tr>
                     </thead>
-                    <%--<tbody>
-                    <c:forEach items="${cartDetail}" var="gh">
-                        <tr>
-                            <td>${gh.productName}</td>
-                            <td>${gh.quantity}</td>
-                            <td style="font-weight: bold;color: red">${gh.price}VND</td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>--%>
                     <tbody>
                     <c:forEach items="${listCartDetail}" var="gh">
                         <tr>
-                            <td>${gh.name}</td>
-                            <td>${gh.quantity}</td>
-                            <td style="font-weight: bold;color: red">${gh.price}VND</td>
+                            <td>
+                                <p>${gh.name}</p>
+                                <a href="/cart/delete/${gh.id}">
+                                    <span class="fa fa-trash"></span>
+                                </a>
+                            </td>
+                            <td>
+                                <p>${gh.colorName}</p>
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <a href="/cart/reduce/${gh.id}" class="btn btn-outline">-</a>
+                                    <input disabled type="text" class="form-control" value="${gh.quantity}"/>
+                                    <a href="/cart/increase/${gh.id}" class="btn btn-outline">+</a>
+                                </div>
+                            </td>
+                            <td style="font-weight: bold;color: red">$${gh.productPrice}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -50,7 +56,7 @@
                     <p>Congratulations! You've got free shipping!</p>
                     <div class="total">
                         <span>Item(s) total</span>
-                        <span class="after">${cart.totalMoney}</span>
+                        <span class="after" style="font-weight: bold;color: red">$${cart.totalMoney}</span>
                     </div>
                     <div class="ship">
                         <div>
@@ -65,7 +71,7 @@
                     <hr/>
                     <div class="total-item">
                         <span>Total (${cart.quantity} items)</span>
-                        <span class="after">${cart.totalMoney}</span>
+                        <span class="after" style="font-weight: bold;color: red">$${cart.totalMoney}</span>
                     </div>
                     <div class="d-grid">
                         <a href="/bill/payment" class="btn btn-success">Check out</a>
