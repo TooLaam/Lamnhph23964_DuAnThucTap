@@ -5,6 +5,7 @@ import com.example.savis_intern_project.entity.Employee;
 import com.example.savis_intern_project.entity.Product;
 import com.example.savis_intern_project.repository.CustomerRepository;
 import com.example.savis_intern_project.service.CustomerService;
+import com.example.savis_intern_project.service.EmployeeService;
 import com.example.savis_intern_project.service.serviceimpl.CustomerServiceImpl;
 import jakarta.persistence.Id;
 import jakarta.servlet.http.HttpSession;
@@ -27,6 +28,9 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    EmployeeService employeeService;
+
 //    @Autowired
 //    private ModelMapper modelMapper;
 
@@ -36,6 +40,16 @@ public class CustomerController {
             //Nếu đã đăng nhập vào trang index
             List<Customer> customerList = customerService.findAll() ;
             model.addAttribute("cusList", customerService.findAll());
+
+
+            String username = (String) session.getAttribute("username");
+            String password = (String) session.getAttribute("password");
+            Employee checkLogin = employeeService.login(username,password);
+            session.setAttribute("checkRole",employeeService.checkRole(username));
+
+            session.setAttribute("Name", checkLogin);
+            model.addAttribute("empLogin",checkLogin);
+
 
             return "/Customer/index";
         }
@@ -92,7 +106,14 @@ public class CustomerController {
     }
 
     @GetMapping("/viewAdd")
-    public String viewAdd(Model model) {
+    public String viewAdd(Model model,HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+        Employee checkLogin = employeeService.login(username,password);
+        session.setAttribute("checkRole",employeeService.checkRole(username));
+
+        session.setAttribute("Name", checkLogin);
+        model.addAttribute("empLogin",checkLogin);
         return "/Customer/add";
     }
 
@@ -149,6 +170,7 @@ public class CustomerController {
         customer.setStatus(status);
         customer.setUsername(username);
         customer.setPassword(password);
+        customer.setDatecreated(String.valueOf(currentDate));
 
 
         customerService.update(customer);
@@ -162,16 +184,23 @@ public class CustomerController {
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(Model model, @PathVariable("id") UUID id) {
+    public String detail(Model model, @PathVariable("id") UUID id,HttpSession session) {
         model.addAttribute("cus", customerService.detail(id));
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+        Employee checkLogin = employeeService.login(username,password);
+        session.setAttribute("checkRole",employeeService.checkRole(username));
 
+        session.setAttribute("Name", checkLogin);
+        model.addAttribute("empLogin",checkLogin);
         return "/Customer/detail";
 
     }
 
     @GetMapping("/timKiem")
     public String timKiem(Model model,
-                          @RequestParam("phone1")String phone) {
+                          @RequestParam("phone1")String phone,
+                          HttpSession session) {
 
 
         if(phone==""){
@@ -180,7 +209,13 @@ public class CustomerController {
         else{
             model.addAttribute("tim",customerService.timKiem(phone));
         }
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+        Employee checkLogin = employeeService.login(username,password);
+        session.setAttribute("checkRole",employeeService.checkRole(username));
 
+        session.setAttribute("Name", checkLogin);
+        model.addAttribute("empLogin",checkLogin);
         return "/Customer/index";
 
     }
