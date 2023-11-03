@@ -11,5 +11,5 @@ import java.util.ArrayList;
 @Getter
 @Setter
 public class OrderCart {
-    private ArrayList<Item> items;
+    private ArrayList<BillDetail> billDetails;
 }

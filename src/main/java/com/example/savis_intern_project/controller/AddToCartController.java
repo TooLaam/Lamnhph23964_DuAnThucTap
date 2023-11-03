@@ -66,6 +66,52 @@ public class AddToCartController {
                 cartDetail.setProductDetail(productDetail);
                 cartDetailService.save(cartDetail);
             }
+        }else{
+            OrderCart cartSession = (OrderCart) httpSession.getAttribute("OrderCart");
+            if (productDetail == null) {
+                // Xử lý trường hợp sản phẩm không tồn tại, ví dụ: thông báo lỗi.
+                return "redirect:/error";
+            }
+
+            UUID productId1 = productDetail.getId();
+            String tenSanPham = productDetail.getProduct().getName();
+            BigDecimal price = productDetail.getPrice();
+            BillDetail item = new BillDetail();
+            item.setPrice(price);
+            item.setProductDetail(productDetailServiceimpl.getOne(productId1));
+//        item.setBill(b);
+            item.setQuantity(1);
+
+            if (cartSession == null) {
+                OrderCart cart = new OrderCart();
+                ArrayList<BillDetail> list = new ArrayList<>();
+                list.add(item);
+                cart.setBillDetails(list);
+                httpSession.setAttribute("OrderCart", cart);
+            } else {
+//            OrderCart cart = (OrderCart) httpSession.getAttribute("OrderCart");
+                if (cartSession == null) {
+                    // Xử lý trường hợp giỏ hàng không tồn tại, ví dụ: thông báo lỗi.
+                    return "redirect:/error";
+                }
+
+                ArrayList<BillDetail> listItem = cartSession.getBillDetails();
+                if (listItem == null) {
+                    // Tạo danh sách mới nếu nó chưa tồn tại.
+                    listItem = new ArrayList<>();
+                }
+
+                for (BillDetail itemTmp : listItem) {
+                    if (itemTmp.getProductDetail().getId().equals(productId1)) {
+                        itemTmp.setQuantity(itemTmp.getQuantity() + 1);
+                        itemTmp.setPrice(price.multiply(BigDecimal.valueOf(itemTmp.getQuantity())));
+                        return "redirect:/viewOrderCart";
+                    }
+                }
+                listItem.add(item);
+                cartSession.setBillDetails(listItem);
+            }
+            return "redirect:/viewOrderCart";
         }
 
         /*CartDetailView cartDetailView = new CartDetailView();
@@ -138,6 +184,9 @@ public class AddToCartController {
 //            listItem.add(item);
             cart.setItems(listItem);
         }*/
+
+
+
         return "redirect:/viewOrderCart";
     }
 
@@ -254,18 +303,18 @@ public class AddToCartController {
         } else {
             OrderCart cart = (OrderCart) httpSession.getAttribute("OrderCart");
 
-            if (cart == null || cart.getItems().isEmpty()) {
+            if (cart == null || cart.getBillDetails().isEmpty()) {
                 // Giỏ hàng trống, thực hiện xử lý tại đây
                 model.addAttribute("emptyCart", true);
                 model.addAttribute("view", "/cart/index.jsp");
                 return "/customerFE/index";
             }
 
-            ArrayList<Item> list = cart.getItems();
+            ArrayList<BillDetail> list = cart.getBillDetails();
             BigDecimal itemTotal = BigDecimal.ZERO;
             Integer quantity = 0;
 
-            for (Item liItem : list) {
+            for (BillDetail liItem : list) {
                 BigDecimal total;
                 total = liItem.getPrice();
                 quantity += liItem.getQuantity();
@@ -283,9 +332,9 @@ public class AddToCartController {
     }
 
 
-    @GetMapping("/add")
-    public String themGioHang1() {
-        ProductDetail productDetail = productDetailServiceimpl.getOne(productId);
+    @GetMapping("/add/{id}")
+    public String themGioHang1(@PathVariable("id") UUID id) {
+        ProductDetail productDetail = productDetailServiceimpl.getOne(id);
         OrderCart cartSession = (OrderCart) httpSession.getAttribute("OrderCart");
         if (productDetail == null) {
             // Xử lý trường hợp sản phẩm không tồn tại, ví dụ: thông báo lỗi.
@@ -295,13 +344,17 @@ public class AddToCartController {
         UUID productId1 = productDetail.getId();
         String tenSanPham = productDetail.getProduct().getName();
         BigDecimal price = productDetail.getPrice();
-        Item item = new Item(productId1, tenSanPham, 1, price);
+        BillDetail item = new BillDetail();
+        item.setPrice(price);
+        item.setProductDetail(productDetailServiceimpl.getOne(productId1));
+//        item.setBill(b);
+        item.setQuantity(1);
 
         if (cartSession == null) {
             OrderCart cart = new OrderCart();
-            ArrayList<Item> list = new ArrayList<>();
+            ArrayList<BillDetail> list = new ArrayList<>();
             list.add(item);
-            cart.setItems(list);
+            cart.setBillDetails(list);
             httpSession.setAttribute("OrderCart", cart);
         } else {
 //            OrderCart cart = (OrderCart) httpSession.getAttribute("OrderCart");
@@ -310,21 +363,21 @@ public class AddToCartController {
                 return "redirect:/error";
             }
 
-            ArrayList<Item> listItem = cartSession.getItems();
+            ArrayList<BillDetail> listItem = cartSession.getBillDetails();
             if (listItem == null) {
                 // Tạo danh sách mới nếu nó chưa tồn tại.
                 listItem = new ArrayList<>();
             }
 
-            for (Item itemTmp : listItem) {
-                if (itemTmp.getIdProduct().equals(productId1)) {
+            for (BillDetail itemTmp : listItem) {
+                if (itemTmp.getProductDetail().getId().equals(productId1)) {
                     itemTmp.setQuantity(itemTmp.getQuantity() + 1);
                     itemTmp.setPrice(price.multiply(BigDecimal.valueOf(itemTmp.getQuantity())));
                     return "redirect:/viewOrderCart";
                 }
             }
             listItem.add(item);
-            cartSession.setItems(listItem);
+            cartSession.setBillDetails(listItem);
         }
         return "redirect:/viewOrderCart";
     }

@@ -65,49 +65,50 @@
                 </a>
             </li><!-- End Search Icon-->
 
-            <c:if test="${Name != null}" >
-            <li class="nav-item dropdown pe-3">
+            <c:if test="${Name != null}">
+                <li class="nav-item dropdown pe-3">
 
-                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="${empLogin.image}" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">${empLogin.fullName}</span>
-                </a><!-- End Profile Iamge Icon -->
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <img src="${empLogin.image}" alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">${empLogin.fullName}</span>
+                    </a><!-- End Profile Iamge Icon -->
 
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                    <li class="dropdown-header">
-                        <h5>${empLogin.fullName}</h5>
-                        <h6>${empLogin.role.name}</h6>
-                        <span>${empLogin.email}</span>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header">
+                            <h5>${empLogin.fullName}</h5>
+                            <h6>${empLogin.role.name}</h6>
+                            <span>${empLogin.email}</span>
 
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="/employee/detail/${empLogin.id}">
-                            <i class="bi bi-person"></i>
-                            <span>My Profile</span>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="/employee/detail/${empLogin.id}">
+                                <i class="bi bi-person"></i>
+                                <span>My Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
 
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="/logout">
+                                    <%--<i class="bi bi-box-arrow-right"></i>--%>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" style="margin-right: 10px;"
+                                     viewBox="0 0 512 512">
+                                    <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/>
+                                </svg>
+                                <span>Sign Out</span>
+                            </a>
+                        </li>
 
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="/logout">
-                            <%--<i class="bi bi-box-arrow-right"></i>--%>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" style="margin-right: 10px;" viewBox="0 0 512 512">
-                                <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/>
-                            </svg>
-                            <span>Sign Out</span>
-                        </a>
-                    </li>
-
-                </ul><!-- End Profile Dropdown Items -->
-            </li><!-- End Profile Nav -->
+                    </ul><!-- End Profile Dropdown Items -->
+                </li>
+                <!-- End Profile Nav -->
             </c:if>
 
         </ul>
@@ -121,7 +122,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="/tong_quan">
+            <a class="nav-link " href="/statisticsResult">
                 <i class="bi bi-grid"></i>
                 <span>Overview</span>
             </a>
@@ -129,11 +130,12 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-menu-button-wide"></i><span>Management</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-menu-button-wide"></i><span>Product Management</span><i
+                    class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="/san_pham">
+                    <a href="/product/index">
                         <i class="bi bi-circle"></i><span>Product</span>
                     </a>
                 </li>
@@ -148,22 +150,28 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/customer/index">
-                        <i class="bi bi-circle"></i><span>Customer</span>
+                    <a href="/brand/index">
+                        <i class="bi bi-circle"></i><span>Brand</span>
                     </a>
                 </li>
+            </ul>
+        </li><!-- End Components Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i><span>User Management</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="/employee/index">
                         <i class="bi bi-circle"></i><span>Employee</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/product/index">
-                        <i class="bi bi-circle"></i><span>Product</span>
+                    <a href="/customer/index">
+                        <i class="bi bi-circle"></i><span>Customer</span>
                     </a>
                 </li>
-
-
             </ul>
         </li><!-- End Components Nav -->
 
@@ -190,7 +198,8 @@
                         <i class="bi bi-person"></i>
                         <span>Log in</span>
                     </a>
-                </li><!-- End Profile Page Nav -->
+                </li>
+                <!-- End Profile Page Nav -->
             </c:when>
             <c:otherwise>
                 <li class="nav-item">
@@ -198,24 +207,28 @@
                         <i class="bi bi-person"></i>
                         <span>Profile</span>
                     </a>
-                </li><!-- End Profile Page Nav -->
+                </li>
+                <!-- End Profile Page Nav -->
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="users-profile.html">
                         <i class="bi bi-person"></i>
                         <span>Register</span>
                     </a>
-                </li><!-- End Register Page Nav -->
+                </li>
+                <!-- End Register Page Nav -->
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="/logout">
-                        <%--<i class="bi bi-box-arrow-right"></i>--%>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" style="margin-right: 10px;" viewBox="0 0 512 512">
+                            <%--<i class="bi bi-box-arrow-right"></i>--%>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" style="margin-right: 10px;"
+                             viewBox="0 0 512 512">
                             <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/>
                         </svg>
                         <span>Sign Out</span>
                     </a>
-                </li><!-- End Sign Out Page Nav -->
+                </li>
+                <!-- End Sign Out Page Nav -->
             </c:otherwise>
         </c:choose>
 

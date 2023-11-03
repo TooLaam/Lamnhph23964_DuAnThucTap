@@ -86,22 +86,19 @@
                     <th>Product</th>
                     <th>Price</th>
                     <th>Quantity</th>
-                    <th>Price</th>
+                    <th>Total</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${cartDetail}" var="gh">
                     <tr>
-                        <%--<td>${gh.productName}</td>
-                        <td>${gh.price}</td>
+                        <td>${gh.productDetail.product.name}</td>
+                        <td>${gh.productDetail.price}</td>
                         <td>${gh.quantity}</td>
-                        <td style="font-weight: bold;color: red">${gh.price}VND</td>--%>
-                        <td>${gh.name}</td>
-                            <td>${gh.quantity}</td>
-                        <td>${gh.price}</td>
-                        <td style="font-weight: bold;color: red">${gh.price}VND</td>
+                        <td>${gh.productDetail.price * gh.quantity}VND</td>
                     </tr>
                 </c:forEach>
+
                 </tbody>
             </table>
             <%--<h4>Total: ${total}</h4>--%>

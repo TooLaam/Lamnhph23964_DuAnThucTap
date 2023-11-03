@@ -55,15 +55,15 @@ public class PaymentC {
         }
         else{
             OrderCart cart = (OrderCart) session.getAttribute("OrderCart");
-            if (cart == null || cart.getItems().isEmpty()) {
+            if (cart == null || cart.getBillDetails().isEmpty()) {
                 return "redirect:/viewOrderCart";  // Chuyển hướng người dùng nếu giỏ hàng trống
             }
 
-            ArrayList<Item> list = cart.getItems();
+            ArrayList<BillDetail> list = cart.getBillDetails();
             BigDecimal itemTotal = BigDecimal.ZERO;
             Integer quantity = 0;
 
-            for (Item liItem : list) {
+            for (BillDetail liItem : list) {
                 BigDecimal total;
                 total = liItem.getPrice();
                 quantity += liItem.getQuantity();
@@ -153,13 +153,13 @@ public class PaymentC {
         else {
 
             OrderCart cart = (OrderCart) session.getAttribute("OrderCart");
-            if (cart == null || cart.getItems().isEmpty()) {
+            if (cart == null || cart.getBillDetails().isEmpty()) {
                 return "redirect:/viewOrderCart";  // Chuyển hướng người dùng nếu giỏ hàng trống
             }
-            ArrayList<Item> list = cart.getItems();
+            ArrayList<BillDetail> list = cart.getBillDetails();
             BigDecimal totalMoney = BigDecimal.ZERO;
 
-            for (Item liItem : list) {
+            for (BillDetail liItem : list) {
                 totalMoney = liItem.getPrice();
                 break;
             }
@@ -191,9 +191,9 @@ public class PaymentC {
             bill = billService.create_new_bill(bill);
 
 // Tạo danh sách Chi Tiết Hóa Đơn
-            for (Item liItem : list) {
+            for (BillDetail liItem : list) {
                 BillDetail billDetail = new BillDetail();
-                billDetail.setProductDetail(productDetailServiceimpl.getOne(liItem.getIdProduct()));
+                billDetail.setProductDetail(productDetailServiceimpl.getOne(liItem.getProductDetail().getId()));
                 billDetail.setQuantity(liItem.getQuantity());
                 billDetail.setPrice(liItem.getPrice());
                 billDetail.setPrice(liItem.getPrice());
