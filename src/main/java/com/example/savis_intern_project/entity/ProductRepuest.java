@@ -2,6 +2,7 @@ package com.example.savis_intern_project.entity;
 
 import jakarta.persistence.Entity;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -14,7 +15,7 @@ import java.util.UUID;
 
 public class ProductRepuest {
 
-    private List<String> files;
+    private List<MultipartFile> files;
     private BigDecimal importPrice;
     private BigDecimal price;
     private Integer quantity;
