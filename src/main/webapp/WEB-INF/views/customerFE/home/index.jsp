@@ -57,3 +57,10 @@
     </div>
 </div>
 <br />
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+        intent="WELCOME"
+        chat-title="CHAT_BOT"
+        agent-id="f11829aa-4fa2-4ada-b34f-4d257015173c"
+        language-code="vi"
+></df-messenger>
