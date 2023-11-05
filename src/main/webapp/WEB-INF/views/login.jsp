@@ -15,6 +15,59 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <title>Login</title>
+    <style>
+        #modal-container{
+            height: 100vh;
+            background: rgba(0, 0,0,0.5);
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            opacity: 0;
+            pointer-events: none;
+        }
+        #modal-container.show{
+            opacity: 1;
+            pointer-events: all;
+        }
+        #modal-container.show #modal{
+            margin-top: 5px;
+        }
+        #modal{
+            background: #fff;
+            max-width: 500px;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 0px;
+            transition: all 0.3s ease-in-out;
+
+        }
+        #modal .modal-header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #dedede;
+        }
+        #modal .modal-header h3{
+            margin: 0;
+        }
+        button#btn-close{
+            outline: none;
+            border: none;
+            background: none;
+            font-size: 19px;
+        }
+        #modal .modal-body{
+            padding: 10px 20px 15px;
+        }
+        #btn-open{
+            background: none;
+            border: none;
+            padding-top:  15px;
+        }
+    </style>
 </head>
 
 <body>
@@ -40,7 +93,7 @@
                 <div class="form">
                     <h3>Log in</h3>
                     <div class="text-log">
-                        <a href="/signup/index.html" class="link-text">Sign up</a>
+                        <a id="btn-open" class="link-text">Sign up</a>
                     </div>
                     <form action="/loginOK" method="post">
                         <div class="mb-3">
@@ -60,6 +113,9 @@
                         <c:if test="${erCheckRole != null}" >
                             <p style="color: red">${erCheckRole}</p>
                         </c:if>
+                        <c:if test="${sigsUp != null}" >
+                            <p style="color: black">${sigsUp}</p>
+                        </c:if>
                         <div class="d-grid">
                             <button type="submit" class="btn login">LOG IN</button>
                         </div>
@@ -72,6 +128,75 @@
     </div>
     <br />
 </div>
+
+<div id="modal-container" >
+    <div id="modal">
+        <div class="modal-header">
+            <h3>Register</h3>
+            <button id="btn-close">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"  style="width: 15px; height: 15px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <form class="form1" action="/customer/addLogin" method="post">
+                <div class="form-group">
+                    <b><label class="form-label">Full Name:</label></b>
+                    <input type="text" class="form-control"  name="fullname" />
+
+                    <b> <label class="form-label">Date Of Birth</label></b>
+                    <input type="date" class="form-control"  name="dateofbirth" />
+
+                    <b> <label class="form-label">Address</label></b>
+                    <input type="text" class="form-control"   name="address" />
+
+                    <b><label class="form-label">Phone Number</label></b>
+                    <input type="number" class="form-control"  name="phone" />
+
+                    <b><label class="form-label">Gender</label></b>
+                    <br />
+                    <select class="form-select" aria-label="Default select example" name="gender">
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+
+                    </select>
+
+                    <b><label class="form-label">Email</label></b>
+                    <input type="email" class="form-control"  name="email" />
+
+
+                    <b><label class="form-label">Username</label></b>
+                    <input type="text" class="form-control"  name="username" />
+
+                    <b><label class="form-label">Password</label></b>
+                    <input type="password" class="form-control"  name="password" />
+
+
+                </div>
+
+                <button type="submit" class="btn btn-default">Sign Up</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    const btn_open = document.getElementById('btn-open');
+    const btn_close = document.getElementById('btn-close');
+    const modal_container = document.getElementById('modal-container');
+    btn_open.addEventListener('click', ()=>{
+        modal_container.classList.add('show')
+    });
+    btn_close.addEventListener('click', ()=>{
+        modal_container.classList.remove('show')
+
+    });
+</script>
 </body>
 
 </html>

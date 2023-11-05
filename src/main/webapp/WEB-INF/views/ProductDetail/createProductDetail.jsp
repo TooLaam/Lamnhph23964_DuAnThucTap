@@ -68,13 +68,15 @@
                         </div>
                         <div class="form-group">
                             Image :
-                            <label for="listImages"> <img src="/assets/img/product/${detailSP.listImages.name}" height="45xp" width="45px"></label>
-                            <c:forEach items="${listProductImage}" var="listImages">
-                                <input type="checkbox" id="listImages" name="listImages" value="${listImages.id}"  multiple>
-                                <label for="listImages"> <img src="/assets/img/product/${listImages.name}" height="45xp" width="45px"></label>
-                            </c:forEach>
-
-                            <input class="form-control" type="file" name="files"  multiple>
+<%--                            <label for="listImages"> <img src="/assets/img/product/${detailSP.listImages.name}" height="45xp" width="45px"></label>--%>
+<%--                            <c:forEach items="${listProductImage}" var="listImages">--%>
+<%--                                <input type="checkbox" id="listImages" name="listImages" value="${listImages.id}"  multiple>--%>
+<%--                                <label for="listImages"> <img src="/assets/img/product/${listImages.name}" height="45xp" width="45px"></label>--%>
+<%--                            </c:forEach>--%>
+<%--                            <form action="upload" method="post" enctype="multipart/form-data">--%>
+                                <input type="file" name="files" multiple="multiple" />
+<%--                                <input type="submit" value="Tải lên" />--%>
+<%--                            </form>--%>
 
                         </div>
                         <input type="submit" class="btn btn-primary" value="Add" style="margin-top: 10px">

@@ -7,7 +7,7 @@
     <h1>Category</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="/statisticsResult">Home</a></li>
             <li class="breadcrumb-item active">Overview</li>
             <li class="breadcrumb-item active">Category</li>
         </ol>

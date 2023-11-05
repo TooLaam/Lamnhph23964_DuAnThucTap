@@ -1,36 +1,3 @@
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-
-<%--<html>--%>
-
-<%--<head>--%>
-<%--    <title>Title</title>--%>
-<%--    <link--%>
-<%--            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"--%>
-<%--            rel="stylesheet"--%>
-<%--            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"--%>
-<%--            crossorigin="anonymous"--%>
-<%--    />--%>
-<%--    <script--%>
-<%--            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"--%>
-<%--            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"--%>
-<%--            crossorigin="anonymous"--%>
-<%--    ></script>--%>
-<%--    <script--%>
-<%--            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"--%>
-<%--            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"--%>
-<%--            crossorigin="anonymous"--%>
-<%--    ></script>--%>
-<%--</head>--%>
-<%--<body class="container">--%>
-
-
-<%--</body>--%>
-<%--</html>--%>
-
-
-
-
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -46,25 +13,8 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
 
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous"
-    />
-    <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-    ></script>
-    <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
-    ></script>
-
     <!-- Favicons -->
-    <link href="/assets/img/logo.png" rel="icon">
+    <link href="/assets/img/apple-touch-icon.png" rel="icon">
     <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -116,50 +66,7 @@
                 </a>
             </li><!-- End Search Icon-->
 
-<%--            <c:if test="${Name != null}" >--%>
-<%--                <li class="nav-item dropdown pe-3">--%>
 
-<%--                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">--%>
-<%--                        <img src="${empLogin.image}" alt="Profile" class="rounded-circle">--%>
-<%--                        <span class="d-none d-md-block dropdown-toggle ps-2">${empLogin.fullName}</span>--%>
-<%--                    </a><!-- End Profile Iamge Icon -->--%>
-
-<%--                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">--%>
-<%--                        <li class="dropdown-header">--%>
-<%--                            <h5>${empLogin.fullName}</h5>--%>
-<%--                            <h6>${empLogin.role.name}</h6>--%>
-<%--                            <span>${empLogin.email}</span>--%>
-
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <hr class="dropdown-divider">--%>
-<%--                        </li>--%>
-
-<%--                        <li>--%>
-<%--                            <a class="dropdown-item d-flex align-items-center" href="/employee/detail/${empLogin.id}">--%>
-<%--                                <i class="bi bi-person"></i>--%>
-<%--                                <span>My Profile</span>--%>
-<%--                            </a>--%>
-<%--                        </li>--%>
-<%--                        <li>--%>
-<%--                            <hr class="dropdown-divider">--%>
-<%--                        </li>--%>
-
-
-
-<%--                        <li>--%>
-<%--                            <a class="dropdown-item d-flex align-items-center" href="/logout">--%>
-<%--                                    &lt;%&ndash;<i class="bi bi-box-arrow-right"></i>&ndash;%&gt;--%>
-<%--                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" style="margin-right: 10px;" viewBox="0 0 512 512">--%>
-<%--                                    <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/>--%>
-<%--                                </svg>--%>
-<%--                                <span>Sign Out</span>--%>
-<%--                            </a>--%>
-<%--                        </li>--%>
-
-<%--                    </ul><!-- End Profile Dropdown Items -->--%>
-<%--                </li><!-- End Profile Nav -->--%>
-<%--            </c:if>--%>
 
         </ul>
     </nav><!-- End Icons Navigation -->
@@ -172,7 +79,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="/tong_quan">
+            <a class="nav-link" href="/statisticsResult">
                 <i class="bi bi-grid"></i>
                 <span>Overview</span>
             </a>
@@ -180,11 +87,12 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-menu-button-wide"></i><span>Management</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-menu-button-wide"></i><span>Product Management</span><i
+                    class="bi bi-chevron-down ms-auto"></i>
             </a>
             <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="/san_pham">
+                    <a href="/product/index">
                         <i class="bi bi-circle"></i><span>Product</span>
                     </a>
                 </li>
@@ -199,22 +107,28 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/customer/index">
-                        <i class="bi bi-circle"></i><span>Customer</span>
+                    <a href="/brand/index">
+                        <i class="bi bi-circle"></i><span>Brand</span>
                     </a>
                 </li>
+            </ul>
+        </li><!-- End Components Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i><span>User Management</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="/employee/index">
                         <i class="bi bi-circle"></i><span>Employee</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/product/index">
-                        <i class="bi bi-circle"></i><span>Product</span>
+                    <a href="/customer/index">
+                        <i class="bi bi-circle"></i><span>Customer</span>
                     </a>
                 </li>
-
-
             </ul>
         </li><!-- End Components Nav -->
 
@@ -241,7 +155,8 @@
                         <i class="bi bi-person"></i>
                         <span>Log in</span>
                     </a>
-                </li><!-- End Profile Page Nav -->
+                </li>
+                <!-- End Profile Page Nav -->
             </c:when>
             <c:otherwise>
                 <li class="nav-item">
@@ -249,24 +164,28 @@
                         <i class="bi bi-person"></i>
                         <span>Profile</span>
                     </a>
-                </li><!-- End Profile Page Nav -->
+                </li>
+                <!-- End Profile Page Nav -->
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="/employee/viewAdd">
                         <i class="bi bi-person"></i>
                         <span>Register</span>
                     </a>
-                </li><!-- End Register Page Nav -->
+                </li>
+                <!-- End Register Page Nav -->
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="/logout">
                             <%--<i class="bi bi-box-arrow-right"></i>--%>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" style="margin-right: 10px;" viewBox="0 0 512 512">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" style="margin-right: 10px;"
+                             viewBox="0 0 512 512">
                             <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/>
                         </svg>
                         <span>Sign Out</span>
                     </a>
-                </li><!-- End Sign Out Page Nav -->
+                </li>
+                <!-- End Sign Out Page Nav -->
             </c:otherwise>
         </c:choose>
 
@@ -274,10 +193,15 @@
 
 </aside><!-- End Sidebar-->
 
-<div   style="float: right;margin-top: 70px; margin-right: 40px;width: 1150px">
-
+<div style="float: right;margin-top: 70px; margin-right: 40px;width: 1150px">
     <form action="/customer/update" method="post">
-        <div><h1>Info Customer</h1></div>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><h1>Info Customer</h1></li>
+                <li style="margin-top: 20px" class="breadcrumb-item"><a href="/customer/index">Home</a></li>
+            </ol>
+        </nav>
+
         <div class="border">
             <div class="row" style="margin-top: 50px;">
                 <div class="col-md-6">
@@ -335,8 +259,6 @@
 
         <button type="submit" class="btn btn-primary">Edit</button>
     </form>
-
-
 </div>
 
 <!-- ======= Footer ======= -->
@@ -365,4 +287,3 @@
 </body>
 
 </html>
-

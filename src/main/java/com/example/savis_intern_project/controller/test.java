@@ -70,4 +70,10 @@ public class test {
         model.addAttribute("view", "/tai_khoan/thong_tin_tai_khoan.jsp");
         return "khach_hang/index";
     }
+    @GetMapping("/blog")
+    public String y(Model model) {
+
+        model.addAttribute("view", "/blog/index.jsp");
+        return "blog/index";
+    }
 }

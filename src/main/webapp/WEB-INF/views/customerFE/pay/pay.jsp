@@ -1,5 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<head>
+    <style>
+        <%@include file="style.css" %>
+    </style>
+</head>
+
+<br />
 <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -58,16 +66,14 @@
                     </c:choose>
                 </div>
                 <div class="form-group">
-                    <label for="addressDelivery">Payment:</label>
-                    <div class="form-check">
-                        <input class="form-check-input" value="2f7fbcf3-3007-4180-a5fe-84d2bcdf171b" type="radio" name="PaymentId" id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
+                    <div class="py-3">
+                        <label for="addressDelivery" class="form-label">Payment:</label>
+                        <input class="btn-check" value="2f7fbcf3-3007-4180-a5fe-84d2bcdf171b" type="radio" name="PaymentId" id="flexRadioDefault1">
+                        <label class="btn" for="flexRadioDefault1">
                             Ship (COD)
                         </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" value="1f7fbcf3-3007-4180-a5fe-84d2bcdf171b" type="radio" name="PaymentId" id="flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
+                        <input class="btn-check" value="1f7fbcf3-3007-4180-a5fe-84d2bcdf171b" type="radio" name="PaymentId" id="flexRadioDefault2" checked>
+                        <label class="btn" for="flexRadioDefault2">
                             Bank transfer
                         </label>
                     </div>
@@ -75,7 +81,7 @@
                         <div class="alert alert-danger">${addressDeliveryError}</div>
                     </c:if>
                 </div>
-                <button type="submit" class="btn btn-primary">Place Order</button>
+                <button type="submit" class="btn">Place Order</button>
             </form>
         </div>
         <div class="col-md-6">
@@ -86,26 +92,23 @@
                     <th>Product</th>
                     <th>Price</th>
                     <th>Quantity</th>
-                    <th>Price</th>
+                    <th>Total</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${cartDetail}" var="gh">
                     <tr>
-                        <%--<td>${gh.productName}</td>
-                        <td>${gh.price}</td>
+                        <td>${gh.productDetail.product.name}</td>
+                        <td>${gh.productDetail.price}</td>
                         <td>${gh.quantity}</td>
-                        <td style="font-weight: bold;color: red">${gh.price}VND</td>--%>
-                        <td>${gh.name}</td>
-                            <td>${gh.quantity}</td>
-                        <td>${gh.price}</td>
-                        <td style="font-weight: bold;color: red">${gh.price}VND</td>
+                        <td>${gh.productDetail.price * gh.quantity}VND</td>
                     </tr>
                 </c:forEach>
+
                 </tbody>
             </table>
-            <%--<h4>Total: ${total}</h4>--%>
             <h4>Total: ${cart.totalMoney}</h4>
         </div>
     </div>
 </div>
+<br />

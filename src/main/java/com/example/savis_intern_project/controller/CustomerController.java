@@ -145,6 +145,36 @@ public class CustomerController {
         return "redirect:/customer/index";
     }
 
+
+    @PostMapping("/addLogin")
+    public String themMoiLogin(Model model,
+
+                               @RequestParam("fullname") String fullname,
+                               @RequestParam("dateofbirth") String dateofbirth,
+                               @RequestParam("address") String address,
+                               @RequestParam("phone") String phone,
+                               @RequestParam("email") String email,
+                               @RequestParam("gender") int gender,
+                               @RequestParam("username") String username,
+                               @RequestParam("password") String password
+    ) {
+        Customer customer = new Customer();
+        Date currentDate = new Date(System.currentTimeMillis());
+        customer.setFullname(fullname);
+        customer.setDateofbirth(Date.valueOf(dateofbirth) );
+        customer.setAddress(address);
+        customer.setPhone(phone);
+        customer.setDatecreated(String.valueOf(currentDate) );
+        customer.setEmail(email);
+        customer.setGender(gender);
+        customer.setStatus(1);
+        customer.setUsername(username);
+        customer.setPassword(password);
+        customerService.add(customer);
+        model.addAttribute("sigsUp","Sign Up Success !!! please log in");
+        return "login";
+    }
+
     @PostMapping("/update")
     public String update(Model model,
                          @RequestParam("id") UUID id,

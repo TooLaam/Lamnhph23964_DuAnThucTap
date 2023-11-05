@@ -8,45 +8,26 @@
 <div class="container">
     <img src="/assets/img/banner/banner3.jpg" class="banner" alt="" />
     <div class="row">
-        <c:forEach items="${listProduct}" var="sp">
+        <c:forEach items="${uniqueQuantityProducts}" var="sp">
             <div class="col-md-3 col-6">
-                <a href="/product/index.html" class="link-recommend">
-<%--                    <img src="/assets/img/${sp.imageUrl}" class="img-recommend" alt="" />--%>
-                    <div class="overlay">${sp.name}</div>
+                <a href="/product/indexcus/brand/${sp.brand.id}" class="link-recommend">
+                    <img src="/assets/img/product/${sp.image}" class="img-recommend" alt="" />
+                    <div class="overlay">${sp.brand.name}</div>
                 </a>
             </div>
         </c:forEach>
     </div>
     <div class="frame">
-        <p>Deals Of The Month</p>
+        <p>New Product</p>
         <div class="row">
-            <c:forEach items="${listProduct}" var="sp">
+            <c:forEach items="${productSortByCreatedDate}" var="sp">
                 <div class="col-md-3 col-6">
                     <div class="thumnail">
-                        <a href="../detail/${sp.id}">
-<%--                            <img src="/assets/img/${sp.imageUrl}" alt="" />--%>
+                        <a href="/product_detail/indexcus/${sp.productDetailId}">
+                            <img src="/assets/img/product/${sp.image}">
                             <div class="caption">
                                 <p>${sp.name}</p>
-                                <td><img src="/assets/img/brand/${sp.brand.image}" width="100px" height="100px"></td>
-                                <span class="sold">${sp.sold} sold</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </c:forEach>
-        </div>
-    </div>
-    <div class="frame">
-        <p>New Arrivals</p>
-        <div class="row">
-            <c:forEach items="${listProduct}" var="sp">
-                <div class="col-md-3 col-6">
-                    <div class="thumnail">
-                        <a href="../detail/${sp.id}">
-<%--                            <img src="/assets/img/${sp.imageUrl}" alt="" />--%>
-                            <div class="caption">
-                                <p>${sp.name}</p>
-                                <td><img src="/assets/img/brand/${sp.brand.image}" width="100px" height="100px"></td>
+                                <span class="price">$${sp.price}</span>
                                 <span class="sold">${sp.sold} sold</span>
                             </div>
                         </a>
@@ -58,14 +39,14 @@
     <div class="frame">
         <p>Best selling</p>
         <div class="row">
-            <c:forEach items="${listProduct}" var="sp">
+            <c:forEach items="${productSortBySold}" var="sp">
                 <div class="col-md-3 col-6">
                     <div class="thumnail">
-                        <a href="../detail/${sp.id}">
-<%--                            <img src="/assets/img/${sp.imageUrl}" alt="" />--%>
+                        <a href="/product_detail/indexcus/${sp.productDetailId}">
+                            <img src="/assets/img/product/${sp.image}">
                             <div class="caption">
                                 <p>${sp.name}</p>
-                                <td><img src="/assets/img/brand/${sp.brand.image}" width="100px" height="100px"></td>
+                                <span class="price">$${sp.price}</span>
                                 <span class="sold">${sp.sold} sold</span>
                             </div>
                         </a>
@@ -76,3 +57,10 @@
     </div>
 </div>
 <br />
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+        intent="WELCOME"
+        chat-title="CHAT_BOT"
+        agent-id="f11829aa-4fa2-4ada-b34f-4d257015173c"
+        language-code="vi"
+></df-messenger>

@@ -22,6 +22,8 @@ public class CartdetailServiceImpl implements CartdetailService  {
     @Autowired
     ProductResponsitory productResponsitory;
     @Autowired
+    ProductImageResponsitory productImageResponsitory;
+    @Autowired
     CartRepository cartRepository;
     @Autowired
     ColorResponsitory colorRepository;
@@ -64,6 +66,15 @@ public class CartdetailServiceImpl implements CartdetailService  {
                     c.setProductDetailId(productDetail.getId());
                     c.setCart(cart);
                     c.setProductDetail(productDetail);
+
+                    ProductImage productImage = productImageResponsitory.findByProductDetailId(productDetail.getId()).get(0);
+
+                    if (productImage != null) {
+                        c.setImage(productImage.getName());
+                    }
+                    else{
+                        c.setImage("deafault.png");
+                    }
 
                     cs.add(c);
                 }

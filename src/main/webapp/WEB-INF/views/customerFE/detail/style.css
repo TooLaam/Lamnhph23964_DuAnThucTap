@@ -67,6 +67,8 @@
     border-radius: 20px;
     background-color: white;
     float: right;
+    text-decoration: none;
+    padding: 0.7rem;
 }
 .fa-heart-o:hover{
     color: white !important;
@@ -111,7 +113,7 @@ img{
 .product-content-product-color-img{
     width: 40px;
     height: 40px;
-    border: 1px solid #333;
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -119,12 +121,12 @@ img{
     border-radius: 50%;
 }
 .product-content-product-color-img:hover{
-    border: 2.5px solid #333;
+    border: 1px solid #333;
 }
 .product-content-product-color-img-active{
     width: 40px;
     height: 40px;
-    border: 2.5px solid #333;
+    border: 1px solid #333;
     display: flex;
     align-items: center;
     justify-content: center;

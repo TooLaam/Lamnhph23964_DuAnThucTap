@@ -44,41 +44,72 @@ public class ProductDetailController {
     @Autowired
     private ProductImageResponsitory productImageResponsitory;
     private final Path root = Paths.get("src/main/resources/static/assets/img/product");
+
     @GetMapping("/index")
-    public String hienThi(Model model){
-        model.addAttribute("listProduct",productServiceimpl.getAll());
-        model.addAttribute("listColor",colorServiceimpl.getAll());
-        model.addAttribute("listProductImage",productImageServiceimpl.getAll());
-        model.addAttribute("listProductDetail",productDetailServiceimpl.getAll());
-        model.addAttribute("ProductDetail",new ProductDetail());
+    public String hienThi(Model model) {
+        model.addAttribute("listProduct", productServiceimpl.getAll());
+        model.addAttribute("listColor", colorServiceimpl.getAll());
+        model.addAttribute("listProductImage", productImageServiceimpl.getAll());
+        model.addAttribute("listProductDetail", productDetailServiceimpl.getAll());
+        model.addAttribute("ProductDetail", new ProductDetail());
         model.addAttribute("view", "/ProductDetail/index.jsp");
         return "index";
     }
+
     @GetMapping("/create")
-    public String create(Model model){
-        model.addAttribute("listProduct",productServiceimpl.getAll());
-        model.addAttribute("listColor",colorServiceimpl.getAll());
-        model.addAttribute("listProductImage",productImageServiceimpl.getAll());
-        model.addAttribute("listProductDetail",productDetailServiceimpl.getAll());
-        model.addAttribute("ProductDetail",new ProductDetail());
+    public String create(Model model) {
+        model.addAttribute("listProduct", productServiceimpl.getAll());
+        model.addAttribute("listColor", colorServiceimpl.getAll());
+        model.addAttribute("listProductImage", productImageServiceimpl.getAll());
+        model.addAttribute("listProductDetail", productDetailServiceimpl.getAll());
+        model.addAttribute("ProductDetail", new ProductDetail());
         model.addAttribute("view", "/ProductDetail/createProductDetail.jsp");
         return "index";
     }
 
+    @GetMapping("/indexcus/{productDetailId}")
+    public String show_data_product_cus(@PathVariable("productDetailId") UUID productDetailId, Model model) {
 
-    @GetMapping("/indexcus/{productDetailId}" )
-    public String show_data_product_cus(@PathVariable("productDetailId") UUID productDetailId, Model model){
-
-        model.addAttribute("listProduct",productServiceimpl.getAllProduct().subList(0, 4));
-        model.addAttribute("productDetail",productDetailServiceimpl.getProductDetailById(productDetailId));
-        model.addAttribute("image",productImageServiceimpl.getByProductDetailId(productDetailId).get(0));
-        model.addAttribute("listImage",productImageServiceimpl.getByProductDetailId(productDetailId));
-        model.addAttribute("listColor",colorServiceimpl.getAllByProductDetailId(productDetailId));
+        model.addAttribute("listProduct", productServiceimpl.getAllProduct().subList(0, 4));
+        model.addAttribute("productDetail", productDetailServiceimpl.getProductDetailById(productDetailId));
+        model.addAttribute("image", productImageServiceimpl.getByProductDetailId(productDetailId).get(0));
+        model.addAttribute("listImage", productImageServiceimpl.getByProductDetailId(productDetailId));
+        model.addAttribute("listColor", colorServiceimpl.getAllByProductDetailId(productDetailId));
         model.addAttribute("view", "/detail/index.jsp");
         return "/customerFE/index";
     }
 
-//    @PostMapping("/add")
+    @GetMapping("/increase/{productDetailId}")
+    public String IncreaseProductDetail(@PathVariable("productDetailId") UUID productDetailId) {
+        ProductDetail productDetail = productDetailServiceimpl.getOne(productDetailId);
+
+        if (productDetail == null) {
+            // Xử lý trường hợp sản phẩm không tồn tại, ví dụ: thông báo lỗi.
+            return "redirect:/error";
+        }
+
+        productDetail.setQuantity(productDetail.getQuantity() + 1);
+        productDetailServiceimpl.update(productDetailId, productDetail);
+        return "redirect:/product_detail/indexcus/{productDetailId}";
+    }
+
+    @GetMapping("/reduce/{productDetailId}")
+    public String ReduceProductDetail(@PathVariable("productDetailId") UUID productDetailId) {
+        ProductDetail productDetail = productDetailServiceimpl.getOne(productDetailId);
+
+        if (productDetail == null) {
+            // Xử lý trường hợp sản phẩm không tồn tại, ví dụ: thông báo lỗi.
+            return "redirect:/error";
+        }
+
+        if(productDetail.getQuantity() > 1){
+            productDetail.setQuantity(productDetail.getQuantity() - 1);
+            productDetailServiceimpl.update(productDetailId, productDetail);
+        }
+        return "redirect:/product_detail/indexcus/{productDetailId}";
+    }
+
+    //    @PostMapping("/add")
 //    public String add(Model model,
 //                      @RequestParam("importPrice") BigDecimal importPrice,
 //                      @RequestParam("price") BigDecimal price,
@@ -99,81 +130,84 @@ public class ProductDetailController {
 //        System.out.println(productDetail.toString());
 //        return "redirect:/product_detail/index";
 //    }
-@PostMapping(value = "add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-public String upload(Model model,
-                     @RequestParam("files") MultipartFile[] files,
-                     @RequestParam("importPrice") BigDecimal importPrice,
-                      @RequestParam("price") BigDecimal price,
-                      @RequestParam("quantity") Integer quantity,
-                      @RequestParam("createdDate") Date createdDate,
-                      @RequestParam("descripTion") String descripTion,
-                      @RequestParam("status") Integer status,
-                      @RequestParam("product") String product,
-                      @RequestParam("color")String color,
-                      @RequestParam("listImages")String listImages) {
-    ProductImage productImage = productImageResponsitory.findById(UUID.fromString(listImages)).orElse(null);
-    Product product1 = productResponsitory.findById(UUID.fromString(product)).orElse(null);
-    Color color1 = colorResponsitory.findById(UUID.fromString(color)).orElse(null);
-    String message = "";
-    try {
-        String fileNames = null;
+    @PostMapping(value = "add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String upload(Model model,
+                         @RequestParam("files") MultipartFile[] files,
+                         @RequestParam("importPrice") BigDecimal importPrice,
+                         @RequestParam("price") BigDecimal price,
+                         @RequestParam("quantity") Integer quantity,
+                         @RequestParam("createdDate") Date createdDate,
+                         @RequestParam("descripTion") String descripTion,
+                         @RequestParam("status") Integer status,
+                         @RequestParam("product") String product,
+                         @RequestParam("color") String color,
+                         @RequestParam("listImages") String listImages) {
+        ProductImage productImage = productImageResponsitory.findById(UUID.fromString(listImages)).orElse(null);
+        Product product1 = productResponsitory.findById(UUID.fromString(product)).orElse(null);
+        Color color1 = colorResponsitory.findById(UUID.fromString(color)).orElse(null);
+        String message = "";
+        try {
+            String fileNames = null;
 
-        Arrays.asList(files).stream().forEach(file -> {
-            ProductDetail a = new ProductDetail();
-            File uploadRootDir = new File(String.valueOf(root));
-            if (!uploadRootDir.exists()) {
-                uploadRootDir.mkdirs();
-            }
-            try {
-                String filename = file.getOriginalFilename();
-                File serverFile = new File(uploadRootDir.getAbsoluteFile() + File.separator + filename);
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-                stream.write(file.getBytes());
-                a.setImportPrice(importPrice);
-                a.setPrice(price);
-                a.setQuantity(quantity);
-                a.setCreatedDate(createdDate);
-                a.setDescripTion(descripTion);
-                a.setStatus(status);
-                a.setProduct(product1);
-                a.setColor(color1);
+            Arrays.asList(files).stream().forEach(file -> {
+                ProductDetail a = new ProductDetail();
+                File uploadRootDir = new File(String.valueOf(root));
+                if (!uploadRootDir.exists()) {
+                    uploadRootDir.mkdirs();
+                }
+                try {
+                    String filename = file.getOriginalFilename();
+                    File serverFile = new File(uploadRootDir.getAbsoluteFile() + File.separator + filename);
+                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+                    stream.write(file.getBytes());
+                    a.setImportPrice(importPrice);
+                    a.setPrice(price);
+                    a.setQuantity(quantity);
+                    a.setCreatedDate(createdDate);
+                    a.setDescripTion(descripTion);
+                    a.setStatus(status);
+                    a.setProduct(product1);
+                    a.setColor(color1);
 //                a.setListImages((List<ProductImage>) fileNames);
-                productDetailServiceimpl.add(a);
-                stream.close();
-            } catch (Exception e) {
+                    productDetailServiceimpl.add(a);
+                    stream.close();
+                } catch (Exception e) {
 
-            }
-        });
+                }
+            });
 
-        message = "Uploaded the files successfully: " + fileNames;
-    } catch (Exception e) {
-        message = "Fail to upload files!";
+            message = "Uploaded the files successfully: " + fileNames;
+        } catch (Exception e) {
+            message = "Fail to upload files!";
+        }
+        return "redirect:/product_detail/index";
     }
-    return "redirect:/product_detail/index";
-}
+
     @GetMapping("/detail/{id}")
     public String detail(Model model,
                          @PathVariable("id") UUID id
-                         ){
-        model.addAttribute("listProduct",productServiceimpl.getAll());
-        model.addAttribute("listColor",colorServiceimpl.getAll());
-        model.addAttribute("listProductImage",productImageServiceimpl.getAll());
-        model.addAttribute("listProductDetail",productDetailServiceimpl.getAll());
-        model.addAttribute("detailSP",productDetailServiceimpl.getOne(id));
+    ) {
+        model.addAttribute("listProduct", productServiceimpl.getAll());
+        model.addAttribute("listColor", colorServiceimpl.getAll());
+        model.addAttribute("listProductImage", productImageServiceimpl.getAll());
+        model.addAttribute("listProductDetail", productDetailServiceimpl.getAll());
+        model.addAttribute("detailSP", productDetailServiceimpl.getOne(id));
         model.addAttribute("view", "/ProductDetail/createProductDetail.jsp");
         return "index";
     }
+
     @GetMapping("/delete/{id}")
     public String delete(Model model,
-                         @PathVariable("id") UUID id){
+                         @PathVariable("id") UUID id) {
         productDetailServiceimpl.delete(id);
         return "redirect:/product_detail/index";
     }
+
     @PostMapping("/update/{id}")
     public String update(Model model,
                          @PathVariable("id") UUID id,
-                         @ModelAttribute("productDetail") ProductDetail productDetail){
-       productDetailServiceimpl.update(id,productDetail);
+                         @ModelAttribute("productDetail") ProductDetail productDetail) {
+        productDetailServiceimpl.update(id, productDetail);
         return "redirect:/product_detail/index";
     }
 }
