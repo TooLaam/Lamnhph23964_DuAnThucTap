@@ -1,6 +1,7 @@
 package com.example.savis_intern_project.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;

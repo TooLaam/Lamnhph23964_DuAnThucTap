@@ -73,12 +73,20 @@
                         <div class="form-group">
                             Image :
                             <%--                                    <label for="listImages"> <img src="/assets/img/product/${detailSP.listImages.name}" height="45xp" width="45px"></label>--%>
-                            <c:forEach items="${listProductImage}" var="listImages">
-                                <input type="checkbox" id="listImages" name="listImages" value="${listImages.id}"  multiple>
-                                <label for="listImages"> <img src="/assets/img/product/${listImages.name}" height="45xp" width="45px"></label>
+<%--                            <c:forEach items="${listProductImage}" var="listImages">--%>
+<%--                                <input type="checkbox" id="listImages" name="listImages" value="${listImages.id}"  multiple>--%>
+<%--                                <label for="listImages"> <img src="/assets/img/product/${listImages.name}" height="45xp" width="45px"></label>--%>
+<%--                            </c:forEach>--%>
+                            <c:forEach items="${detailSP.listImages}" var="image" varStatus="loop">
+                                <div class="image-container">
+                                    <img src="/assets/img/product/${image.name}" height="100px" width="100px">
+                                    <a href="/product_detail/deleteImage/${image.id}" class="delete-image-link">Xóa</a>
+                                </div>
                             </c:forEach>
 
-                            <input class="form-control" type="file" name="files"  multiple>
+                            <input type="file" name="files" multiple="multiple" />
+
+                            <input type="submit" value="Cập nhật">
 
                         </div>
                         <input type="submit" class="btn btn-primary" value="Update" style="margin-top: 10px">

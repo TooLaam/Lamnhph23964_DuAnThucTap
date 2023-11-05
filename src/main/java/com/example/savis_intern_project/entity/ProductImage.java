@@ -24,13 +24,12 @@ public class ProductImage {
     private UUID id;
 
 
-    @NotBlank(message = "Không được để trống") // Thêm @NotBlank để kiểm tra trường trống
     @Column(name = "Name", unique = true)
     private String name;
-    @NotBlank(message = "Không được để trống")
+
     @Column(name = "Status")
     private Integer staTus;
-    @NotBlank(message = "Không được để trống")
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProductDetailId" ,referencedColumnName = "Id", nullable = true)
     private ProductDetail productDetail;

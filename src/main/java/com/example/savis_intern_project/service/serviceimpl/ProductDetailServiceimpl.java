@@ -51,7 +51,7 @@ public class ProductDetailServiceimpl implements ProductDetailService {
         detail.setDescripTion(productDetail.getDescripTion());
         detail.setProduct(productDetail.getProduct());
         detail.setColor(productDetail.getColor());
-        detail.setListImages(productDetail.getListImages());
+//        detail.setListImages(productDetail.getListImages());
         responsitory.flush();
     }
 
