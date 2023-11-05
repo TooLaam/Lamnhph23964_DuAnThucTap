@@ -54,9 +54,9 @@
                 </div>
                 <div class="col-3">
                     <div class="input-group mb-3">
-                        <button class="btn btn-outline">-</button>
-                        <input type="text" class="form-control" value="${productDetail.quantity}"/>
-                        <button class="btn btn-outline">+</button>
+                        <a href="/product_detail/reduce/${productDetail.id}" class="btn btn-outline">-</a>
+                        <input disabled type="text" class="form-control" value="${productDetail.quantity}"/>
+                        <a href="/product_detail/increase/${productDetail.id}" class="btn btn-outline">+</a>
                     </div>
                 </div>
                 <div class="col-6">
@@ -71,9 +71,11 @@
                             ADD TO CART
                         </a>
                     </div>
-                    <div class="col-2">
-                        <button class="fa fa-heart-o" type="button"></button>
-                    </div>
+                    <c:if test="${CustomerName != null}">
+                        <form class="col-2" action="/favor/like/${productDetail.id}" method="post">
+                            <button type="submit" class="fa fa-heart-o"></button>
+                        </form>
+                    </c:if>
                 </div>
                 <button class="btn" type="button">BUY IT NOW</button>
             </div>

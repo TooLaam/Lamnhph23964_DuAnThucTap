@@ -13,7 +13,7 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="/assets/img/logo.png" rel="icon">
+    <link href="/assets/img/apple-touch-icon.png" rel="icon">
     <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -122,7 +122,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="/statisticsResult">
+            <a class="nav-link" href="/statisticsResult">
                 <i class="bi bi-grid"></i>
                 <span>Overview</span>
             </a>

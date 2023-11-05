@@ -2,6 +2,7 @@ package com.example.savis_intern_project.controller;
 
 import com.example.savis_intern_project.entity.Brand;
 import com.example.savis_intern_project.entity.Product;
+import com.example.savis_intern_project.entity.ViewModels.ProductView;
 import com.example.savis_intern_project.service.serviceimpl.BrandServiceimpl;
 import com.example.savis_intern_project.service.serviceimpl.CategoryServiceimpl;
 import com.example.savis_intern_project.service.serviceimpl.ColorServiceimpl;
@@ -11,8 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class homeController {
@@ -21,12 +21,29 @@ public class homeController {
     @Autowired
     BrandServiceimpl brandServiceimpl;
     @Autowired
-    private ProductServiceimpl productServiceimpl;
+    ProductServiceimpl productServiceimpl;
     @GetMapping("/home" )
     public String home(Model model){
-        model.addAttribute("listProduct",productServiceimpl.getAll());
-        model.addAttribute("Product",new Product());
-        model.addAttribute("listBrand",brandServiceimpl.getAll());
+
+        ArrayList<ProductView> productSortBySold = productServiceimpl.getAllProduct();
+        Collections.sort(productSortBySold, (p1, p2) -> Integer.compare(p2.getSold(), p1.getSold()));
+
+        ArrayList<ProductView> productSortByCreatedDate = productServiceimpl.getAllProduct();
+        Collections.sort(productSortByCreatedDate, (p1, p2) -> p1.getCreatedDate().compareTo(p2.getCreatedDate()));
+
+        ArrayList<ProductView> listProduct = productServiceimpl.getAllProduct();
+
+        Map<Brand, ProductView> firstProductInEachCategory = new LinkedHashMap<>();
+
+        listProduct.forEach(product -> firstProductInEachCategory
+                .putIfAbsent(product.getBrand(), product)
+        );
+
+        ArrayList<ProductView> uniqueQuantityProducts = new ArrayList<>(firstProductInEachCategory.values());
+
+        model.addAttribute("productSortBySold", productSortBySold.subList(0, 4));
+        model.addAttribute("productSortByCreatedDate", productSortByCreatedDate.subList(0, 4));
+        model.addAttribute("uniqueQuantityProducts", uniqueQuantityProducts.subList(0, 4));
         model.addAttribute("view", "/home/index.jsp");
         return "/customerFE/index";
     }

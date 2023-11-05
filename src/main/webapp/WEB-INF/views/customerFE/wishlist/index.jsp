@@ -9,18 +9,18 @@
     <div class="container">
       <div class="content">
         <span class="text-content">Wishlist </span>
-        <span class="available">(4)</span>
+        <span class="available">(${quantityFavor})</span>
       </div>
       <div class="row">
-        <c:forEach items="${listProduct}" var="sp">
+        <c:forEach items="${listFavor}" var="sp">
           <div class="col-md-3 col-6">
             <div class="thumnail">
-              <a href="../detail/${sp.id}">
-                <img src="/assets/img/${sp.imageUrl}" alt="" />
+              <a href="/product_detail/indexcus/${sp.productDetailId}">
+                <img src="/assets/img/product/${sp.image}" alt="" />
                 <div class="caption">
-                  <p>${sp.name}</p>
+                  <p>${sp.product.name}</p>
                   <span class="price">$${sp.price}</span>
-                  <span class="sold">${sp.sold} sold</span>
+                  <span class="sold">${sp.product.sold} sold</span>
                 </div>
               </a>
             </div>

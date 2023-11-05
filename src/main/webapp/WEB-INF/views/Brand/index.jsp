@@ -7,7 +7,7 @@
     <h1>Color</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="/statisticsResult">Home</a></li>
             <li class="breadcrumb-item active">Overview</li>
             <li class="breadcrumb-item active">Brand</li>
         </ol>
@@ -29,26 +29,29 @@
                             <h5 class="card-title">Brand <span>| </span></h5>
 
                             <table class="table table-borderless datatable">
+                                <thead>
                                 <tr>
-
-                                    <th>Tên</th>
-                                    <th>Ảnh</th>
-                                    <th>Trạng thái</th>
+                                    <th>Name</th>
+                                    <th>Image</th>
+                                    <th>Status</th>
                                     <th>Action</th>
-
                                 </tr>
+                                </thead>
+                                <tbody>
                                 <c:forEach items="${listBrand}" var="bra">
                                     <tr>
 
                                         <td>${bra.name}</td>
-                                        <td><img src="/assets/img/brand/${bra.image}" width="100px" height="100px"></td>
-                                        <td>${bra.staTus == 1 ? "Còn hàng" : "Hết hàng"}</td>
+                                        <td><img src="/assets/img/brand/${bra.image}" width="100px" height="auto"></td>
+                                        <td>${bra.staTus == 0 ? "Stocking" : "Out Of Stock"}</td>
                                         <td>
-                                            <a href="/brand/delete/${bra.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')">Delete</a>
+                                            <a href="/brand/delete/${bra.id}" class="btn btn-danger"
+                                               onclick="return confirm('Bạn chắc chắn có muốn xóa??')">Delete</a>
                                             <a href="/brand/detail/${bra.id}" class="btn btn-success">Detail</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
+                                </tbody>
                             </table>
                             <%--                            <form method="post" enctype="multipart/form-data" action="import">--%>
                             <%--                                Thêm từ file excel: <input class="form-control" name="file" type="file">--%>
@@ -108,14 +111,16 @@
                                 <div>
                                     Image :
                                     <img src="/assets/img/brand/${bra.image}" height="100px" width="100px">
-                                    <input class="form-control" name="image" type="file"  value="${bra.image}">
+                                    <input class="form-control" name="image" type="file" value="${bra.image}">
                                 </div>
                                 <div>
                                     Status :
-                                    <input  type="radio" name="staTus" value="1" ${ bra.staTus == "1" ? "checked" : "" }> Còn Hàng <br>
-                                    <input   type="radio" name="staTus" value="0" ${ bra.staTus == "0" ? "checked" : "" }> Hết hàng
+                                    <input type="radio" name="staTus" value="1" ${ bra.staTus == "1" ? "checked" : "" }>
+                                    Còn Hàng <br>
+                                    <input type="radio" name="staTus" value="0" ${ bra.staTus == "0" ? "checked" : "" }>
+                                    Hết hàng
                                 </div>
-                                <input type="submit" class="btn btn-primary" value="Update"style="margin-top: 10px">
+                                <input type="submit" class="btn btn-primary" value="Update" style="margin-top: 10px">
                             </form>
                         </div>
 
@@ -124,33 +129,33 @@
                             <form method="post" action="/brand/add">
                                 <div>
                                     Name :
-                                    <input class="form-control" name="name" >
+                                    <input class="form-control" name="name">
                                 </div>
                                 <div>
                                     Image :
 
-                                    <input class="form-control" name="image" type="file"  >
+                                    <input class="form-control" name="image" type="file">
                                 </div>
                                 <div>
                                     Status :
-                                    <input  type="radio" name="staTus" value="1"> Còn Hàng <br>
-                                    <input   type="radio" name="staTus" value="0"> Hết hàng
+                                    <input type="radio" name="staTus" value="1"> Còn Hàng <br>
+                                    <input type="radio" name="staTus" value="0"> Hết hàng
                                 </div>
-                                <input type="submit" class="btn btn-primary" value="Add"style="margin-top: 10px">
+                                <input type="submit" class="btn btn-primary" value="Add" style="margin-top: 10px">
                             </form>
                         </div>
                         <%--detail--%>
-<%--                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">--%>
-<%--                            <form class="row g-3" action="/favor/detail/${spyt.id}" method="get">--%>
-<%--                                <div class="form-group">--%>
-<%--                                    ID : ${mau.id}--%>
-<%--                                </div>--%>
-<%--                                <div class="form-group">--%>
-<%--                                    Name : ${mau.name}--%>
-<%--                                </div>--%>
+                        <%--                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">--%>
+                        <%--                            <form class="row g-3" action="/favor/detail/${spyt.id}" method="get">--%>
+                        <%--                                <div class="form-group">--%>
+                        <%--                                    ID : ${mau.id}--%>
+                        <%--                                </div>--%>
+                        <%--                                <div class="form-group">--%>
+                        <%--                                    Name : ${mau.name}--%>
+                        <%--                                </div>--%>
 
-<%--                            </form><!-- End Multi Columns Form -->--%>
-<%--                        </div>--%>
+                        <%--                            </form><!-- End Multi Columns Form -->--%>
+                        <%--                        </div>--%>
                     </div><!-- End Default Tabs -->
 
 

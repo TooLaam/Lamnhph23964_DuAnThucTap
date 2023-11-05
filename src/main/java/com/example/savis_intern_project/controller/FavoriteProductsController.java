@@ -3,6 +3,7 @@ package com.example.savis_intern_project.controller;
 
 import com.example.savis_intern_project.entity.*;
 import com.example.savis_intern_project.service.serviceimpl.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,8 @@ import java.util.UUID;
 @RequestMapping("/favor")
 public class FavoriteProductsController {
 
+    @Autowired
+    private HttpSession httpSession;
     @Autowired
     WishListServiceimpl wishListServiceimpl;
     @Autowired
@@ -35,12 +38,24 @@ public class FavoriteProductsController {
     @GetMapping("/indexcus" )
     public String show_data_favor_cus(Model model){
 
-        model.addAttribute("listFavor", wishListServiceimpl.getAll());
-        model.addAttribute("FavoriteProducts",new Product());
-        model.addAttribute("listProduct",productServiceimpl.getAll());
-        model.addAttribute("listCustomer",customerServiceimpl.findAll());
+        if (httpSession.getAttribute("CustomerName") != null) {
+            String username = (String) httpSession.getAttribute("CustomerName");
+            Customer customer = customerServiceimpl.getCustomerByName(username);
+            model.addAttribute("listFavor", wishListServiceimpl.getAllByCustomerId(customer.getId()));
+            model.addAttribute("quantityFavor", wishListServiceimpl.getAllByCustomerId(customer.getId()).size());
+        }
         model.addAttribute("view", "/wishlist/index.jsp");
         return "/customerFE/index";
+    }
+
+    @PostMapping("/like/{id}")
+    public String like(@PathVariable("id") UUID id){
+        if (httpSession.getAttribute("CustomerName") != null) {
+            String username = (String) httpSession.getAttribute("CustomerName");
+            Customer customer = customerServiceimpl.getCustomerByName(username);
+            wishListServiceimpl.Like(customer.getId(), id);
+        }
+        return "redirect:/favor/indexcus";
     }
 
     @PostMapping("/add")

@@ -7,7 +7,7 @@
     <h1>Category</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="/statisticsResult">Home</a></li>
             <li class="breadcrumb-item active">Overview</li>
             <li class="breadcrumb-item active">Category</li>
         </ol>
@@ -31,19 +31,16 @@
                             <table class="table table-borderless datatable">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Ten</th>
+                                    <th>Name</th>
                                     <th>Status</th>
                                     <th>Action</th>
-
                                 </tr>
                                 </thead>
                                      <tbody>
                                      <c:forEach items="${listCategory}" var="loai">
                                          <tr>
-                                             <td>${loai.id}</td>
                                              <td>${loai.name}</td>
-                                             <td>${loai.status == 0 ? "Còn hàng" : "Hết hàng"}</td>
+                                             <td>${loai.status == 0 ? "Stocking" : "Out Of Stock"}</td>
                                              <td>
                                                  <a href="/category/delete/${loai.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" >Delete</a>
                                                  <a href="/category/detail/${loai.id}" class="btn btn-success" >Detail</a>

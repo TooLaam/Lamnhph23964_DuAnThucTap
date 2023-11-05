@@ -7,7 +7,7 @@
         <h1>Product</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="/statisticsResult">Home</a></li>
             <li class="breadcrumb-item active">Overview</li>
             <li class="breadcrumb-item active">Product</li>
         </ol>
@@ -15,17 +15,10 @@
 </div>
 <!-- End Page Title -->
 
-<section className="section dashboard">
-    <div className="row">
-
-
-        <div className="col-lg-10">
-
-
-            <div className="card">
-
-
-
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Product <span>| </span></h5>
 
@@ -56,7 +49,7 @@
                                      <td>${sp.brand.name}</td>
 
                                          <%--                                        <td>${sp.brand.name}</td>--%>
-                                     <td>${sp.status == 0 ? "Còn hàng" : "Hết hàng"}</td>
+                                     <td>${sp.status == 0 ? "Stocking" : "Out Of Stock"}</td>
 <%--                                     <td>--%>
 <%--                                         <c:forEach items="${sp.list}" var="cate">--%>
 <%--                                             <option value="${cate.id}">${cate.category.name}</option>--%>

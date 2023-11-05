@@ -29,6 +29,14 @@ public class BrandController {
         return "index";
     }
 
+    @GetMapping("/indexcus" )
+    public String show_data_product_cus(Model model){
+        model.addAttribute("listBrand",serviceimpl.getAll());
+        model.addAttribute("quantityBrand",serviceimpl.getAll().size());
+        model.addAttribute("view", "/brand/index.jsp");
+        return "/customerFE/index";
+    }
+
 //    @GetMapping("/indexcus" )
 //    public String show_data_product_cus(Model model){
 //

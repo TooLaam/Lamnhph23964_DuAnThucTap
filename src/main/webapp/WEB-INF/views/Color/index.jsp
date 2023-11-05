@@ -7,7 +7,7 @@
     <h1>Color</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="/statisticsResult">Home</a></li>
             <li class="breadcrumb-item active">Overview</li>
             <li class="breadcrumb-item active">Color</li>
         </ol>
@@ -32,11 +32,11 @@
                                 <thead>
                                 <tr>
 
-                                    <th>Ten</th>
-                                    <th>Gia</th>
-                                    <th>Anh</th>
-                                    <th>Trang Thai</th>
-                                    <th>Thuong Hieu</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Image</th>
+                                    <th>Status</th>
+                                    <th>Brand</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -48,7 +48,7 @@
                                         <td>${mau.name}</td>
                                         <td>${mau.price}</td>
                                         <td><img src="/assets/img/color/${mau.image}" width="100px" height="100px"></td>
-                                        <td>${mau.status == 0 ? "Còn hàng" : "Hết hàng"}</td>
+                                        <td>${mau.status == 0 ? "Stocking" : "Out Of Stock"}</td>
                                         <td>${mau.brand.name}</td>
                                         <td>
                                             <a href="/color/delete/${mau.id}" class="btn btn-danger"
@@ -122,8 +122,9 @@
                                 <div>
                                     Image :
                                     <img src="/assets/img/color/${mau.image}" height="100px" width="100px">
-<%--                                    <input class="form-control" name="image" type="file" value="${mau.image}">--%>
-                                    <input type="file" name="image" accept="image/*" class="form-control" value="${mau.image}">
+                                    <%--                                    <input class="form-control" name="image" type="file" value="${mau.image}">--%>
+                                    <input type="file" name="image" accept="image/*" class="form-control"
+                                           value="${mau.image}">
                                 </div>
                                 <div>
                                     Status :<br>
