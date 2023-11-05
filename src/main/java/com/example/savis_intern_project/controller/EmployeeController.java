@@ -87,6 +87,13 @@ public class EmployeeController {
                 }
                 List<Employee> customerList = employeeService.findAll() ;
                 model.addAttribute("empList", customerList);
+                String username = (String) session.getAttribute("username");
+                String password = (String) session.getAttribute("password");
+                Employee checkLogin = employeeService.login(username,password);
+                session.setAttribute("checkRole",employeeService.checkRole(username));
+
+                session.setAttribute("Name", checkLogin);
+                model.addAttribute("empLogin",checkLogin);
 
                 return "/Employee/index";
             }
@@ -108,10 +115,8 @@ public class EmployeeController {
                         @RequestParam("fullName") String fullName,
                         @RequestParam("username") String username,
                         @RequestParam("password") String password,
-                        @RequestParam("image") String image,
                         @RequestParam("dateOfBirth") String dateOfBirth,
                         @RequestParam("gender") int gender,
-
                         @RequestParam("phoneNumber") String phoneNumber,
                         @RequestParam("email") String email,
                         @RequestParam("address") String address,
@@ -136,7 +141,6 @@ public class EmployeeController {
                 employee.setStatus(status);
                 employee.setUsername(username);
                 employee.setPassword(password);
-                employee.setImage(image);
                 employee.setRole(rl);
                 employeeService.add(employee);
                 return "redirect:/employee/index";
@@ -158,7 +162,6 @@ public class EmployeeController {
             @RequestParam("fullName") String fullName,
             @RequestParam("username") String username,
             @RequestParam("password") String password,
-            @RequestParam("image") String image,
             @RequestParam("dateOfBirth") String dateOfBirth,
             @RequestParam("gender") int gender,
             @RequestParam("phoneNumber") String phoneNumber,
@@ -166,6 +169,7 @@ public class EmployeeController {
             @RequestParam("address") String address,
             @RequestParam("idRole")String idRole
     ) {
+
         Employee employee = new Employee();
 
 
@@ -181,7 +185,6 @@ public class EmployeeController {
         employee.setStatus(1);
         employee.setUsername(username);
         employee.setPassword(password);
-        employee.setImage(image);
         employee.setRole(roleService.detail(UUID.fromString(idRole)));
         employeeService.add(employee);
         return "redirect:/employee/index";
@@ -189,18 +192,31 @@ public class EmployeeController {
 
 
     @GetMapping("/employee/detail/{id}")
-    public String detail(Model model, @PathVariable("id") UUID id) {
+    public String detail(Model model, @PathVariable("id") UUID id,HttpSession session) {
         model.addAttribute("emp", employeeService.detail(id));
         model.addAttribute("role", roleService.getAll());
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+        Employee checkLogin = employeeService.login(username,password);
+        session.setAttribute("checkRole",employeeService.checkRole(username));
 
+        session.setAttribute("Name", checkLogin);
+        model.addAttribute("empLogin",checkLogin);
 
         return "/Employee/detail";
 
     }
 
     @GetMapping("/employee/viewAdd")
-    public String viewAdd(Model model) {
+    public String viewAdd(Model model,HttpSession session) {
         model.addAttribute("role", roleService.getAll());
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+        Employee checkLogin = employeeService.login(username,password);
+        session.setAttribute("checkRole",employeeService.checkRole(username));
+
+        session.setAttribute("Name", checkLogin);
+        model.addAttribute("empLogin",checkLogin);
         return "/Employee/add";
 
     }
@@ -215,7 +231,7 @@ public class EmployeeController {
     @GetMapping("/employee/timKiem")
     public String timKiem(Model model,
                           @RequestParam("name1")String name,
-                          @RequestParam("phone1")String phone) {
+                          @RequestParam("phone1")String phone,HttpSession session) {
 
         if (name ==""||phone==""){
             model.addAttribute("tim",employeeService.timKiem(name,phone));
@@ -226,6 +242,13 @@ public class EmployeeController {
         else{
             model.addAttribute("tim",employeeService.timKiem2(name,phone));
         }
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+        Employee checkLogin = employeeService.login(username,password);
+        session.setAttribute("checkRole",employeeService.checkRole(username));
+
+        session.setAttribute("Name", checkLogin);
+        model.addAttribute("empLogin",checkLogin);
 
         return "/Employee/index";
 
