@@ -5,6 +5,7 @@
     <style>
         <%@include file="style.css" %>
     </style>
+
 </head>
 
 <br />
@@ -12,24 +13,38 @@
     <div class="row">
         <div class="col-md-6">
             <h2>Payment Information</h2>
+<%--            <div class="error">--%>
+<%--                <c:if test="${not empty receiverNameError}">--%>
+<%--                    <p class="text-danger">${receiverNameError}</p>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${not empty customerPhoneError}">--%>
+<%--                    <p class="text-danger">${customerPhoneError}</p>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${not empty addressDeliveryError}">--%>
+<%--                    <p class="text-danger">${addressDeliveryError}</p>--%>
+<%--                </c:if>--%>
+<%--            </div>--%>
             <form method="post" action="/bill/placeorder">
                 <div class="form-group">
                     <label for="receiverName">Receiver Name:</label>
                     <%--<input type="text" class="form-control" value="${inputReceiverName}" id="receiverName"
                            name="receiverName">
                     <c:if test="${not empty receiverNameError}">
-                        <div class="alert alert-danger">${receiverNameError}</div>
+                        <div class="text-danger">${receiverNameError}</div>
                     </c:if>--%>
                     <c:choose>
                         <c:when test="${not empty customer}">
                             <input type="text" class="form-control" value="${customer.fullname}" id="receiverName"
                                    name="receiverName">
+                            <c:if test="${not empty receiverNameError}">
+                                <div class="text-danger">${receiverNameError}</div>
+                            </c:if>
                         </c:when>
                         <c:otherwise>
                             <input type="text" class="form-control" value="${inputReceiverName}" id="receiverName"
                                    name="receiverName">
                             <c:if test="${not empty receiverNameError}">
-                                <div class="alert alert-danger">${receiverNameError}</div>
+                                <div class="text-danger">${receiverNameError}</div>
                             </c:if>
                         </c:otherwise>
                     </c:choose>
@@ -40,12 +55,15 @@
                         <c:when test="${not empty customer}">
                             <input type="text" class="form-control" value="${customer.phone}" id="customerPhone"
                                    name="customerPhone">
+                            <c:if test="${not empty customerPhoneError}">
+                                <p class="text-danger">${customerPhoneError}</p>
+                            </c:if>
                         </c:when>
                         <c:otherwise>
                             <input type="text" class="form-control" value="${inputCustomerPhone}" id="customerPhone"
                                    name="customerPhone">
                             <c:if test="${not empty customerPhoneError}">
-                                <div class="alert alert-danger">${customerPhoneError}</div>
+                                <p class="text-danger">${customerPhoneError}</p>
                             </c:if>
                         </c:otherwise>
                     </c:choose>
@@ -55,12 +73,15 @@
                     <c:choose>
                         <c:when test="${not empty customer}">
                             <textarea type="text" class="form-control" id="addressDelivery" name="addressDelivery">${customer.address}</textarea>
+                            <c:if test="${not empty addressDeliveryError}">
+                                <p class="text-danger">${addressDeliveryError}</p>
+                            </c:if>
                         </c:when>
                         <c:otherwise>
                     <textarea class="form-control" id="addressDelivery" data-value="${inputReceiverName}"
                               name="addressDelivery"></textarea>
                             <c:if test="${not empty addressDeliveryError}">
-                                <div class="alert alert-danger">${addressDeliveryError}</div>
+                                <p class="text-danger">${addressDeliveryError}</p>
                             </c:if>
                         </c:otherwise>
                     </c:choose>
@@ -77,9 +98,6 @@
                             Bank transfer
                         </label>
                     </div>
-                    <c:if test="${not empty addressDeliveryError}">
-                        <div class="alert alert-danger">${addressDeliveryError}</div>
-                    </c:if>
                 </div>
                 <button type="submit" class="btn">Place Order</button>
             </form>

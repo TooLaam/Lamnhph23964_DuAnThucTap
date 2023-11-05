@@ -76,23 +76,37 @@ public class PaymentC {
                           @RequestParam("addressDelivery") String addressDelivery,
                           RedirectAttributes redirectAttributes
     ) {
-        if (receiverName.isEmpty()) {
-            model.addAttribute("receiverNameError", "Receiver Name is required");
+        boolean hasError = false; // Biến kiểm tra có lỗi nào xảy ra
+
+        if (receiverName.isEmpty() || !receiverName.matches("^[a-zA-Z\\p{IsAlphabetic} ]+$")) {
+            redirectAttributes.addFlashAttribute("receiverNameError", "Invalid Receiver Name (must not be blank and must only contain letters and spaces)");
+            hasError = true; // Đặt biến lỗi thành true
         } else {
-            model.addAttribute("inputReceiverName", receiverName);
+            redirectAttributes.addAttribute("inputReceiverName", receiverName); // Giữ nguyên giá trị người dùng
         }
 
-        if (customerPhone.isEmpty()) {
-            model.addAttribute("customerPhoneError", "Customer Phone is required");
-        } else {
-            model.addAttribute("inputCustomerPhone", customerPhone);
+
+
+        if (customerPhone.isEmpty() || !customerPhone.matches("^\\d+$")) {
+            redirectAttributes.addFlashAttribute("customerPhoneError", "Invalid Customer Phone (must not be blank and must be numeric)");
+            hasError = true; // Đặt biến lỗi thành true
+        }else {
+            redirectAttributes.addAttribute("inputCustomerPhone", customerPhone); // Giữ nguyên giá trị người dùng
         }
+
 
         if (addressDelivery.isEmpty()) {
-            model.addAttribute("addressDeliveryError", "Address Delivery is required");
-        } else {
-            model.addAttribute("inputAddressDelivery", addressDelivery);
+            redirectAttributes.addFlashAttribute("addressDeliveryError", "Address Delivery is required");
+            hasError = true; // Đặt biến lỗi thành true
+        }else {
+            redirectAttributes.addAttribute("inputAddressDelivery", addressDelivery); // Giữ nguyên giá trị người dùng
         }
+
+
+        if (hasError) {
+            return "redirect:/bill/payment"; // Chuyển hướng đến trang thanh toán
+        }
+
 
         if (session.getAttribute("CustomerName") != null) {
             String username = (String) session.getAttribute("CustomerName");
