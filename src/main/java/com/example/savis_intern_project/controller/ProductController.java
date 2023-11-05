@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -55,12 +57,34 @@ public class ProductController {
         return "index";
     }
 
-    @GetMapping("/indexcus" )
-    public String show_data_product_cus(Model model){
-
-        model.addAttribute("listProduct",productServiceimpl.getAllProduct());
+    @GetMapping("/indexcus")
+    public String show_data_product_cus(Model model) {
+        model.addAttribute("listProduct", productServiceimpl.getAllProduct());
+        model.addAttribute("quantityProduct", productServiceimpl.getAllProduct().size());
         model.addAttribute("view", "/product/index.jsp");
         return "/customerFE/index";
+    }
+
+    @GetMapping("/indexcus/{name}")
+    public String show_data_product_cus_search(Model model, @PathVariable("name") String name) {
+        model.addAttribute("listProduct", productServiceimpl.getAllProductByName(name));
+        model.addAttribute("quantityProduct", productServiceimpl.getAllProductByName(name).size());
+        model.addAttribute("view", "/product/index.jsp");
+        return "/customerFE/index";
+    }
+
+    @GetMapping("/indexcus/brand/{brandId}")
+    public String show_data_product_cus_brand(Model model, @PathVariable("brandId") UUID brandId) {
+        model.addAttribute("listProduct", productServiceimpl.getAllProductByBrand(brandId));
+        model.addAttribute("quantityProduct", productServiceimpl.getAllProductByBrand(brandId).size());
+        model.addAttribute("view", "/product/index.jsp");
+        return "/customerFE/index";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam String name, RedirectAttributes attributes) {
+        attributes.addAttribute("name", name);
+        return "redirect:/product/indexcus/{name}";
     }
 
     //    @PostMapping("/add")
@@ -101,7 +125,7 @@ public class ProductController {
                       @RequestParam("descripTion") String descripTion,
                       @RequestParam("brand") UUID brandId,
                       @RequestParam("category") UUID categoryId
-                      ) {
+    ) {
         // Tạo một đối tượng Product
         Product newProduct = new Product();
         newProduct.setName(name);
@@ -116,12 +140,12 @@ public class ProductController {
         newProduct = productServiceimpl.add(newProduct);
 
         // Lặp qua danh sách CategoryValue từ ProductRepuest và tạo các CategoryDetail
-            // Tạo đối tượng Category từ categoryValue và gán cho CategoryDetail
+        // Tạo đối tượng Category từ categoryValue và gán cho CategoryDetail
 //            System.out.println("Cai nay o dau ta" + categoryServiceimpl.getOne(idCategory));
 //            System.out.println("id"+idCategory);
         Category category = categoryServiceimpl.getOne(categoryId);
         if (category == null) {
-            System.out.println(category.getId()+"Quân");
+            System.out.println(category.getId() + "Quân");
         } else {
             CategoryDetail categoryDetail = new CategoryDetail();
             categoryDetail.setCategory(category);

@@ -18,18 +18,20 @@ public class CartDetailView {
     private Integer Quantity;
     private BigDecimal Price;
     private BigDecimal ProductPrice;
+    private String image;
     private UUID ProductId;
     private UUID ProductDetailId;
     private Cart cart;
     private ProductDetail productDetail;
 
-    public CartDetailView(UUID id, String name, String colorName, Integer quantity, BigDecimal price, BigDecimal productPrice, UUID productId, UUID productDetailId, Cart cart, ProductDetail productDetail) {
+    public CartDetailView(UUID id, String name, String colorName, Integer quantity, BigDecimal price, BigDecimal productPrice, String image, UUID productId, UUID productDetailId, Cart cart, ProductDetail productDetail) {
         Id = id;
         Name = name;
         this.colorName = colorName;
         Quantity = quantity;
         Price = price;
         ProductPrice = productPrice;
+        this.image = image;
         ProductId = productId;
         ProductDetailId = productDetailId;
         this.cart = cart;

@@ -52,27 +52,17 @@ public class PaymentC {
             model.addAttribute("customer", customer);
             model.addAttribute("cart", cart);
             model.addAttribute("cartDetail", lstCartDetailView);
-        }
-        else{
-            OrderCart cart = (OrderCart) session.getAttribute("OrderCart");
-            if (cart == null || cart.getBillDetails().isEmpty()) {
-                return "redirect:/viewOrderCart";  // Chuyển hướng người dùng nếu giỏ hàng trống
-            }
+        } else {
+            Customer customer = new Customer();
+            customer.setFullname("");
+            customer.setPhone("");
+            customer.setAddress("");
+            Cart cartSession = (Cart) session.getAttribute("Cart");
+            ArrayList<CartDetailView> cartDetailSession = (ArrayList<CartDetailView>) session.getAttribute("CartDetail");
 
-            ArrayList<BillDetail> list = cart.getBillDetails();
-            BigDecimal itemTotal = BigDecimal.ZERO;
-            Integer quantity = 0;
-
-            for (BillDetail liItem : list) {
-                BigDecimal total;
-                total = liItem.getPrice();
-                quantity += liItem.getQuantity();
-                System.out.println("Total: " + total);
-                System.out.println("Quantity: " + quantity);
-                model.addAttribute("total", total);
-                break;
-            }
-            model.addAttribute("cartDetail", list);
+            model.addAttribute("customer", customer);
+            model.addAttribute("cart", cartSession);
+            model.addAttribute("cartDetail", cartDetailSession);
         }
         model.addAttribute("view", "/pay/pay.jsp");
         return "/customerFE/index";
@@ -109,10 +99,9 @@ public class PaymentC {
             Customer customer = customerService.getCustomerByName(username);
             Cart cart = cartService.getOne(customer.getId());
             ArrayList<CartDetailView> lstCartDetailView = cartDetailService.getCartDetailByCustomerId(customer.getId());
+            Bill bill = new Bill();
 
             Date currentDate = new Date(System.currentTimeMillis());
-
-            Bill bill = new Bill();
             bill.setId(UUID.randomUUID());
             bill.setReceiverName(receiverName);
             bill.setTotalMoney(cart.getTotalMoney());
@@ -129,6 +118,7 @@ public class PaymentC {
             for (var lstItem : lstCartDetailView) {
                 Product product = productService.getOne(lstItem.getProductId());
                 product.setAvailableQuantity(product.getAvailableQuantity() - lstItem.getQuantity());
+                product.setSold(product.getSold() + lstItem.getQuantity());
 
                 BillDetail billDetail = new BillDetail();
                 billDetail.setId(UUID.randomUUID());
@@ -148,66 +138,60 @@ public class PaymentC {
             cartService.update(cart.getId(), cart);
             // Truyền tham số qua RedirectAttributes
             redirectAttributes.addAttribute("billId", b.getId());
-            return "redirect:/bill/orderComplete/{billId}";
-        }
-        else {
+        } else {
+            Cart cartSession = (Cart) session.getAttribute("Cart");
+            ArrayList<CartDetailView> cartDetailViewSession = (ArrayList<CartDetailView>) session.getAttribute("CartDetail");
+            Customer customer = new Customer();
+            Bill bill = new Bill();
 
-            OrderCart cart = (OrderCart) session.getAttribute("OrderCart");
-            if (cart == null || cart.getBillDetails().isEmpty()) {
-                return "redirect:/viewOrderCart";  // Chuyển hướng người dùng nếu giỏ hàng trống
-            }
-            ArrayList<BillDetail> list = cart.getBillDetails();
-            BigDecimal totalMoney = BigDecimal.ZERO;
-
-            for (BillDetail liItem : list) {
-                totalMoney = liItem.getPrice();
-                break;
-            }
-
-            if (addressDelivery.isEmpty()) {
-                model.addAttribute("paymentError", "Payment is required");
-            } else {
-                model.addAttribute("inputPayment", PaymentId);
-            }
-
-            if (receiverName.isEmpty() || customerPhone.isEmpty() || addressDelivery.isEmpty()) {
-                model.addAttribute("cartDetail", list); // thêm dòng này
-                model.addAttribute("total", totalMoney); // và dòng này
-                model.addAttribute("view", "/pay/pay.jsp");
-                return "/customerFE/index"; // Thay thế bằng tên view của bạn
-            }
-
+            customer.setFullname(receiverName);
+            customer.setPhone(customerPhone);
+            customer.setAddress(addressDelivery);
 
             Date currentDate = new Date(System.currentTimeMillis());
-            Bill bill = new Bill();
+
+            bill.setId(UUID.randomUUID());
             bill.setReceiverName(receiverName);
-            bill.setPayment(paymentService.getOne(PaymentId));
+            bill.setTotalMoney(cartSession.getTotalMoney());
             bill.setCustomerPhone(customerPhone);
             bill.setAddressDelivery(addressDelivery);
             bill.setCreatedDate(currentDate);
-            bill.setTotalMoney(totalMoney);
+            bill.setPayment(paymentService.getOne(PaymentId));
             bill.setBillStatus(billStatusService.findById(UUID.fromString("259b8bc3-5489-47c0-a115-b94a0cf6286f")));
 
-            bill = billService.create_new_bill(bill);
+            var b = billService.create_new_bill(bill);
 
-// Tạo danh sách Chi Tiết Hóa Đơn
-            for (BillDetail liItem : list) {
+            // Tạo danh sách Chi Tiết Hóa Đơn
+            for (var lstItem : cartDetailViewSession) {
+                Product product = productService.getOne(lstItem.getProductId());
+                product.setAvailableQuantity(product.getAvailableQuantity() - lstItem.getQuantity());
+                product.setSold(product.getSold() + lstItem.getQuantity());
+
                 BillDetail billDetail = new BillDetail();
-                billDetail.setProductDetail(productDetailServiceimpl.getOne(liItem.getProductDetail().getId()));
-                billDetail.setQuantity(liItem.getQuantity());
-                billDetail.setPrice(liItem.getPrice());
-                billDetail.setPrice(liItem.getPrice());
-                billDetail.setBill(bill);
+                billDetail.setId(UUID.randomUUID());
+                billDetail.setQuantity(lstItem.getQuantity());
+                billDetail.setPrice(lstItem.getPrice());
+                billDetail.setBill(b);
+                billDetail.setProductDetail(productDetailServiceimpl.getOne(lstItem.getProductDetailId()));
 
                 // Lưu Chi Tiết Hóa Đơn vào cơ sở dữ liệu
                 billDetailService.create_new_billdetail(billDetail);
+                productService.update(product.getId(), product);
+                CartDetailView cartDetailViewOld = lstItem;
+                cartDetailViewSession.remove(cartDetailViewOld);
+                if (cartDetailViewSession.size() == 0){
+                    break;
+                }
             }
+            session.invalidate();
+            // Truyền tham số qua RedirectAttributes
+            redirectAttributes.addAttribute("billId", b.getId());
         }
-        return "redirect:/viewOrderCart";
+        return "redirect:/bill/orderComplete/{billId}";
     }
 
-    @GetMapping("/orderComplete/{billId}" )
-    public String orderComplete(@PathVariable("billId") UUID billId, Model model){
+    @GetMapping("/orderComplete/{billId}")
+    public String orderComplete(@PathVariable("billId") UUID billId, Model model) {
         model.addAttribute("bill", billService.get_one_bill(billId));
         model.addAttribute("billDetail", billDetailService.getByBillId(billId));
         model.addAttribute("view", "/checkout/index.jsp");

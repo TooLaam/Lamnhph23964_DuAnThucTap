@@ -64,6 +64,7 @@
                             <button type="submit" class="btn login">LOG IN</button>
                         </div>
 
+                        <a href="/home"><img src="/assets/img/logo.png" class="logo" style="margin-top: 6rem;" alt="logo" /></a>
                     </form>
                 </div>
             </div>

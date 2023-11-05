@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -29,25 +28,27 @@
                             <h5 class="card-title">Bill <span>| </span></h5>
 
                             <table class="table table-hover datatable">
+                                <thead>
                                 <tr>
-                                    <td>Receiver Name</td>
-<%--                                    <td>Employee</td>--%>
-<%--                                    <td>Customer</td>--%>
-                                    <td>Customer Phone</td>
-
-                                    <td>Total Money</td>
-                                    <td>Address Delivery</td>
-                                    <td>Created Date</td>
-                                    <td>Payment</td>
-                                    <td>Status</td>
-                                    <td>Action</td>
+                                    <th>Receiver Name</th>
+                                    <%--                                    <td>Employee</td>--%>
+                                    <%--                                    <td>Customer</td>--%>
+                                    <th>Customer Phone</th>
+                                    <th>Total Money</th>
+                                    <th>Address Delivery</th>
+                                    <th>Created Date</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
+                                </thead>
+                                <tbody>
                                 <c:forEach items="${listBill}" var="bill">
                                     <tr onclick="goToPage('/bill_detail/index/${bill.id}')">
-<%--                                        <td>${bill.id}</td>--%>
+                                            <%--                                        <td>${bill.id}</td>--%>
                                         <td>${bill.receiverName}</td>
-<%--                                        <td>${bill.employee.fullName}</td>--%>
-<%--                                        <td>${bill.customer.fullname}</td>--%>
+                                            <%--                                        <td>${bill.employee.fullName}</td>--%>
+                                            <%--                                        <td>${bill.customer.fullname}</td>--%>
                                         <td>${bill.customerPhone}</td>
                                         <td>${bill.addressDelivery}</td>
                                         <td>${bill.totalMoney}</td>
@@ -56,20 +57,21 @@
                                         <td>${bill.payment.name}</td>
                                         <td>
                                             <a href="/bill_detail/index/${bill.id}" class="btn btn-success">Detail</a>
-<%--                                            <a href="/bill/index/${bill.id}" class="btn btn-danger">Detail</a>--%>
-<%--                                            <form action="/bill/change_bill_status/${bill.id}" method="post">--%>
-<%--                                                <button class=" ${bill.billStatus.id!=3?"btn btn-warning":"btn btn-dark"--%>
-<%--                                                }" onclick="return confirm('You want to change this status?')"--%>
-<%--&lt;%&ndash;                                                    ${bill.billStatus.id==3?"disabled":""}>${bill.billStatus.id==3?"Done":"Change Status"}</button>&ndash;%&gt;--%>
-<%--                                            </form>--%>
+                                                <%--                                            <a href="/bill/index/${bill.id}" class="btn btn-danger">Detail</a>--%>
+                                                <%--                                            <form action="/bill/change_bill_status/${bill.id}" method="post">--%>
+                                                <%--                                                <button class=" ${bill.billStatus.id!=3?"btn btn-warning":"btn btn-dark"--%>
+                                                <%--                                                }" onclick="return confirm('You want to change this status?')"--%>
+                                                <%--&lt;%&ndash;                                                    ${bill.billStatus.id==3?"disabled":""}>${bill.billStatus.id==3?"Done":"Change Status"}</button>&ndash;%&gt;--%>
+                                                <%--                                            </form>--%>
                                         </td>
                                     </tr>
                                 </c:forEach>
+                                </tbody>
                             </table>
-<%--                            <form method="post" enctype="multipart/form-data" action="import">--%>
-<%--                                Thêm từ file excel: <input class="form-control" name="file" type="file">--%>
-<%--                                <button>Thêm</button>--%>
-<%--                            </form>--%>
+                            <%--                            <form method="post" enctype="multipart/form-data" action="import">--%>
+                            <%--                                Thêm từ file excel: <input class="form-control" name="file" type="file">--%>
+                            <%--                                <button>Thêm</button>--%>
+                            <%--                            </form>--%>
                         </div>
 
                     </div>
@@ -112,18 +114,20 @@
                         </li>
                     </ul>
 
-<%--update--%>
+                    <%--update--%>
                     <div class="tab-content pt-2" id="myTabContent">
                         <div class="tab-pane fade" id="home" role="tabpanel"
                              aria-labelledby="home-tab">
                             <form action="/bill/update-bill/${billId}" method="post">
                                 <div class="form-group">
-                                    Price: <input type="number" name="price" class="form-control" value="${billD.price}">
+                                    Price: <input type="number" name="price" class="form-control"
+                                                  value="${billD.price}">
                                 </div>
 
 
                                 <div class="form-group">
-                                    Address: <input type="text" name="address" class="form-control" value="${billD.address}">
+                                    Address: <input type="text" name="address" class="form-control"
+                                                    value="${billD.address}">
                                 </div>
 
                                 <div>
@@ -148,8 +152,8 @@
                             </form>
                         </div>
 
-<%--create--%>
-                        <div class="tab-pane fade"  id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <%--create--%>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <form action="/bill/create_bill" method="post">
                                 <div class="form-group">
                                     Price: <input type="number" name="price" class="form-control">
@@ -181,12 +185,13 @@
                                 <button class="btn btn-success">Add new</button>
                             </form>
                         </div>
-<%--detail--%>
-                        <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <%--detail--%>
+                        <div class="tab-pane fade show active" id="contact" role="tabpanel"
+                             aria-labelledby="contact-tab">
                             <form class="row g-3" action="/bill/index/${bill.id}" method="get">
                                 <table class="table table-borderless">
                                     <tr>
-<%--                                        <td>Id</td>--%>
+                                        <%--                                        <td>Id</td>--%>
                                         <td>Price</td>
                                         <td>Quantity</td>
                                         <td>Product</td>
@@ -194,14 +199,15 @@
                                     </tr>
                                     <c:forEach items="${billDetailD}" var="billDetailD">
                                         <tr>
-<%--                                            <td>${bill.id}</td>--%>
+                                                <%--                                            <td>${bill.id}</td>--%>
                                             <td>${billDetailD.price}</td>
                                             <td>${billDetailD.quantity}</td>
                                             <td>${billDetailD.product.name}</td>
                                         </tr>
                                     </c:forEach>
                                 </table>
-                                <h3>Tổng tiền khách phải trả : <fmt:formatNumber value="${allPrice}" type="currency" currencyCode="VND" /></h3>
+                                <h3>Tổng tiền khách phải trả : <fmt:formatNumber value="${allPrice}" type="currency"
+                                                                                 currencyCode="VND"/></h3>
                             </form><!-- End Multi Columns Form -->
                         </div>
                     </div><!-- End Default Tabs -->

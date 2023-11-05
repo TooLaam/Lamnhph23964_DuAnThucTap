@@ -51,13 +51,11 @@
             </div>
             <div class="col-md-1 col-0"></div>
             <div class="col-md-6 col-4">
-                <div class="input-group mb-3" id="nav-search">
-                    <input type="text" class="form-control" placeholder="What can we help you find?"
+                <form action="/product/search" method="get" class="input-group mb-3" id="nav-search">
+                    <input type="text" name="name" class="form-control" placeholder="What can we help you find?"
                            aria-label="Recipient's username"/>
-                    <button class="btn" type="button">
-                        SEARCH
-                    </button>
-                </div>
+                    <button type="submit" class="btn">SEARCH</button>
+                </form>
             </div>
             <div class="col-md-1 col-0"></div>
             <div class="col-md-2 col-4">
@@ -73,15 +71,15 @@
                                 <span class="fa fa-heart"></span>
                             </a>
                         </li>
+                        <li>
+                            <a href="/bill/indexcus">
+                                <span class="fa fa-sticky-note"></span>
+                            </a>
+                        </li>
                     </c:if>
                     <li>
                         <a href="/viewOrderCart">
                             <span class="fa fa-shopping-cart"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/bill/indexcus">
-                            <span class="fa fa-sticky-note"></span>
                         </a>
                     </li>
                 </ul>
@@ -96,6 +94,9 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/product/indexcus">lips</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/brand/indexcus">brands</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/blog">blogs</a>

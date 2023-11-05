@@ -11,7 +11,7 @@
 <div class="container">
     <div class="content">
         <span class="text-content">Lips </span>
-        <span class="available">(35)</span>
+        <span class="available">(${quantityProduct})</span>
         <div class="btn-group" role="group">
             <button type="button" class="btn btn-outline dropdown-toggle" data-bs-toggle="dropdown"
                     aria-expanded="false">

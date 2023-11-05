@@ -15,6 +15,8 @@ public interface ProductServie {
     void delete(UUID id);
     void update(UUID id, Product product);
     ArrayList<ProductView> getAllProduct();
+    ArrayList<ProductView> getAllProductByName(String name);
+    ArrayList<ProductView> getAllProductByBrand(UUID id);
     List<Product> getAll();
     Product getOne(UUID id);
 }
