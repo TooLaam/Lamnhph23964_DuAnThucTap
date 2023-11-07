@@ -90,7 +90,7 @@ public class CustomerController {
             Customer checkLogin = customerService.login(username,password);
             if (!(checkLogin == null)){
                 session.setAttribute("CustomerName", username);
-                return "/customerFE/index";
+                return "redirect:/home";
             }
             else {
                 model.addAttribute("erCheckCustomer","Username and password are incorrect");

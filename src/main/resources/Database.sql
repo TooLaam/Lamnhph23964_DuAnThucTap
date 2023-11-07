@@ -246,6 +246,33 @@ CREATE TABLE BillDetail (
     FOREIGN KEY (ProductDetailId) REFERENCES ProductDetail(Id),
 );
 
+-- Tạo bảng Chi tiết Voucher (Voucher)
+IF OBJECT_ID('Voucher') IS NOT NULL
+	DROP TABLE Voucher
+GO
+CREATE TABLE Voucher (
+    Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+    Code NVARCHAR(100) NOT NULL,
+	Value DECIMAL(10, 2) NOT NULL,
+    TimeStart DATE NOT NULL,
+	TimeEnd DATE NOT NULL,
+    CreatedDate DATE NOT NULL,
+	Status INT NOT NULL,
+);
+
+-- Tạo bảng Chi tiết UsedVoucher (UsedVoucher)
+IF OBJECT_ID('UsedVoucher') IS NOT NULL
+	DROP TABLE UsedVoucher
+GO
+CREATE TABLE UsedVoucher (
+    Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+	SubTotal DECIMAL(10, 2) NOT NULL,
+    BillId UNIQUEIDENTIFIER,
+    VoucherId UNIQUEIDENTIFIER,
+    FOREIGN KEY (BillId) REFERENCES Bill(Id),
+    FOREIGN KEY (VoucherId) REFERENCES Voucher(Id),
+);
+
 --Nhập liệu các bảng
 
 --Nhập dữ liệu bảng Thương hiệu (Brand)
@@ -581,14 +608,34 @@ GO
 --Nhập dữ liệu bảng Hóa đơn (Bill)
 INSERT INTO Bill VALUES
 ('126195bb-2b4f-4a91-ab4f-0acf00306616', 'Luc Minh Quan', 45, '0987654323', 'Hanoi', '10/09/2023', '159b8bc3-5489-47c0-a115-b94a0cf6286f', '2f7fbcf3-3007-4180-a5fe-84d2bcdf171b', '9c7cf1ed-8f0a-44c3-8dc1-a652a37c0279', '67357ae4-342e-4673-b80f-1f1d1f068c5c'),
-('226195bb-2b4f-4a91-ab4f-0acf00306616', 'Luc Van Quan', 50, '0987654323', 'Hanoi', '10/09/2023', '159b8bc3-5489-47c0-a115-b94a0cf6286f', '2f7fbcf3-3007-4180-a5fe-84d2bcdf171b', '9c7cf1ed-8f0a-44c3-8dc1-a652a37c0278', '67357ae4-342e-4673-b80f-1f1d1f068c6c')
+('226195bb-2b4f-4a91-ab4f-0acf00306616', 'Luc Van Quan', 50, '0987654323', 'Hanoi', '10/09/2023', '159b8bc3-5489-47c0-a115-b94a0cf6286f', '2f7fbcf3-3007-4180-a5fe-84d2bcdf171b', '9c7cf1ed-8f0a-44c3-8dc1-a652a37c0278', '67357ae4-342e-4673-b80f-1f1d1f068c6c'),
+('326195bb-2b4f-4a91-ab4f-0acf00306616', 'Luc Minh Quan', 21, '0987654323', 'Hanoi', '10/09/2023', '159b8bc3-5489-47c0-a115-b94a0cf6286f', '2f7fbcf3-3007-4180-a5fe-84d2bcdf171b', '9c7cf1ed-8f0a-44c3-8dc1-a652a37c0279', '67357ae4-342e-4673-b80f-1f1d1f068c5c'),
+('426195bb-2b4f-4a91-ab4f-0acf00306616', 'Luc Van Quan', 33, '0987654323', 'Hanoi', '10/09/2023', '159b8bc3-5489-47c0-a115-b94a0cf6286f', '2f7fbcf3-3007-4180-a5fe-84d2bcdf171b', '9c7cf1ed-8f0a-44c3-8dc1-a652a37c0278', '67357ae4-342e-4673-b80f-1f1d1f068c6c'),
+('526195bb-2b4f-4a91-ab4f-0acf00306616', 'Luc Van Quan', 52, '0987654323', 'Hanoi', '10/09/2023', '159b8bc3-5489-47c0-a115-b94a0cf6286f', '2f7fbcf3-3007-4180-a5fe-84d2bcdf171b', '9c7cf1ed-8f0a-44c3-8dc1-a652a37c0278', '67357ae4-342e-4673-b80f-1f1d1f068c6c')
 GO
 
 --Nhập dữ liệu bảng Chi tiết Hóa đơn (BillDetail)
 INSERT INTO BillDetail VALUES
-('ada72d63-1447-4d82-bb84-d6b0103c7238', 1, 20, '126195bb-2b4f-4a91-ab4f-0acf00306616', 'f548c39d-d212-45c3-b191-a2a80f8d9d6b'),
-('ada72d63-1447-4d82-bb84-d6b0103c7239', 1, 25, '126195bb-2b4f-4a91-ab4f-0acf00306616', '79cebd85-1aea-4938-9f9a-9b15e9969e68'),
-('ada72d63-1447-4d82-bb84-d6b0103c7237', 1, 20, '226195bb-2b4f-4a91-ab4f-0acf00306616', 'f548c39d-d212-45c3-b191-a2a80f8d9d7b'),
-('ada72d63-1447-4d82-bb84-d6b0103c7236', 1, 18, '226195bb-2b4f-4a91-ab4f-0acf00306616', 'f548c39d-d212-45c3-b191-a2a80f8d9d5b'),
-('ada72d63-1447-4d82-bb84-d6b0103c7235', 1, 12, '226195bb-2b4f-4a91-ab4f-0acf00306616', '5baaeb15-d505-4927-b7fd-eea39f61dc80')
+('ada72d63-1447-4d82-bb84-d6b0103c7230', 1, 20, '126195bb-2b4f-4a91-ab4f-0acf00306616', 'f548c39d-d212-45c3-b191-a2a80f8d9d6b'),
+('ada72d63-1447-4d82-bb84-d6b0103c7231', 1, 25, '126195bb-2b4f-4a91-ab4f-0acf00306616', '79cebd85-1aea-4938-9f9a-9b15e9969e68'),
+('ada72d63-1447-4d82-bb84-d6b0103c7232', 1, 20, '226195bb-2b4f-4a91-ab4f-0acf00306616', 'f548c39d-d212-45c3-b191-a2a80f8d9d7b'),
+('ada72d63-1447-4d82-bb84-d6b0103c7233', 1, 18, '226195bb-2b4f-4a91-ab4f-0acf00306616', 'f548c39d-d212-45c3-b191-a2a80f8d9d5b'),
+('ada72d63-1447-4d82-bb84-d6b0103c7234', 1, 12, '226195bb-2b4f-4a91-ab4f-0acf00306616', '5baaeb15-d505-4927-b7fd-eea39f61dc80'),
+('ada72d63-1447-4d82-bb84-d6b0103c7235', 1, 12, '326195bb-2b4f-4a91-ab4f-0acf00306616', '5baaeb15-d505-4927-b7fd-eea39f61dc82'),
+('ada72d63-1447-4d82-bb84-d6b0103c7236', 1, 9, '326195bb-2b4f-4a91-ab4f-0acf00306616', '79cebd85-1aea-4938-9f9a-9b15e9969e85'),
+('ada72d63-1447-4d82-bb84-d6b0103c7237', 1, 36, '426195bb-2b4f-4a91-ab4f-0acf00306616', '79cebd85-1aea-4938-9f9a-9b15e9969e72'),
+('ada72d63-1447-4d82-bb84-d6b0103c7238', 1, 25, '526195bb-2b4f-4a91-ab4f-0acf00306616', '79cebd85-1aea-4938-9f9a-9b15e9969e69'),
+('ada72d63-1447-4d82-bb84-d6b0103c7239', 1, 29, '526195bb-2b4f-4a91-ab4f-0acf00306616', '79cebd85-1aea-4938-9f9a-9b15e9969e80')
+GO
+
+--Nhập dữ liệu bảng Voucher (Voucher)
+INSERT INTO Voucher VALUES
+('31c17634-be31-43c7-ac64-46f30fbe3b11', 'MEOWSHOP', 3, '10/09/2023', '11/20/2023', '10/09/2023', 0),
+('31c17634-be31-43c7-ac64-46f30fbe3b12', 'MEOW', 2,  '10/09/2023', '11/20/2023', '10/09/2023', 0)
+GO
+
+--Nhập dữ liệu bảng Chi tiết UsedVoucher (UsedVoucher)
+INSERT INTO UsedVoucher VALUES
+('215d4e1a-b541-4008-bbef-9b3b5a84f3e1', 36, '426195bb-2b4f-4a91-ab4f-0acf00306616', '31c17634-be31-43c7-ac64-46f30fbe3b11'),
+('215d4e1a-b541-4008-bbef-9b3b5a84f3e2', 54, '526195bb-2b4f-4a91-ab4f-0acf00306616', '31c17634-be31-43c7-ac64-46f30fbe3b12')
 GO

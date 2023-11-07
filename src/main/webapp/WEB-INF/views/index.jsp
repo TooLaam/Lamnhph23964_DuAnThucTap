@@ -42,7 +42,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
+        <a href="/statisticsResult" class="logo d-flex align-items-center">
             <img src="/assets/img/logo.png" alt="LOGO">
             <%--<span class="d-none d-lg-block">LOGO</span>--%>
         </a>
@@ -108,6 +108,11 @@
                 <li>
                     <a href="/brand/index">
                         <i class="bi bi-circle"></i><span>Brand</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/voucher/index">
+                        <i class="bi bi-circle"></i><span>Voucher</span>
                     </a>
                 </li>
             </ul>

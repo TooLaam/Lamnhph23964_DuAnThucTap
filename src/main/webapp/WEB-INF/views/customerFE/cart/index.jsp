@@ -92,7 +92,7 @@
                         </c:choose>
                     </div>
                     <div class="d-grid">
-                        <a href="/bill/payment" class="btn btn-success">Check out</a>
+                        <a href="/bill/payment" class="btn">Check out</a>
                     </div>
                 </div>
             </div>
