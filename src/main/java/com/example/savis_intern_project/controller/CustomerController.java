@@ -53,7 +53,7 @@ public class CustomerController {
 
             return "/Customer/index";
         }
-        //Nếu chưa đăng nhập thì return về trang login
+        //Nếu chưa đăng nhập thì return về trang logina
         return "login";
 
     }
