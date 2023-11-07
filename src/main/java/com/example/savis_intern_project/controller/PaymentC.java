@@ -41,6 +41,10 @@ public class PaymentC {
     ProductDetailServiceimpl productDetailServiceimpl;
     @Autowired
     PaymentServiceImpl paymentService;
+    @Autowired
+    VoucherServiceImpl voucherService;
+    @Autowired
+    UsedVoucherServiceImpl usedVoucherService;
 
     @GetMapping("/payment")
     public String checkout(Model model) {
@@ -74,24 +78,51 @@ public class PaymentC {
                           @RequestParam("customerPhone") String customerPhone,
                           @RequestParam("PaymentId") UUID PaymentId,
                           @RequestParam("addressDelivery") String addressDelivery,
+                          @RequestParam("code") String code,
                           RedirectAttributes redirectAttributes
     ) {
-        if (receiverName.isEmpty()) {
-            model.addAttribute("receiverNameError", "Receiver Name is required");
+        boolean hasError = false; // Biến kiểm tra có lỗi nào xảy ra
+
+        if (receiverName.isEmpty() || !receiverName.matches("^[a-zA-Z\\p{IsAlphabetic} ]+$")) {
+            redirectAttributes.addFlashAttribute("receiverNameError", "Invalid Receiver Name (must not be blank and must only contain letters and spaces)");
+            hasError = true; // Đặt biến lỗi thành true
         } else {
-            model.addAttribute("inputReceiverName", receiverName);
+            redirectAttributes.addAttribute("inputReceiverName", receiverName); // Giữ nguyên giá trị người dùng
         }
 
-        if (customerPhone.isEmpty()) {
-            model.addAttribute("customerPhoneError", "Customer Phone is required");
-        } else {
-            model.addAttribute("inputCustomerPhone", customerPhone);
+        if (customerPhone.isEmpty() || !customerPhone.matches("^\\d+$")) {
+            redirectAttributes.addFlashAttribute("customerPhoneError", "Invalid Customer Phone (must not be blank and must be numeric)");
+            hasError = true; // Đặt biến lỗi thành true
+        }else {
+            redirectAttributes.addAttribute("inputCustomerPhone", customerPhone); // Giữ nguyên giá trị người dùng
         }
 
         if (addressDelivery.isEmpty()) {
-            model.addAttribute("addressDeliveryError", "Address Delivery is required");
-        } else {
-            model.addAttribute("inputAddressDelivery", addressDelivery);
+            redirectAttributes.addFlashAttribute("addressDeliveryError", "Address Delivery is required");
+            hasError = true; // Đặt biến lỗi thành true
+        }else {
+            redirectAttributes.addAttribute("inputAddressDelivery", addressDelivery); // Giữ nguyên giá trị người dùng
+        }
+
+        if (hasError) {
+            return "redirect:/bill/payment"; // Chuyển hướng đến trang thanh toán
+        }
+
+        Date currentDate = new Date(System.currentTimeMillis());
+
+        if (!code.isEmpty()) {
+            if (voucherService.getByCode(code) == null){
+                redirectAttributes.addFlashAttribute("codeError", "Enter a valid discount code or gift card");
+                return "redirect:/bill/payment"; // Chuyển hướng đến trang thanh toán
+            }
+            else if(voucherService.getByCode(code).getTimeStart().compareTo(currentDate) > 0){
+                redirectAttributes.addFlashAttribute("codeError", "Not eligible to use Discount Code");
+                return "redirect:/bill/payment"; // Chuyển hướng đến trang thanh toán
+            }
+            else if(voucherService.getByCode(code).getTimeEnd().compareTo(currentDate) < 0){
+                redirectAttributes.addFlashAttribute("codeError", "Discount code has expired");
+                return "redirect:/bill/payment"; // Chuyển hướng đến trang thanh toán
+            }
         }
 
         if (session.getAttribute("CustomerName") != null) {
@@ -101,10 +132,8 @@ public class PaymentC {
             ArrayList<CartDetailView> lstCartDetailView = cartDetailService.getCartDetailByCustomerId(customer.getId());
             Bill bill = new Bill();
 
-            Date currentDate = new Date(System.currentTimeMillis());
             bill.setId(UUID.randomUUID());
             bill.setReceiverName(receiverName);
-            bill.setTotalMoney(cart.getTotalMoney());
             bill.setCustomerPhone(customerPhone);
             bill.setAddressDelivery(addressDelivery);
             bill.setCreatedDate(currentDate);
@@ -112,7 +141,25 @@ public class PaymentC {
             bill.setPayment(paymentService.getOne(PaymentId));
             bill.setBillStatus(billStatusService.findById(UUID.fromString("259b8bc3-5489-47c0-a115-b94a0cf6286f")));
 
-            var b = billService.create_new_bill(bill);
+            Bill b;
+
+            if (code.isEmpty()){
+                bill.setTotalMoney(cart.getTotalMoney());
+
+                b = billService.create_new_bill(bill);
+            }
+            else{
+                bill.setTotalMoney(cart.getTotalMoney().subtract(voucherService.getByCode(code).getValue()));
+
+                b = billService.create_new_bill(bill);
+
+                UsedVoucher usedVoucher = new UsedVoucher();
+                usedVoucher.setId(UUID.randomUUID());
+                usedVoucher.setSubTotal(cart.getTotalMoney());
+                usedVoucher.setBill(b);
+                usedVoucher.setVoucher(voucherService.getByCode(code));
+                usedVoucherService.add(usedVoucher);
+            }
 
             // Tạo danh sách Chi Tiết Hóa Đơn
             for (var lstItem : lstCartDetailView) {
@@ -132,6 +179,7 @@ public class PaymentC {
                 productService.update(product.getId(), product);
                 cartDetailService.delete(lstItem.getId());
             }
+
             cart.setQuantity(0);
             cart.setTotalMoney(BigDecimal.ZERO);
             cart.setStatus(1);
@@ -148,18 +196,33 @@ public class PaymentC {
             customer.setPhone(customerPhone);
             customer.setAddress(addressDelivery);
 
-            Date currentDate = new Date(System.currentTimeMillis());
-
             bill.setId(UUID.randomUUID());
             bill.setReceiverName(receiverName);
-            bill.setTotalMoney(cartSession.getTotalMoney());
             bill.setCustomerPhone(customerPhone);
             bill.setAddressDelivery(addressDelivery);
             bill.setCreatedDate(currentDate);
             bill.setPayment(paymentService.getOne(PaymentId));
             bill.setBillStatus(billStatusService.findById(UUID.fromString("259b8bc3-5489-47c0-a115-b94a0cf6286f")));
 
-            var b = billService.create_new_bill(bill);
+            Bill b;
+
+            if (code.isEmpty()){
+                bill.setTotalMoney(cartSession.getTotalMoney());
+
+                b = billService.create_new_bill(bill);
+            }
+            else{
+                bill.setTotalMoney(cartSession.getTotalMoney().subtract(voucherService.getByCode(code).getValue()));
+
+                b = billService.create_new_bill(bill);
+
+                UsedVoucher usedVoucher = new UsedVoucher();
+                usedVoucher.setId(UUID.randomUUID());
+                usedVoucher.setSubTotal(cartSession.getTotalMoney());
+                usedVoucher.setBill(b);
+                usedVoucher.setVoucher(voucherService.getByCode(code));
+                usedVoucherService.add(usedVoucher);
+            }
 
             // Tạo danh sách Chi Tiết Hóa Đơn
             for (var lstItem : cartDetailViewSession) {
@@ -194,6 +257,10 @@ public class PaymentC {
     public String orderComplete(@PathVariable("billId") UUID billId, Model model) {
         model.addAttribute("bill", billService.get_one_bill(billId));
         model.addAttribute("billDetail", billDetailService.getByBillId(billId));
+        if(usedVoucherService.getUsedVoucherByBillId(billId) != null){
+            model.addAttribute("usedVoucher", usedVoucherService.getUsedVoucherByBillId(billId));
+            model.addAttribute("voucher", voucherService.getOne(usedVoucherService.getUsedVoucherByBillId(billId).getVoucher().getId()));
+        }
         model.addAttribute("view", "/checkout/index.jsp");
         return "/customerFE/index";
     }

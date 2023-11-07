@@ -41,39 +41,39 @@
                             <span>Have an account?</span>
                             <a href="/customer/login" class="link-text">Log in</a>
                         </div>
-                        <form>
+                        <form action="/customer/addLogin" method="post">
                             <div class="mb-3">
-                                <input class="form-control" id="exampleInputFullName" placeholder="FullName" />
+                                <input class="form-control" id="exampleInputFullName" placeholder="FullName"  name="fullname" />
                             </div>
                             <div class="mb-3">
-                                <input class="form-control" id="exampleInputUsername" placeholder="Username" />
+                                <input class="form-control" id="exampleInputUsername" placeholder="Username" name="username" />
                             </div>
                             <div class="mb-3">
                                 <input type="password" class="form-control" id="exampleInputPassword"
-                                    placeholder="Password" />
+                                    placeholder="Password" name="password" />
                             </div>
                             <div class="mb-3">
                                 <input type="number" class="form-control" id="exampleInputPhoneNumber"
-                                    placeholder="PhoneNumber" />
+                                    placeholder="PhoneNumber" name="phone" />
                             </div>
                             <div class="mb-3">
-                                <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email" />
+                                <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email" name="email" />
                             </div>
                             <div class="mb-3">
                                 <input type="date" class="form-control" id="exampleInputBirthday"
-                                    placeholder="Birthday">
+                                    placeholder="Birthday"  name="dateofbirth">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Gender: </label>
-                                <input type="radio" class="btn-check" name="options" id="male" autocomplete="off"
+                                <input type="radio" class="btn-check" name="gender" value="1" id="male" autocomplete="off"
                                     checked>
                                 <label class="btn" for="male">Male</label>
 
-                                <input type="radio" class="btn-check" name="options" id="female" autocomplete="off">
+                                <input type="radio" class="btn-check" value="2" name="gender" id="female" autocomplete="off">
                                 <label class="btn" for="female">Female</label>
                             </div>
                             <div class="mb-3">
-                                <input class="form-control" id="exampleInputAddress" placeholder="Address">
+                                <input class="form-control" id="exampleInputAddress" placeholder="Address" name="address">
                             </div>
                             <div class="d-grid">
                                 <button type="submit" class="btn signup">SIGN UP</button>

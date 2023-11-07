@@ -30,7 +30,7 @@
                 <c:forEach items="${listBill}" var="bill">
                     <tr onclick="goToPage('/bill_detail/index/${bill.id}')">
                         <td>${bill.receiverName}</td>
-                        <td>${bill.totalMoney}</td>
+                        <td>$${bill.totalMoney}</td>
                         <td>${bill.customerPhone}</td>
                         <td>${bill.addressDelivery}</td>
                         <td>${bill.createdDate}</td>
