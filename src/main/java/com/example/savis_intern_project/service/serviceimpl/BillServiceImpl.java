@@ -34,17 +34,17 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public Bill create_new_bill(Bill bill) {
-       return billRepository.save(bill);
+        return billRepository.save(bill);
     }
 
     @Override
     public Bill update_bill(Bill bill) {
         Bill bill1 = billRepository.findById(bill.getId()).get();
-            bill1.setReceiverName(bill.getReceiverName());
-            bill1.setTotalMoney(bill.getTotalMoney());
-            bill1.setCustomerPhone(bill.getCustomerPhone());
-            bill1.setAddressDelivery(bill.getAddressDelivery());
-            return billRepository.save(bill1);
+        bill1.setReceiverName(bill.getReceiverName());
+        bill1.setTotalMoney(bill.getTotalMoney());
+        bill1.setCustomerPhone(bill.getCustomerPhone());
+        bill1.setAddressDelivery(bill.getAddressDelivery());
+        return billRepository.save(bill1);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public List<Bill> get_all_by_Date(Date startDate, Date endDate) {
-        return billRepository.getAllBillsInDateRange(startDate,endDate);
+        return billRepository.getAllBillsInDateRange(startDate, endDate);
     }
 
 
@@ -67,29 +67,23 @@ public class BillServiceImpl implements BillService {
     public Bill get_one_bill(UUID billId) {
         return billRepository.findById(billId).get();
     }
-
     @Override
     public void change_bill_status(UUID billId) {
-        Optional<Bill> optionalBill = billRepository.findById(billId);
-
-//        if (optionalBill.isPresent()) {
-//            Bill bill = optionalBill.get();
-//            System.out.println(bill.getBillStatus().getName());
-//            if (bill.getBillStatus().getId() ==  UUID.fromString("159b8bc3-5489-47c0-a115-b94a0cf6286f")) {
-//                Optional<BillStatus> optionalBill2 = billStatusRepository.findById(UUID.fromString("159b8bc3-5489-47c0-a115-b94a0cf6286f"));
-//                System.out.println(optionalBill2);
-//                bill.setBillStatus(optionalBill2.get());
-//            } else if (bill.getBillStatus().getId() == UUID.fromString("159b8bc3-5489-47c0-a115-b94a0cf6286f")) {
-//                bill.setBillStatus(billStatusRepository.findById(UUID.fromString("159b8bc3-5489-47c0-a115-b94a0cf6286f")).get());
-//            }
-//            billRepository.save(bill);
-//        } else {
-//            // Xử lý trường hợp không tìm thấy hóa đơn
-//            System.out.println("Hóa đơn không tồn tại với ID: " + billId);
-//            // Hoặc bạn có thể ném ra một ngoại lệ hoặc thực hiện xử lý khác tùy ý.
-//        }
-
+        Bill bill = billRepository.findById(billId).get();
+        BillStatus billStatusConfirmed = billStatusRepository.findById(UUID.fromString("159b8bc3-5489-47c0-a115-b94a0cf6286f")).get();
+        BillStatus billStatusUnconfirmed = billStatusRepository.findById(UUID.fromString("259b8bc3-5489-47c0-a115-b94a0cf6286f")).get();
+        System.out.println("Như nào"+bill.toString());
+        if (bill.getBillStatus().getId()==billStatusUnconfirmed.getId()) {
+//            System.out.println("Quân đẹp trai" + billStatusUnconfirmed.getName());
+            bill.setBillStatus(billStatusConfirmed);
+//            System.out.println("Bill changed" + bill.getBillStatus().getName());
+            billRepository.save(bill);
+        } else if (bill.getBillStatus().getId()==billStatusConfirmed.getId()) {
+            bill.setBillStatus(billStatusRepository.findById(billStatusUnconfirmed.getId()).get());
+            billRepository.save(bill);
+        }
     }
+
 
     @Override
     public void delete_bill(UUID billId) {
