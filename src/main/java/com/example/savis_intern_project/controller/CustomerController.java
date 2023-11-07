@@ -59,7 +59,10 @@ public class CustomerController {
     }
 
     @GetMapping("/indexcus" )
-    public String show_data_customer_cus(Model model){
+    public String show_data_customer_cus(Model model,HttpSession session){
+        String username = (String) session.getAttribute("CustomerName");
+        String password = (String) session.getAttribute("CustomerPass");
+        model.addAttribute("cus",customerService.login(username,password));
         model.addAttribute("cusList",customerService.findAll());
         model.addAttribute("view", "/account/index.jsp");
         return "/customerFE/index";
@@ -90,7 +93,8 @@ public class CustomerController {
             Customer checkLogin = customerService.login(username,password);
             if (!(checkLogin == null)){
                 session.setAttribute("CustomerName", username);
-                return "/customerFE/index";
+                session.setAttribute("CustomerPass", password);
+                return "redirect:/home";
             }
             else {
                 model.addAttribute("erCheckCustomer","Username and password are incorrect");
@@ -98,6 +102,8 @@ public class CustomerController {
             }
         }
     }
+
+
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
@@ -172,7 +178,7 @@ public class CustomerController {
         customer.setPassword(password);
         customerService.add(customer);
         model.addAttribute("sigsUp","Sign Up Success !!! please log in");
-        return "login";
+        return "/customerFE/login/index";
     }
 
     @PostMapping("/update")

@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-3">
             <div class="content">
-                <span class="account-name">Tuan Bean's Account </span>
+                <span class="account-name">${cus.fullname} Account </span>
                 <a href="/home/index.html" class="link-text-logout">(Logout)</a>
             </div>
             <div class="link">
@@ -23,35 +23,35 @@
                 <form>
                     <div class="mb-3">
                         <label class="form-label">FullName: </label>
-                        <label class="form-label text-inf">Tuan Bean's</label>
+                        <label class="form-label text-inf">${cus.fullname}</label>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Username: </label>
-                        <label class="form-label text-inf">tuanbeans</label>
+                        <label class="form-label text-inf">${cus.username}</label>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Password: </label>
-                        <input type="password" class="form-label text-inf password" value="123123">
+                        <input type="password" class="form-label text-inf password" value="${cus.password}">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">PhoneNumber: </label>
-                        <label class="form-label text-inf">0987654321</label>
+                        <label class="form-label text-inf">${cus.phone}</label>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email: </label>
-                        <label class="form-label text-inf">tuanbeans@gmail.com</label>
+                        <label class="form-label text-inf">${cus.email}</label>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Birthday: </label>
-                        <label class="form-label text-inf">01/01/2003</label>
+                        <label class="form-label text-inf">${cus.dateofbirth}</label>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Gender: </label>
-                        <label class="form-label text-inf">Male</label>
+                        <label class="form-label text-inf">${cus.gender==1?"Male":"Female"}</label>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Address: </label>
-                        <label class="form-label text-inf">Hanoi</label>
+                        <label class="form-label text-inf">${cus.address}</label>
                     </div>
                     <button type="button" class="btn">Change Account Info</button>
                 </form>

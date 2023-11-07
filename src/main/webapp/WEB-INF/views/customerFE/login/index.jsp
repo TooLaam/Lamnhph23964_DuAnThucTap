@@ -51,10 +51,13 @@
                                 <input type="password" class="form-control" id="exampleInputPassword" name="password"/>
                             </div>
                             <c:if test="${erTrongCustomer != null}" >
-                                <p style="color: red">${erTrong}</p>
+                                <p style="color: red">${erTrongCustomer}</p>
                             </c:if>
                             <c:if test="${erCheckCustomer != null}" >
-                                <p style="color: red">${erCheck}</p>
+                                <p style="color: red">${erCheckCustomer}</p>
+                            </c:if>
+                            <c:if test="${sigsUp != null}" >
+                                <p style="color: black">${sigsUp}</p>
                             </c:if>
                             <div class="d-grid">
                                 <button type="submit" class="btn login">LOG IN</button>
