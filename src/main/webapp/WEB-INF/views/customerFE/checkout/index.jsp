@@ -43,8 +43,21 @@
                 <tfoot>
                 <tr>
                     <th scope="row">Subtotal:</th>
-                    <td class="text-end"><span class="money"><span>$</span>${bill.totalMoney}</span></td>
+                    <c:choose>
+                        <c:when test="${not empty usedVoucher}">
+                            <td class="text-end"><span class="money"><span>$</span>${usedVoucher.subTotal}</span></td>
+                        </c:when>
+                        <c:otherwise>
+                            <td class="text-end"><span class="money"><span>$</span>${bill.totalMoney}</span></td>
+                        </c:otherwise>
+                    </c:choose>
                 </tr>
+                <c:if test="${not empty voucher}">
+                    <tr>
+                        <th scope="row">Discount:</th>
+                        <td class="text-end"><span class="money"><span>$</span>${voucher.value}</span></td>
+                    </tr>
+                </c:if>
                 <tr>
                     <th scope="row">Shipping:</th>
                     <td class="text-end"><span><span>$</span>0</span>&nbsp;<small>via Delivery in Hanoi</small></td>
