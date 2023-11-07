@@ -99,12 +99,13 @@
 .datatable-pagination a {
 	border: 1px solid transparent;
 	float: left;
-	margin-left: 2px;
+	margin-left: 3px;
 	padding: 6px 12px;
 	position: relative;
 	text-decoration: none;
-	color: #333;
+	color: #333 !important;
     cursor: pointer;
+	border-radius: 5px;
 }
 
 .datatable-pagination a:hover {
@@ -115,9 +116,6 @@
 .datatable-pagination .datatable-active a:focus,
 .datatable-pagination .datatable-active a:hover {
 	background-color: #d9d9d9;
-	border-radius: 20px;
-	margin: 0 10px;
-	color: black;
 }
 
 .datatable-pagination .datatable-ellipsis a,
