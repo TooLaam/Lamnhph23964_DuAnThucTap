@@ -205,32 +205,43 @@
             <div class="row" style="margin-top: 50px;">
                 <div class="col-md-6">
                     <b><label class="form-label">Full Name:</label></b>
-                    <input type="text" class="form-control"  name="fullName" />
-
+                    <input type="text" class="form-control" value="${fullnameAdd}"  name="fullName" />
+                    <c:if test="${errName != null}" >
+                        <p style="color: red">${errName}</p>
+                    </c:if>
                     <b> <label class="form-label">Date Of Birth</label></b>
-                    <input type="date" class="form-control"  name="dateOfBirth" />
+                    <input type="date" class="form-control" value="${dateOfBirthAdd}"  name="dateOfBirth" /><br>
+                    <c:if test="${errDate != null}" >
+                        <p style="color: red">${errDate}</p>
+                    </c:if>
+                    <b><label class="form-label">Gender: </label></b>
+                    <label class="form-label">Male</label>
+                    <input class="form-check-input" type="radio" checked value="1" name="gender" >
 
-                    <b><label class="form-label">Gender</label></b>
-                    <select class="form-select" aria-label="Default select example" name="gender">
-
-                        <option value=1>Male</option>
-                        <option value=2>Female</option>
-
-                    </select>
+                    <label class="form-label">Female</label>
+                    <input class="form-check-input" type="radio" value="2" name="gender" ><br>
 
 
-                    <b><label class="form-label">Phone Number</label></b>
-                    <input type="number" class="form-control"  name="phoneNumber" />
-
+                        <b><label class="form-label">Phone Number</label></b>
+                    <input type="number" class="form-control" value="${phoneNumberAdd}"  name="phoneNumber" />
+                    <c:if test="${errPhone != null}" >
+                        <p style="color: red">${errPhone}</p>
+                    </c:if>
                     <b><label class="form-label">Email</label></b>
-                    <input type="email" class="form-control"  name="email" />
+                    <input type="email" class="form-control" value="${emailAdd}"  name="email" />
+                    <c:if test="${errEmail != null}" >
+                        <p style="color: red">${errEmail}</p>
+                    </c:if>
                 </div>
+
 
                 <div class="col-md-6">
 
                     <b> <label class="form-label">Address</label></b>
-                    <input type="text" class="form-control"   name="address" />
-
+                    <input type="text" class="form-control" value="${addressAdd}"   name="address" />
+                    <c:if test="${errAdd != null}" >
+                        <p style="color: red">${errAdd}</p>
+                    </c:if>
                     <b><label class="form-label">Role</label></b>
                     <select class="form-select" aria-label="Default select example" name="idRole">
 
@@ -240,11 +251,18 @@
                     </select>
 
                     <b><label class="form-label">Username</label></b>
-                    <input type="text" class="form-control"  name="username" />
-
+                    <input type="text" class="form-control" value="${usernameAdd}"  name="username1" />
+                    <c:if test="${errUser != null}" >
+                        <p style="color: red">${errUser}</p>
+                    </c:if>
+                    <c:if test="${errUserTrung != null}" >
+                        <p style="color: red">${errUserTrung}</p>
+                    </c:if>
                     <b><label class="form-label">Password</label></b>
-                    <input type="password" class="form-control"  name="password" />
-
+                    <input type="password" class="form-control" value="${passwordAdd}"  name="password1" />
+                    <c:if test="${errPass != null}" >
+                        <p style="color: red">${errPass}</p>
+                    </c:if>
 
 
                 </div>

@@ -19,4 +19,5 @@ public interface EmployeeService  {
     List<Employee> getByUserName(String username);
     Employee login(String username, String password);
     Employee checkRole(String username);
+    List<Employee> listDesc();
 }

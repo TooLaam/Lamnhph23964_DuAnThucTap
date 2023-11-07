@@ -98,11 +98,11 @@
                     <form action="/loginOK" method="post">
                         <div class="mb-3">
                             <label for="exampleInputUsername" class="form-label">Username</label>
-                            <input class="form-control" id="exampleInputUsername" name="username" />
+                            <input class="form-control" id="exampleInputUsername" name="username" value="${reUsername}" />
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword" name="password"/>
+                            <input type="password" class="form-control" id="exampleInputPassword" value="${rePassword}" name="password"/>
                         </div>
                         <c:if test="${erTrong != null}" >
                             <p style="color: red">${erTrong}</p>

@@ -12,6 +12,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
     @Query("SELECT e from Employee e WHERE e.fullName=?1 and e.phoneNumber=?2")
     List<Employee> timKiem(String name,String phone);
 
+
     @Query("SELECT e from Employee e WHERE e.fullName=?1 or e.phoneNumber=?2")
     List<Employee> timKiem2(String name,String phone);
 
@@ -23,4 +24,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
 
     @Query("SELECT c from Employee c where c.username=?1 and c.role.name='Staff'")
     Employee checkRole(String username);
+
+    @Query("select c from Employee c order by c.datecreated desc ")
+    List<Employee> listDesc();
 }
