@@ -1,11 +1,11 @@
 package com.example.savis_intern_project.controller;
 
-import com.example.savis_intern_project.entity.Customer;
-import com.example.savis_intern_project.entity.Employee;
-import com.example.savis_intern_project.entity.Product;
+import com.example.savis_intern_project.entity.*;
 import com.example.savis_intern_project.repository.CustomerRepository;
 import com.example.savis_intern_project.service.CustomerService;
 import com.example.savis_intern_project.service.EmployeeService;
+import com.example.savis_intern_project.service.serviceimpl.CartServiceImpl;
+import com.example.savis_intern_project.service.serviceimpl.CartdetailServiceImpl;
 import com.example.savis_intern_project.service.serviceimpl.CustomerServiceImpl;
 import jakarta.persistence.Id;
 import jakarta.servlet.http.HttpSession;
@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 //import org.modelmapper.ModelMapper;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
@@ -30,25 +31,29 @@ public class CustomerController {
 
     @Autowired
     EmployeeService employeeService;
+    @Autowired
+    CartServiceImpl cartService;
+    @Autowired
+    CartdetailServiceImpl cartdetailService;
 
 //    @Autowired
 //    private ModelMapper modelMapper;
 
     @GetMapping("/index")
     public String HienThi(Model model, HttpSession session) {
-        if (session.getAttribute("Name") != null){
+        if (session.getAttribute("Name") != null) {
             //Nếu đã đăng nhập vào trang index
-            List<Customer> customerList = customerService.findAll() ;
+            List<Customer> customerList = customerService.findAll();
             model.addAttribute("cusList", customerService.findAll());
 
 
             String username = (String) session.getAttribute("username");
             String password = (String) session.getAttribute("password");
-            Employee checkLogin = employeeService.login(username,password);
-            session.setAttribute("checkRole",employeeService.checkRole(username));
+            Employee checkLogin = employeeService.login(username, password);
+            session.setAttribute("checkRole", employeeService.checkRole(username));
 
             session.setAttribute("Name", checkLogin);
-            model.addAttribute("empLogin",checkLogin);
+            model.addAttribute("empLogin", checkLogin);
 
 
             return "/Customer/index";
@@ -58,68 +63,65 @@ public class CustomerController {
 
     }
 
-    @GetMapping("/indexcus" )
-    public String show_data_customer_cus(Model model,HttpSession session){
+    @GetMapping("/indexcus")
+    public String show_data_customer_cus(Model model, HttpSession session) {
         String username = (String) session.getAttribute("CustomerName");
         String password = (String) session.getAttribute("CustomerPass");
-        model.addAttribute("cus",customerService.login(username,password));
-        model.addAttribute("cusList",customerService.findAll());
+        model.addAttribute("cus", customerService.login(username, password));
+        model.addAttribute("cusList", customerService.findAll());
         model.addAttribute("view", "/account/index.jsp");
         return "/customerFE/index";
     }
 
-    @GetMapping("/signup" )
-    public String signup(Model model){
+    @GetMapping("/signup")
+    public String signup(Model model) {
         model.addAttribute("view", "/signup/index.jsp");
         return "/customerFE/signup/index";
     }
 
-    @GetMapping("/login" )
-    public String login(Model model){
+    @GetMapping("/login")
+    public String login(Model model) {
         model.addAttribute("view", "/login/index.jsp");
         return "/customerFE/login/index";
     }
 
     @PostMapping("/loginOK")
-    public String loginOK(@RequestParam("username")String username,
-                          @RequestParam("password")String password,
+    public String loginOK(@RequestParam("username") String username,
+                          @RequestParam("password") String password,
                           HttpSession session,
-                          Model model){
-        if (username == ""||password == ""){
+                          Model model) {
+        if (username == "" || password == "") {
             model.addAttribute("erTrongCustomer", "Please enter complete information !!!");
             return "/customerFE/login/index";
-        }
-        else {
-            Customer checkLogin = customerService.login(username,password);
-            if (!(checkLogin == null)){
+        } else {
+            Customer checkLogin = customerService.login(username, password);
+            if (!(checkLogin == null)) {
                 session.setAttribute("CustomerName", username);
                 session.setAttribute("CustomerPass", password);
                 return "redirect:/home";
-            }
-            else {
-                model.addAttribute("erCheckCustomer","Username and password are incorrect");
+            } else {
+                model.addAttribute("erCheckCustomer", "Username and password are incorrect");
                 return "/customerFE/login/index";
             }
         }
     }
 
 
-
     @GetMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         session.removeAttribute("CustomerName");
         return "redirect:/customer/login";
     }
 
     @GetMapping("/viewAdd")
-    public String viewAdd(Model model,HttpSession session) {
+    public String viewAdd(Model model, HttpSession session) {
         String username = (String) session.getAttribute("username");
         String password = (String) session.getAttribute("password");
-        Employee checkLogin = employeeService.login(username,password);
-        session.setAttribute("checkRole",employeeService.checkRole(username));
+        Employee checkLogin = employeeService.login(username, password);
+        session.setAttribute("checkRole", employeeService.checkRole(username));
 
         session.setAttribute("Name", checkLogin);
-        model.addAttribute("empLogin",checkLogin);
+        model.addAttribute("empLogin", checkLogin);
         return "/Customer/add";
     }
 
@@ -138,16 +140,28 @@ public class CustomerController {
         Customer customer = new Customer();
         Date currentDate = new Date(System.currentTimeMillis());
         customer.setFullname(fullname);
-        customer.setDateofbirth(Date.valueOf(dateofbirth) );
+        customer.setDateofbirth(Date.valueOf(dateofbirth));
         customer.setAddress(address);
         customer.setPhone(phone);
-        customer.setDatecreated(String.valueOf(currentDate) );
+        customer.setDatecreated(String.valueOf(currentDate));
         customer.setEmail(email);
         customer.setGender(gender);
         customer.setStatus(1);
         customer.setUsername(username);
         customer.setPassword(password);
         customerService.add(customer);
+        Cart cart = new Cart();
+        cart.setQuantity(0);
+        cart.setTotalMoney(BigDecimal.valueOf(0));
+        cart.setTotalMoney(BigDecimal.valueOf(0));
+        cart.setCustomer(customer);
+        cartService.save(cart);
+        CartDetail cartDetail = new CartDetail();
+        cartDetail.setPrice(BigDecimal.valueOf(0));
+        cartDetail.setQuantity(0);
+        cartDetail.setProductDetail(null);
+        cartDetail.setCart(cart);
+        cartdetailService.save(cartDetail);
         return "redirect:/customer/index";
     }
 
@@ -167,21 +181,33 @@ public class CustomerController {
         Customer customer = new Customer();
         Date currentDate = new Date(System.currentTimeMillis());
         customer.setFullname(fullname);
-        customer.setDateofbirth(Date.valueOf(dateofbirth) );
+        customer.setDateofbirth(Date.valueOf(dateofbirth));
         customer.setAddress(address);
         customer.setPhone(phone);
-        customer.setDatecreated(String.valueOf(currentDate) );
+        customer.setDatecreated(String.valueOf(currentDate));
         customer.setEmail(email);
         customer.setGender(gender);
         customer.setStatus(1);
         customer.setUsername(username);
         customer.setPassword(password);
         customerService.add(customer);
-        model.addAttribute("sigsUp","Sign Up Success !!! please log in");
+        Cart cart = new Cart();
+        cart.setId(customer.getId());
+        cart.setQuantity(0);
+        cart.setTotalMoney(BigDecimal.valueOf(0));
+        cart.setTotalMoney(BigDecimal.valueOf(0));
+        cart.setCustomer(customer);
+        cart.setStatus(0);
+        cartService.save(cart);
+        CartDetail cartDetail = new CartDetail();
+        cartDetail.setPrice(BigDecimal.valueOf(0));
+        cartDetail.setQuantity(0);
+        cartDetail.setProductDetail(null);
+        cartDetail.setCart(cart);
+        cartdetailService.save(cartDetail);
+        model.addAttribute("sigsUp", "Sign Up Success !!! please log in");
         return "/customerFE/login/index";
     }
-
-
 
 
     @PostMapping("/update")
@@ -200,7 +226,7 @@ public class CustomerController {
         Customer customer = new Customer();
         Date currentDate = new Date(System.currentTimeMillis());
         customer.setFullname(fullname);
-        customer.setDateofbirth(Date.valueOf(dateofbirth) );
+        customer.setDateofbirth(Date.valueOf(dateofbirth));
         customer.setAddress(address);
         customer.setPhone(phone);
         customer.setId(id);
@@ -223,38 +249,37 @@ public class CustomerController {
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(Model model, @PathVariable("id") UUID id,HttpSession session) {
+    public String detail(Model model, @PathVariable("id") UUID id, HttpSession session) {
         model.addAttribute("cus", customerService.detail(id));
         String username = (String) session.getAttribute("username");
         String password = (String) session.getAttribute("password");
-        Employee checkLogin = employeeService.login(username,password);
-        session.setAttribute("checkRole",employeeService.checkRole(username));
+        Employee checkLogin = employeeService.login(username, password);
+        session.setAttribute("checkRole", employeeService.checkRole(username));
 
         session.setAttribute("Name", checkLogin);
-        model.addAttribute("empLogin",checkLogin);
+        model.addAttribute("empLogin", checkLogin);
         return "/Customer/detail";
 
     }
 
     @GetMapping("/timKiem")
     public String timKiem(Model model,
-                          @RequestParam("phone1")String phone,
+                          @RequestParam("phone1") String phone,
                           HttpSession session) {
 
 
-        if(phone==""){
-            model.addAttribute("cusList",customerService.findAll());
-        }
-        else{
-            model.addAttribute("tim",customerService.timKiem(phone));
+        if (phone == "") {
+            model.addAttribute("cusList", customerService.findAll());
+        } else {
+            model.addAttribute("tim", customerService.timKiem(phone));
         }
         String username = (String) session.getAttribute("username");
         String password = (String) session.getAttribute("password");
-        Employee checkLogin = employeeService.login(username,password);
-        session.setAttribute("checkRole",employeeService.checkRole(username));
+        Employee checkLogin = employeeService.login(username, password);
+        session.setAttribute("checkRole", employeeService.checkRole(username));
 
         session.setAttribute("Name", checkLogin);
-        model.addAttribute("empLogin",checkLogin);
+        model.addAttribute("empLogin", checkLogin);
         return "/Customer/index";
 
     }
