@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -65,6 +66,8 @@ public class EmployeeController {
             }
             else {
                 model.addAttribute("erCheck","Username and password are incorrect");
+                model.addAttribute("reUsername",username);
+                model.addAttribute("rePassword",password);
                 return "login";
             }
         }
@@ -85,7 +88,7 @@ public class EmployeeController {
                 if (employeeService.findAll().isEmpty()){
                     model.addAttribute("erList","Empty list");
                 }
-                List<Employee> customerList = employeeService.findAll() ;
+                List<Employee> customerList = employeeService.listDesc() ;
                 model.addAttribute("empList", customerList);
                 String username = (String) session.getAttribute("username");
                 String password = (String) session.getAttribute("password");
@@ -160,34 +163,186 @@ public class EmployeeController {
     @PostMapping("/employee/add")
     public String add(
             @RequestParam("fullName") String fullName,
-            @RequestParam("username") String username,
-            @RequestParam("password") String password,
+            @RequestParam("username1") String username1,
+            @RequestParam("password1") String password1,
             @RequestParam("dateOfBirth") String dateOfBirth,
             @RequestParam("gender") int gender,
             @RequestParam("phoneNumber") String phoneNumber,
             @RequestParam("email") String email,
             @RequestParam("address") String address,
-            @RequestParam("idRole")String idRole
+            @RequestParam("idRole")String idRole,
+            Model model,
+            RedirectAttributes redirectAttributes,
+            HttpSession session
     ) {
 
-        Employee employee = new Employee();
+        if (fullName.isBlank()){
+            model.addAttribute("role", roleService.getAll());
+            String username = (String) session.getAttribute("username");
+            String password = (String) session.getAttribute("password");
+            Employee checkLogin = employeeService.login(username,password);
+            session.setAttribute("checkRole",employeeService.checkRole(username));
+            session.setAttribute("Name", checkLogin);
+            model.addAttribute("empLogin",checkLogin);
+            model.addAttribute("fullnameAdd",fullName);
+            model.addAttribute("usernameAdd",username1);
+            model.addAttribute("passwordAdd",password1);
+            model.addAttribute("dateOfBirthAdd",dateOfBirth);
+            model.addAttribute("emailAdd",email);
+            model.addAttribute("addressAdd",address);
+            model.addAttribute("phoneNumberAdd",phoneNumber);
+            model.addAttribute("errName","Invalid Receiver FullName");
+            return "/Employee/add";
+        }
+        if (dateOfBirth.isBlank()){
+            model.addAttribute("role", roleService.getAll());
+            String username = (String) session.getAttribute("username");
+            String password = (String) session.getAttribute("password");
+            Employee checkLogin = employeeService.login(username,password);
+            session.setAttribute("checkRole",employeeService.checkRole(username));
+            session.setAttribute("Name", checkLogin);
+            model.addAttribute("empLogin",checkLogin);
+            model.addAttribute("fullnameAdd",fullName);
+            model.addAttribute("usernameAdd",username1);
+            model.addAttribute("passwordAdd",password1);
+            model.addAttribute("dateOfBirthAdd",dateOfBirth);
+            model.addAttribute("emailAdd",email);
+            model.addAttribute("addressAdd",address);
+            model.addAttribute("phoneNumberAdd",phoneNumber);
+            model.addAttribute("errDate","Invalid Receiver Date Of Birth");
+            return "/Employee/add";
+        }
+        if (phoneNumber.isBlank()){
+            model.addAttribute("role", roleService.getAll());
+            String username = (String) session.getAttribute("username");
+            String password = (String) session.getAttribute("password");
+            Employee checkLogin = employeeService.login(username,password);
+            session.setAttribute("checkRole",employeeService.checkRole(username));
+            session.setAttribute("Name", checkLogin);
+            model.addAttribute("empLogin",checkLogin);
+            model.addAttribute("fullnameAdd",fullName);
+            model.addAttribute("usernameAdd",username1);
+            model.addAttribute("passwordAdd",password1);
+            model.addAttribute("dateOfBirthAdd",dateOfBirth);
+            model.addAttribute("emailAdd",email);
+            model.addAttribute("addressAdd",address);
+            model.addAttribute("phoneNumberAdd",phoneNumber);
+            model.addAttribute("errPhone","Invalid Receiver Phone Number");
+            return "/Employee/add";
+        }
+        if (email.isBlank()){
+            model.addAttribute("role", roleService.getAll());
+            String username = (String) session.getAttribute("username");
+            String password = (String) session.getAttribute("password");
+            Employee checkLogin = employeeService.login(username,password);
+            session.setAttribute("checkRole",employeeService.checkRole(username));
+            session.setAttribute("Name", checkLogin);
+            model.addAttribute("empLogin",checkLogin);
+            model.addAttribute("fullnameAdd",fullName);
+            model.addAttribute("usernameAdd",username1);
+            model.addAttribute("passwordAdd",password1);
+            model.addAttribute("dateOfBirthAdd",dateOfBirth);
+            model.addAttribute("emailAdd",email);
+            model.addAttribute("addressAdd",address);
+            model.addAttribute("phoneNumberAdd",phoneNumber);
+            model.addAttribute("errEmail","Invalid Receiver Email");
+            return "/Employee/add";
+        }
+        if (address.isBlank()){
+            model.addAttribute("role", roleService.getAll());
+            String username = (String) session.getAttribute("username");
+            String password = (String) session.getAttribute("password");
+            Employee checkLogin = employeeService.login(username,password);
+            session.setAttribute("checkRole",employeeService.checkRole(username));
+            session.setAttribute("Name", checkLogin);
+            model.addAttribute("empLogin",checkLogin);
+            model.addAttribute("fullnameAdd",fullName);
+            model.addAttribute("usernameAdd",username1);
+            model.addAttribute("passwordAdd",password1);
+            model.addAttribute("dateOfBirthAdd",dateOfBirth);
+            model.addAttribute("emailAdd",email);
+            model.addAttribute("addressAdd",address);
+            model.addAttribute("phoneNumberAdd",phoneNumber);
+            model.addAttribute("errAdd","Invalid Receiver Address");
+            return "/Employee/add";
+        }
+        if (username1.isBlank()){
+            model.addAttribute("role", roleService.getAll());
+            String username = (String) session.getAttribute("username");
+            String password = (String) session.getAttribute("password");
+            Employee checkLogin = employeeService.login(username,password);
+            session.setAttribute("checkRole",employeeService.checkRole(username));
+            session.setAttribute("Name", checkLogin);
+            model.addAttribute("empLogin",checkLogin);
+            model.addAttribute("fullnameAdd",fullName);
+            model.addAttribute("usernameAdd",username1);
+            model.addAttribute("passwordAdd",password1);
+            model.addAttribute("dateOfBirthAdd",dateOfBirth);
+            model.addAttribute("emailAdd",email);
+            model.addAttribute("addressAdd",address);
+            model.addAttribute("phoneNumberAdd",phoneNumber);
+            model.addAttribute("errUser","Invalid Receiver UserName");
+            return "/Employee/add";
+        }
+        if (password1.isBlank()){
+
+            model.addAttribute("role", roleService.getAll());
+            String username = (String) session.getAttribute("username");
+            String password = (String) session.getAttribute("password");
+            Employee checkLogin = employeeService.login(username,password);
+            session.setAttribute("checkRole",employeeService.checkRole(username));
+            session.setAttribute("Name", checkLogin);
+            model.addAttribute("empLogin",checkLogin);
+            model.addAttribute("fullnameAdd",fullName);
+            model.addAttribute("usernameAdd",username1);
+            model.addAttribute("passwordAdd",password1);
+            model.addAttribute("dateOfBirthAdd",dateOfBirth);
+            model.addAttribute("emailAdd",email);
+            model.addAttribute("addressAdd",address);
+            model.addAttribute("phoneNumberAdd",phoneNumber);
+            model.addAttribute("errPass","Invalid Receiver Password");
+            return "/Employee/add";
+        }
+        else {
+            List<Employee>  checkUser = employeeService.getByUserName(username1);
+            if (!(checkUser.isEmpty())){
+                model.addAttribute("role", roleService.getAll());
+                String username = (String) session.getAttribute("username");
+                String password = (String) session.getAttribute("password");
+                Employee checkLogin = employeeService.login(username,password);
+                session.setAttribute("checkRole",employeeService.checkRole(username));
+                session.setAttribute("Name", checkLogin);
+                model.addAttribute("empLogin",checkLogin);
+                model.addAttribute("fullnameAdd",fullName);
+                model.addAttribute("usernameAdd",username1);
+                model.addAttribute("passwordAdd",password1);
+                model.addAttribute("dateOfBirthAdd",dateOfBirth);
+                model.addAttribute("emailAdd",email);
+                model.addAttribute("addressAdd",address);
+                model.addAttribute("phoneNumberAdd",phoneNumber);
+                model.addAttribute("errUserTrung","Duplicate Username !!! Please enter another username");
+                return "/Employee/add";
+            }
+
+            Employee employee = new Employee();
 
 
-        Date currentDate = new Date(System.currentTimeMillis());
+            Date currentDate = new Date(System.currentTimeMillis());
 
-        employee.setFullName(fullName);
-        employee.setDateOfBirth(dateOfBirth );
-        employee.setAddress(address);
-        employee.setPhoneNumber(phoneNumber);
-        employee.setDatecreated((currentDate));
-        employee.setEmail(email);
-        employee.setGender(gender);
-        employee.setStatus(1);
-        employee.setUsername(username);
-        employee.setPassword(password);
-        employee.setRole(roleService.detail(UUID.fromString(idRole)));
-        employeeService.add(employee);
-        return "redirect:/employee/index";
+            employee.setFullName(fullName);
+            employee.setDateOfBirth(dateOfBirth );
+            employee.setAddress(address);
+            employee.setPhoneNumber(phoneNumber);
+            employee.setDatecreated((currentDate));
+            employee.setEmail(email);
+            employee.setGender(gender);
+            employee.setStatus(1);
+            employee.setUsername(username1);
+            employee.setPassword(password1);
+            employee.setRole(roleService.detail(UUID.fromString(idRole)));
+            employeeService.add(employee);
+            return "redirect:/employee/index";
+        }
     }
 
 
@@ -233,14 +388,14 @@ public class EmployeeController {
                           @RequestParam("name1")String name,
                           @RequestParam("phone1")String phone,HttpSession session) {
 
-        if (name ==""||phone==""){
+        if (name.isBlank()||phone.isBlank()){
             model.addAttribute("tim",employeeService.timKiem(name,phone));
         }
         if(name ==""&&phone==""){
-            model.addAttribute("empList",employeeService.findAll());
+            model.addAttribute("empList",employeeService.listDesc());
         }
-        else{
-            model.addAttribute("tim",employeeService.timKiem2(name,phone));
+        if (!(name.isBlank()&&phone.isBlank())){
+            model.addAttribute("tim",employeeService.timKiem(name,phone));
         }
         String username = (String) session.getAttribute("username");
         String password = (String) session.getAttribute("password");

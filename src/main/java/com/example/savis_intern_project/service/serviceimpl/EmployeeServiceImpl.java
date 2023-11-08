@@ -63,6 +63,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<Employee> listDesc() {
+        return employeeRepository.listDesc();
+    }
+
+    @Override
     public void update(Employee cs) {
 
         this.employeeRepository.save(cs);
