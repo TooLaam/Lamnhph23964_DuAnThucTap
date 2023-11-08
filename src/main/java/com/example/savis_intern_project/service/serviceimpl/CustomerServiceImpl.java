@@ -5,6 +5,9 @@ import com.example.savis_intern_project.entity.Employee;
 import com.example.savis_intern_project.repository.CustomerRepository;
 import com.example.savis_intern_project.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -15,6 +18,12 @@ import java.util.UUID;
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     CustomerRepository customerRepository;
+
+    @Override
+    public Page<Customer> findAll(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo,10);
+        return customerRepository.findAll(pageable);
+    }
 
     @Override
     public List<Customer> findAll() {

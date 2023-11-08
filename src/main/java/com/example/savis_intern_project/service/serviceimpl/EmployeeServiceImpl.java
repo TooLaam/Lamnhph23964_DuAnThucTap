@@ -4,6 +4,9 @@ import com.example.savis_intern_project.entity.Employee;
 import com.example.savis_intern_project.repository.EmployeeRepository;
 import com.example.savis_intern_project.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,11 +42,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> timKiem(String name, String phone) {
+
         return employeeRepository.timKiem(name,phone);
     }
 
     @Override
     public List<Employee> timKiem2(String name, String phone) {
+
         return employeeRepository.timKiem2(name,phone);
     }
 
@@ -63,8 +68,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> listDesc() {
-        return employeeRepository.listDesc();
+    public Page<Employee> listDesc(Integer pageNo) {
+        Pageable pageable = PageRequest.of(pageNo,10);
+        return employeeRepository.listDesc(pageable);
     }
 
     @Override

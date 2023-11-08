@@ -7,6 +7,7 @@ import com.example.savis_intern_project.service.EmployeeService;
 import com.example.savis_intern_project.service.RoleService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -80,7 +81,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employee/index")
-    public String HienThi(Model model,HttpSession session) {
+    public String HienThi(Model model,HttpSession session,@RequestParam(value = "pageNo",defaultValue = "0")Integer page) {
 
 
         if (session.getAttribute("Name") != null){
@@ -88,7 +89,7 @@ public class EmployeeController {
                 if (employeeService.findAll().isEmpty()){
                     model.addAttribute("erList","Empty list");
                 }
-                List<Employee> customerList = employeeService.listDesc() ;
+                Page<Employee> customerList = employeeService.listDesc(page) ;
                 model.addAttribute("empList", customerList);
                 String username = (String) session.getAttribute("username");
                 String password = (String) session.getAttribute("password");
@@ -98,7 +99,8 @@ public class EmployeeController {
                 session.setAttribute("Name", checkLogin);
                 model.addAttribute("empLogin",checkLogin);
 
-                return "/Employee/index";
+                model.addAttribute("view", "/Employee/index.jsp");
+                return "index";
             }
             else {
                 model.addAttribute("erCheckRole","Employees cannot use this function");
@@ -192,7 +194,9 @@ public class EmployeeController {
             model.addAttribute("addressAdd",address);
             model.addAttribute("phoneNumberAdd",phoneNumber);
             model.addAttribute("errName","Invalid Receiver FullName");
-            return "/Employee/add";
+            model.addAttribute("view", "/Employee/add.jsp");
+            return "index";
+
         }
         if (dateOfBirth.isBlank()){
             model.addAttribute("role", roleService.getAll());
@@ -210,8 +214,8 @@ public class EmployeeController {
             model.addAttribute("addressAdd",address);
             model.addAttribute("phoneNumberAdd",phoneNumber);
             model.addAttribute("errDate","Invalid Receiver Date Of Birth");
-            return "/Employee/add";
-        }
+            model.addAttribute("view", "/Employee/add.jsp");
+            return "index";        }
         String Regex = "^(0|84)(2(0[3-9]|1[0-6|8|9]|2[0-2|5-9]|3[2-9]|4[0-9]|5[1|2|4-9]|6[0-3|9]|7[0-7]|8[0-9]|9[0-4|6|7|9])|3[2-9]|5[5|6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])([0-9]{7})$";
 
         if (phoneNumber.isBlank()){
@@ -230,8 +234,8 @@ public class EmployeeController {
             model.addAttribute("addressAdd",address);
             model.addAttribute("phoneNumberAdd",phoneNumber);
             model.addAttribute("errPhone","Invalid Receiver Phone Number");
-            return "/Employee/add";
-        }
+            model.addAttribute("view", "/Employee/add.jsp");
+            return "index";        }
         if (email.isBlank()){
             model.addAttribute("role", roleService.getAll());
             String username = (String) session.getAttribute("username");
@@ -248,8 +252,8 @@ public class EmployeeController {
             model.addAttribute("addressAdd",address);
             model.addAttribute("phoneNumberAdd",phoneNumber);
             model.addAttribute("errEmail","Invalid Receiver Email");
-            return "/Employee/add";
-        }
+            model.addAttribute("view", "/Employee/add.jsp");
+            return "index";        }
         if (address.isBlank()){
             model.addAttribute("role", roleService.getAll());
             String username = (String) session.getAttribute("username");
@@ -266,8 +270,8 @@ public class EmployeeController {
             model.addAttribute("addressAdd",address);
             model.addAttribute("phoneNumberAdd",phoneNumber);
             model.addAttribute("errAdd","Invalid Receiver Address");
-            return "/Employee/add";
-        }
+            model.addAttribute("view", "/Employee/add.jsp");
+            return "index";        }
         if (username1.isBlank()){
             model.addAttribute("role", roleService.getAll());
             String username = (String) session.getAttribute("username");
@@ -284,8 +288,8 @@ public class EmployeeController {
             model.addAttribute("addressAdd",address);
             model.addAttribute("phoneNumberAdd",phoneNumber);
             model.addAttribute("errUser","Invalid Receiver UserName");
-            return "/Employee/add";
-        }
+            model.addAttribute("view", "/Employee/add.jsp");
+            return "index";        }
         if (password1.isBlank()){
 
             model.addAttribute("role", roleService.getAll());
@@ -303,8 +307,8 @@ public class EmployeeController {
             model.addAttribute("addressAdd",address);
             model.addAttribute("phoneNumberAdd",phoneNumber);
             model.addAttribute("errPass","Invalid Receiver Password");
-            return "/Employee/add";
-        }
+            model.addAttribute("view", "/Employee/add.jsp");
+            return "index";        }
         else {
             List<Employee>  checkUser = employeeService.getByUserName(username1);
             if (!(checkUser.isEmpty())){
@@ -323,8 +327,8 @@ public class EmployeeController {
                 model.addAttribute("addressAdd",address);
                 model.addAttribute("phoneNumberAdd",phoneNumber);
                 model.addAttribute("errUserTrung","Duplicate Username !!! Please enter another username");
-                return "/Employee/add";
-            }
+                model.addAttribute("view", "/Employee/add.jsp");
+                return "index";            }
 
 
             Employee employee = new Employee();
@@ -346,8 +350,8 @@ public class EmployeeController {
                 model.addAttribute("addressAdd",address);
                 model.addAttribute("phoneNumberAdd",phoneNumber);
                 model.addAttribute("errDateAfter","Date of birth must be less than current date !!!");
-                return "/Employee/add";
-            }
+                model.addAttribute("view", "/Employee/add.jsp");
+                return "index";            }
             if (!phoneNumber.matches(Regex)){
                 model.addAttribute("role", roleService.getAll());
                 String username = (String) session.getAttribute("username");
@@ -364,7 +368,8 @@ public class EmployeeController {
                 model.addAttribute("addressAdd",address);
                 model.addAttribute("phoneNumberAdd",phoneNumber);
                 model.addAttribute("errPhoneErrr","Phone number syntax is incorrect !!!");
-                return "/Employee/add";
+                model.addAttribute("view", "/Employee/add.jsp");
+                return "index";
             }
 
 
@@ -396,8 +401,9 @@ public class EmployeeController {
 
         session.setAttribute("Name", checkLogin);
         model.addAttribute("empLogin",checkLogin);
+        model.addAttribute("view", "/Employee/detail.jsp");
+        return "index";
 
-        return "/Employee/detail";
 
     }
 
@@ -411,7 +417,9 @@ public class EmployeeController {
 
         session.setAttribute("Name", checkLogin);
         model.addAttribute("empLogin",checkLogin);
-        return "/Employee/add";
+        model.addAttribute("view", "/Employee/add.jsp");
+        return "index";
+
 
     }
 
@@ -425,9 +433,10 @@ public class EmployeeController {
     @GetMapping("/employee/timKiem")
     public String timKiem(Model model,
                           @RequestParam("name1")String name,
-                          @RequestParam("phone1")String phone,HttpSession session) {
+                          @RequestParam("phone1")String phone,HttpSession session,
+                          @RequestParam(value = "pageNo",defaultValue = "0")Integer page) {
         if (name.isBlank()&&phone.isBlank()) {
-            model.addAttribute("empList", employeeService.listDesc());
+            model.addAttribute("empList", employeeService.listDesc(page));
             String username = (String) session.getAttribute("username");
             String password = (String) session.getAttribute("password");
             Employee checkLogin = employeeService.login(username, password);
@@ -435,8 +444,9 @@ public class EmployeeController {
 
             session.setAttribute("Name", checkLogin);
             model.addAttribute("empLogin", checkLogin);
+            model.addAttribute("view", "/Employee/index.jsp");
+            return "index";
 
-            return "/Employee/index";
         }
 
         else {
@@ -450,7 +460,8 @@ public class EmployeeController {
                 session.setAttribute("Name", checkLogin);
                 model.addAttribute("empLogin",checkLogin);
 
-                return "/Employee/index";
+                model.addAttribute("view", "/Employee/index.jsp");
+                return "index";
             }
             else {
                 model.addAttribute("tim", employeeService.timKiem(name, phone));
@@ -462,7 +473,8 @@ public class EmployeeController {
                 session.setAttribute("Name", checkLogin);
                 model.addAttribute("empLogin", checkLogin);
 
-                return "/Employee/index";
+                model.addAttribute("view", "/Employee/index.jsp");
+                return "index";
             }
 
         }

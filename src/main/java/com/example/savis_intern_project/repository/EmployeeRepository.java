@@ -1,6 +1,8 @@
 package com.example.savis_intern_project.repository;
 
 import com.example.savis_intern_project.entity.Employee;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -26,5 +28,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
     Employee checkRole(String username);
 
     @Query("select c from Employee c order by c.datecreated desc ")
-    List<Employee> listDesc();
+    Page<Employee> listDesc(Pageable pageable);
 }

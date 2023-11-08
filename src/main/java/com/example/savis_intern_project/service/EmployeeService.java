@@ -1,6 +1,7 @@
 package com.example.savis_intern_project.service;
 
 import com.example.savis_intern_project.entity.Employee;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,5 +20,5 @@ public interface EmployeeService  {
     List<Employee> getByUserName(String username);
     Employee login(String username, String password);
     Employee checkRole(String username);
-    List<Employee> listDesc();
+    Page<Employee> listDesc(Integer pageNo);
 }

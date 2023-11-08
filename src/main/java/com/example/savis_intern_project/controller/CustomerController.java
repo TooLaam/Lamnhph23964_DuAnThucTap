@@ -40,11 +40,11 @@ public class CustomerController {
 //    private ModelMapper modelMapper;
 
     @GetMapping("/index")
-    public String HienThi(Model model, HttpSession session) {
+    public String HienThi(Model model, HttpSession session, @RequestParam(value = "pageNo",defaultValue = "0")Integer page) {
         if (session.getAttribute("Name") != null) {
             //Nếu đã đăng nhập vào trang index
-            List<Customer> customerList = customerService.findAll();
-            model.addAttribute("cusList", customerService.findAll());
+
+            model.addAttribute("cusList", customerService.findAll(page));
 
 
             String username = (String) session.getAttribute("username");
@@ -54,9 +54,11 @@ public class CustomerController {
 
             session.setAttribute("Name", checkLogin);
             model.addAttribute("empLogin", checkLogin);
+            model.addAttribute("view", "/Customer/index.jsp");
+            return "index";
 
 
-            return "/Customer/index";
+
         }
         //Nếu chưa đăng nhập thì return về trang logina
         return "login";
@@ -122,7 +124,9 @@ public class CustomerController {
 
         session.setAttribute("Name", checkLogin);
         model.addAttribute("empLogin", checkLogin);
-        return "/Customer/add";
+        model.addAttribute("view", "/Customer/add.jsp");
+        return "index";
+
     }
 
     @PostMapping("/add")
@@ -242,11 +246,7 @@ public class CustomerController {
         return "redirect:/customer/index";
     }
 
-    @GetMapping("/delete/{id}")
-    public String Delete(Model model, @PathVariable("id") UUID id) {
-        customerService.delete(id);
-        return "redirect:/kich_thuoc/hien_thi";
-    }
+
 
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable("id") UUID id, HttpSession session) {
@@ -258,18 +258,20 @@ public class CustomerController {
 
         session.setAttribute("Name", checkLogin);
         model.addAttribute("empLogin", checkLogin);
-        return "/Customer/detail";
+        model.addAttribute("view", "/Customer/detail.jsp");
+        return "index";
 
     }
 
     @GetMapping("/timKiem")
     public String timKiem(Model model,
                           @RequestParam("phone1") String phone,
-                          HttpSession session) {
+                          HttpSession session,
+                          @RequestParam(value = "pageNo",defaultValue = "0")Integer page) {
 
 
         if (phone == "") {
-            model.addAttribute("cusList", customerService.findAll());
+            model.addAttribute("cusList", customerService.findAll(page));
         } else {
             model.addAttribute("tim", customerService.timKiem(phone));
         }
@@ -280,7 +282,8 @@ public class CustomerController {
 
         session.setAttribute("Name", checkLogin);
         model.addAttribute("empLogin", checkLogin);
-        return "/Customer/index";
+        model.addAttribute("view", "/Customer/index.jsp");
+        return "index";
 
     }
 }
