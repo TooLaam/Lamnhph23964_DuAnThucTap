@@ -284,9 +284,12 @@
                         <p style="color: red">${errName}</p>
                     </c:if>
                     <b> <label class="form-label">Date Of Birth</label></b>
-                    <input type="date" class="form-control" value="${dateOfBirthAdd}"  name="dateOfBirth" /><br>
+                    <input type="date" max="${now}" class="form-control" value="${dateOfBirthAdd}"  name="dateOfBirth" /><br>
                     <c:if test="${errDate != null}" >
                         <p style="color: red">${errDate}</p>
+                    </c:if>
+                    <c:if test="${errDateAfter != null}" >
+                        <p style="color: red">${errDateAfter}</p>
                     </c:if>
                     <b><label class="form-label">Gender: </label></b>
                     <label class="form-label">Male</label>
@@ -296,10 +299,13 @@
                     <input class="form-check-input" type="radio" value="2" name="gender" ><br>
 
 
-                        <b><label class="form-label">Phone Number</label></b>
+                    <b><label class="form-label">Phone Number</label></b>
                     <input type="number" class="form-control" value="${phoneNumberAdd}"  name="phoneNumber" />
                     <c:if test="${errPhone != null}" >
                         <p style="color: red">${errPhone}</p>
+                    </c:if>
+                    <c:if test="${errPhoneErrr != null}" >
+                        <p style="color: red">${errPhoneErrr}</p>
                     </c:if>
                     <b><label class="form-label">Email</label></b>
                     <input type="email" class="form-control" value="${emailAdd}"  name="email" />

@@ -212,6 +212,8 @@ public class EmployeeController {
             model.addAttribute("errDate","Invalid Receiver Date Of Birth");
             return "/Employee/add";
         }
+        String Regex = "^(0|84)(2(0[3-9]|1[0-6|8|9]|2[0-2|5-9]|3[2-9]|4[0-9]|5[1|2|4-9]|6[0-3|9]|7[0-7]|8[0-9]|9[0-4|6|7|9])|3[2-9]|5[5|6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])([0-9]{7})$";
+
         if (phoneNumber.isBlank()){
             model.addAttribute("role", roleService.getAll());
             String username = (String) session.getAttribute("username");
@@ -324,13 +326,50 @@ public class EmployeeController {
                 return "/Employee/add";
             }
 
+
             Employee employee = new Employee();
-
-
             Date currentDate = new Date(System.currentTimeMillis());
+            Date birth = Date.valueOf(dateOfBirth);
+            if (birth.after(currentDate)){
+                model.addAttribute("role", roleService.getAll());
+                String username = (String) session.getAttribute("username");
+                String password = (String) session.getAttribute("password");
+                Employee checkLogin = employeeService.login(username,password);
+                session.setAttribute("checkRole",employeeService.checkRole(username));
+                session.setAttribute("Name", checkLogin);
+                model.addAttribute("empLogin",checkLogin);
+                model.addAttribute("fullnameAdd",fullName);
+                model.addAttribute("usernameAdd",username1);
+                model.addAttribute("passwordAdd",password1);
+                model.addAttribute("dateOfBirthAdd",dateOfBirth);
+                model.addAttribute("emailAdd",email);
+                model.addAttribute("addressAdd",address);
+                model.addAttribute("phoneNumberAdd",phoneNumber);
+                model.addAttribute("errDateAfter","Date of birth must be less than current date !!!");
+                return "/Employee/add";
+            }
+            if (!phoneNumber.matches(Regex)){
+                model.addAttribute("role", roleService.getAll());
+                String username = (String) session.getAttribute("username");
+                String password = (String) session.getAttribute("password");
+                Employee checkLogin = employeeService.login(username,password);
+                session.setAttribute("checkRole",employeeService.checkRole(username));
+                session.setAttribute("Name", checkLogin);
+                model.addAttribute("empLogin",checkLogin);
+                model.addAttribute("fullnameAdd",fullName);
+                model.addAttribute("usernameAdd",username1);
+                model.addAttribute("passwordAdd",password1);
+                model.addAttribute("dateOfBirthAdd",dateOfBirth);
+                model.addAttribute("emailAdd",email);
+                model.addAttribute("addressAdd",address);
+                model.addAttribute("phoneNumberAdd",phoneNumber);
+                model.addAttribute("errPhoneErrr","Phone number syntax is incorrect !!!");
+                return "/Employee/add";
+            }
+
 
             employee.setFullName(fullName);
-            employee.setDateOfBirth(dateOfBirth );
+            employee.setDateOfBirth(String.valueOf(dateOfBirth) );
             employee.setAddress(address);
             employee.setPhoneNumber(phoneNumber);
             employee.setDatecreated((currentDate));
@@ -387,25 +426,45 @@ public class EmployeeController {
     public String timKiem(Model model,
                           @RequestParam("name1")String name,
                           @RequestParam("phone1")String phone,HttpSession session) {
+        if (name.isBlank()&&phone.isBlank()) {
+            model.addAttribute("empList", employeeService.listDesc());
+            String username = (String) session.getAttribute("username");
+            String password = (String) session.getAttribute("password");
+            Employee checkLogin = employeeService.login(username, password);
+            session.setAttribute("checkRole", employeeService.checkRole(username));
 
-        if (name.isBlank()||phone.isBlank()){
-            model.addAttribute("tim",employeeService.timKiem(name,phone));
+            session.setAttribute("Name", checkLogin);
+            model.addAttribute("empLogin", checkLogin);
+
+            return "/Employee/index";
         }
-        if(name ==""&&phone==""){
-            model.addAttribute("empList",employeeService.listDesc());
+
+        else {
+            if (name.isBlank()||phone.isBlank()){
+                model.addAttribute("tim",employeeService.timKiem2(name,phone));
+                String username = (String) session.getAttribute("username");
+                String password = (String) session.getAttribute("password");
+                Employee checkLogin = employeeService.login(username,password);
+                session.setAttribute("checkRole",employeeService.checkRole(username));
+
+                session.setAttribute("Name", checkLogin);
+                model.addAttribute("empLogin",checkLogin);
+
+                return "/Employee/index";
+            }
+            else {
+                model.addAttribute("tim", employeeService.timKiem(name, phone));
+                String username = (String) session.getAttribute("username");
+                String password = (String) session.getAttribute("password");
+                Employee checkLogin = employeeService.login(username, password);
+                session.setAttribute("checkRole", employeeService.checkRole(username));
+
+                session.setAttribute("Name", checkLogin);
+                model.addAttribute("empLogin", checkLogin);
+
+                return "/Employee/index";
+            }
+
         }
-        if (!(name.isBlank()&&phone.isBlank())){
-            model.addAttribute("tim",employeeService.timKiem(name,phone));
-        }
-        String username = (String) session.getAttribute("username");
-        String password = (String) session.getAttribute("password");
-        Employee checkLogin = employeeService.login(username,password);
-        session.setAttribute("checkRole",employeeService.checkRole(username));
-
-        session.setAttribute("Name", checkLogin);
-        model.addAttribute("empLogin",checkLogin);
-
-        return "/Employee/index";
-
     }
 }
