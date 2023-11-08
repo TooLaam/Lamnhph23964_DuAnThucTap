@@ -3,13 +3,16 @@ package com.example.savis_intern_project.controller;
 
 import com.example.savis_intern_project.entity.Brand;
 import com.example.savis_intern_project.entity.Color;
+import com.example.savis_intern_project.entity.Employee;
 import com.example.savis_intern_project.entity.Product;
 import com.example.savis_intern_project.repository.BrandResponsitory;
 import com.example.savis_intern_project.service.ColorService;
+import com.example.savis_intern_project.service.EmployeeService;
 import com.example.savis_intern_project.service.serviceimpl.BrandServiceimpl;
 import com.example.savis_intern_project.service.serviceimpl.ColorServiceimpl;
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -37,13 +40,26 @@ public class ColorController {
     private BrandResponsitory brandResponsitory;
     @Autowired
     private ServletContext servletContext;
+    @Autowired
+    private EmployeeService employeeService;
 
     @GetMapping("/index")
-    public String hienThi(Model model) {
-        model.addAttribute("listColor", colorServiceimpl.getAll());
-        model.addAttribute("listBrand", brandServiceimpl.getAll());
-        model.addAttribute("view", "/Color/index.jsp");
-        return "index";
+    public String hienThi(Model model, HttpSession session) {
+        if (session.getAttribute("Name") != null){
+            //Nếu đã đăng nhập vào trang index
+            String username = (String) session.getAttribute("username");
+            String password = (String) session.getAttribute("password");
+            Employee checkLogin = employeeService.login(username,password);
+            model.addAttribute("empLogin",checkLogin);
+            //////
+            model.addAttribute("listColor", colorServiceimpl.getAll());
+            model.addAttribute("listBrand", brandServiceimpl.getAll());
+            model.addAttribute("view", "/Color/index.jsp");
+            return "index";
+        }
+        //Nếu chưa đăng nhập thì return về trang logina
+        return "login";
+
     }
 
     @PostMapping("/add")

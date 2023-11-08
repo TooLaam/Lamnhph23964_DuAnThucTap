@@ -90,24 +90,35 @@ public class BillController {
     }
 
     @GetMapping("/index")
-    public String show_data_bill(Model model) {
-        model.addAttribute("listBill", billService.get_all_bill());
-        model.addAttribute("listCustomer", customerService.findAll());
-        model.addAttribute("listEmployee", employeeService.findAll());
-        model.addAttribute("listBillStatus", billStatusService.get_all_bill_status());
-        model.addAttribute("view", "/Bill/index.jsp");
-        for (Bill bill : billService.get_all_bill()
-        ) {
-            System.out.println(bill.getReceiverName());
+    public String show_data_bill(Model model,HttpSession session) {
+        if (session.getAttribute("Name") != null){
+            //Nếu đã đăng nhập vào trang index
+            String username = (String) session.getAttribute("username");
+            String password = (String) session.getAttribute("password");
+            Employee checkLogin = employeeService.login(username,password);
+            model.addAttribute("empLogin",checkLogin);
+            //////
+            model.addAttribute("listBill", billService.get_all_bill());
+            model.addAttribute("listCustomer", customerService.findAll());
+            model.addAttribute("listEmployee", employeeService.findAll());
+            model.addAttribute("listBillStatus", billStatusService.get_all_bill_status());
+            model.addAttribute("view", "/Bill/index.jsp");
+            for (Bill bill : billService.get_all_bill()
+            ) {
+                System.out.println(bill.getReceiverName());
 //            System.out.println(bill.getEmployee().getFullName());
 //            System.out.println(bill.getCustomer().getFullname());
-            System.out.println(bill.getCustomerPhone());
-            System.out.println(bill.getAddressDelivery());
-            System.out.println(bill.getTotalMoney());
-            System.out.println(bill.getCreatedDate());
-            System.out.println(bill.getBillStatus());
+                System.out.println(bill.getCustomerPhone());
+                System.out.println(bill.getAddressDelivery());
+                System.out.println(bill.getTotalMoney());
+                System.out.println(bill.getCreatedDate());
+                System.out.println(bill.getBillStatus());
+            }
+            return "index";
         }
-        return "index";
+        //Nếu chưa đăng nhập thì return về trang logina
+        return "login";
+
     }
 
     @GetMapping("/indexcus")

@@ -4,7 +4,9 @@ package com.example.savis_intern_project.controller;
 import com.example.savis_intern_project.entity.*;
 import com.example.savis_intern_project.repository.*;
 import com.example.savis_intern_project.repuest.ProductRepuest;
+import com.example.savis_intern_project.service.EmployeeService;
 import com.example.savis_intern_project.service.serviceimpl.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,19 +34,31 @@ public class ProductController {
     @Autowired
     private BrandResponsitory responsitory;
     @Autowired
+    private EmployeeService employeeService;
+    @Autowired
     private ProductResponsitory productResponsitory;
     @Autowired
     private CategoryDetailResponsitory categoryDetailResponsitory;
 
     @GetMapping("/index")
 
-    public String hienThi(Model model) {
-        model.addAttribute("listProduct", productServiceimpl.getAll());
-        model.addAttribute("listBrand", brandServiceimpl.getAll());
-        model.addAttribute("listCategory", categoryServiceimpl.getAll());
-        model.addAttribute("Product", new Product());
-        model.addAttribute("view", "/Product/index.jsp");
-        return "index";
+    public String hienThi(Model model, HttpSession session) {
+        if (session.getAttribute("Name") != null){
+            //Nếu đã đăng nhập vào trang index
+            String username = (String) session.getAttribute("username");
+            String password = (String) session.getAttribute("password");
+            Employee checkLogin = employeeService.login(username,password);
+            model.addAttribute("empLogin",checkLogin);
+            //////
+            model.addAttribute("listProduct", productServiceimpl.getAll());
+            model.addAttribute("listBrand", brandServiceimpl.getAll());
+            model.addAttribute("listCategory", categoryServiceimpl.getAll());
+            model.addAttribute("Product", new Product());
+            model.addAttribute("view", "/Product/index.jsp");
+            return "index";
+        }
+        //Nếu chưa đăng nhập thì return về trang logina
+        return "login";
     }
 
     @GetMapping("/create")
