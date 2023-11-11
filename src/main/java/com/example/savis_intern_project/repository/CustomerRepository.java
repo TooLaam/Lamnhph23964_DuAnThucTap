@@ -18,4 +18,10 @@ public interface CustomerRepository extends JpaRepository<Customer,UUID> {
 
     @Query("SELECT c from Customer c where c.username = ?1")
     Customer getCustomerByName(String username);
+
+    @Query("SELECT c from Customer c where c.username=?1")
+    List<Customer> getByUserName(String username);
+
+    @Query("select c from Customer c where c.Id not in (select d.Id from Customer d where d.username =?1) and c.username =?2")
+    List<Customer> checkUserNameUpdate(String tenHT,String tenSua);
 }

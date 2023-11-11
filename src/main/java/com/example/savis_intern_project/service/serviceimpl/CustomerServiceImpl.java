@@ -67,4 +67,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer getCustomerByName(String username) { return customerRepository.getCustomerByName(username); }
 
+    @Override
+    public List<Customer> getByUserName(String username) {
+        return customerRepository.getByUserName(username);
+    }
+
+    @Override
+    public List<Customer> checkUserNameUpdate(String tenHT, String tenSua) {
+        return customerRepository.checkUserNameUpdate(tenHT,tenSua);
+    }
+
 }

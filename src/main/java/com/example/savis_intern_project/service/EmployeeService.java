@@ -21,4 +21,5 @@ public interface EmployeeService  {
     Employee login(String username, String password);
     Employee checkRole(String username);
     Page<Employee> listDesc(Integer pageNo);
+    List<Employee> checkUserNameUpdate(String tenHT,String tenSua);
 }

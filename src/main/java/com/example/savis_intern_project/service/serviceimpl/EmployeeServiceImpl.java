@@ -74,6 +74,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<Employee> checkUserNameUpdate(String tenHT, String tenSua) {
+        return employeeRepository.checkUserNameUpdate(tenHT, tenSua);
+    }
+
+    @Override
     public void update(Employee cs) {
 
         this.employeeRepository.save(cs);

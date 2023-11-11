@@ -19,4 +19,6 @@ public interface CustomerService {
     Customer detail(UUID id);
     Customer login(String username, String password);
     Customer getCustomerByName(String username);
+    List<Customer> getByUserName(String username);
+    List<Customer> checkUserNameUpdate(String tenHT,String tenSua);
 }

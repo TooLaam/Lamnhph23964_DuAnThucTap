@@ -28,31 +28,47 @@
 
                                         <b><label class="form-label">Full Name:</label></b>
                                         <input type="text" class="form-control" value="${emp.fullName}" name="fullName" />
-
+                                        <c:if test="${errName != null}" >
+                                            <p style="color: red">${errName}</p>
+                                        </c:if>
                                         <b> <label class="form-label">Date Of Birth</label></b>
-                                        <input type="date" class="form-control" value="${emp.dateOfBirth}" name="dateOfBirth" />
+                                        <input type="date" max="${now}" class="form-control" value="${emp.dateOfBirth}"  name="dateOfBirth" /><br>
+                                        <c:if test="${errDate != null}" >
+                                            <p style="color: red">${errDate}</p>
+                                        </c:if>
+                                        <c:if test="${errDateAfter != null}" >
+                                            <p style="color: red">${errDateAfter}</p>
+                                        </c:if>
+                                        <b><label class="form-label">Gender: </label></b>
+                                        <label class="form-label">Male</label>
+                                        <input class="form-check-input" type="radio" ${emp.gender==1?"checked":""}  value="1" name="gender" >
 
-                                        <b><label class="form-label">Gender</label></b>
-                                        <br />
-                                        <select class="form-select" aria-label="Default select example" name="gender">
-                                            <option value="${emp.gender}">${emp.gender==1?"Male":"Female"}</option>
-                                            <option value="1">Male</option>
-                                            <option value="2">Female</option>
+                                        <label class="form-label">Female</label>
+                                        <input class="form-check-input" type="radio" ${emp.gender==2?"checked":""} value="2" name="gender" ><br>
 
-                                        </select>
 
                                         <b><label class="form-label">Phone Number</label></b>
-                                        <input type="number" class="form-control" value="${emp.phoneNumber}" name="phoneNumber" />
-
+                                        <input type="number" class="form-control" value="${emp.phoneNumber}"  name="phoneNumber" />
+                                        <c:if test="${errPhone != null}" >
+                                            <p style="color: red">${errPhone}</p>
+                                        </c:if>
+                                        <c:if test="${errPhoneErrr != null}" >
+                                            <p style="color: red">${errPhoneErrr}</p>
+                                        </c:if>
                                         <b><label class="form-label">Email</label></b>
-                                        <input type="email" class="form-control" value="${emp.email}" name="email" />
+                                        <input type="email" class="form-control" value="${emp.email}"  name="email" />
+                                        <c:if test="${errEmail != null}" >
+                                            <p style="color: red">${errEmail}</p>
+                                        </c:if>
                                     </div>
 
                                     <div class="col-md-6">
 
                                         <b> <label class="form-label">Address</label></b>
-                                        <input type="text" class="form-control"  value="${emp.address}" name="address" />
-
+                                        <input type="text" class="form-control" value="${emp.address}"  name="address" />
+                                        <c:if test="${errAdd != null}" >
+                                            <p style="color: red">${errAdd}</p>
+                                        </c:if>
                                         <b><label class="form-label">Role</label></b>
                                         <select class="form-select" aria-label="Default select example" name="idRole">
                                             <option value="${emp.role.id}">${emp.role.name} </option>
@@ -62,22 +78,29 @@
                                         </select>
 
                                         <b><label class="form-label">Username</label></b>
-                                        <input type="text" class="form-control" value="${emp.username}" name="username" />
-
+                                        <input type="text" class="form-control" value="${emp.username}"  name="username1" />
+                                        <c:if test="${errUser != null}" >
+                                            <p style="color: red">${errUser}</p>
+                                        </c:if>
+                                        <c:if test="${errUserTrung != null}" >
+                                            <p style="color: red">${errUserTrung}</p>
+                                        </c:if>
                                         <b><label class="form-label">Password</label></b>
-                                        <input type="password" class="form-control" value="${emp.password}" name="password" />
+                                        <input type="password" class="form-control" value="${emp.password}" name="password1" />
+                                        <c:if test="${errPass != null}" >
+                                            <p style="color: red">${errPass}</p>
+                                        </c:if>
 
+                                        <b><label class="form-label">Date created: </label></b>
+                                        <label  name="datecreated">${emp.datecreated}</label><br>
+<%--                                        <input type="date" class="form-control" value="${emp.datecreated}" name="datecreated" readonly />--%>
 
-                                        <b><label class="form-label">Date created</label></b>
-                                        <input type="date" class="form-control" value="${emp.datecreated}" name="datecreated" readonly />
+                                        <b><label class="form-label">Status: </label></b>
+                                        <label class="form-label">ON</label>
+                                        <input class="form-check-input" type="radio" ${emp.status==1?"checked":""}  value="1" name="status" >
 
-                                        <b><label class="form-label">Status</label></b>
-                                        <select class="form-select" aria-label="Default select example" name="status">
-                                            <option value="${emp.status}">${emp.status==1?"ON":"OFF"} </option>
-                                            <option value="1">ON</option>
-                                            <option value="2">OFF</option>
-
-                                        </select>
+                                        <label class="form-label">OFF</label>
+                                        <input class="form-check-input" type="radio" ${emp.status==2?"checked":""} value="2" name="status" ><br>
                                     </div>
                                 </div>
 

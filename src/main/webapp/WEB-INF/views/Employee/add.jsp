@@ -53,7 +53,7 @@
                                             <p style="color: red">${errPhoneErrr}</p>
                                         </c:if>
                                         <b><label class="form-label">Email</label></b>
-                                        <input type="email" class="form-control" value="${emailAdd}"  name="email" />
+                                        <input type="email" class="form-control"value="${emailAdd}"  name="email" />
                                         <c:if test="${errEmail != null}" >
                                             <p style="color: red">${errEmail}</p>
                                         </c:if>

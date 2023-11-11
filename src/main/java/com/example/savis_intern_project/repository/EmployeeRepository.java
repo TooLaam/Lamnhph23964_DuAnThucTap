@@ -29,4 +29,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
 
     @Query("select c from Employee c order by c.datecreated desc ")
     Page<Employee> listDesc(Pageable pageable);
+
+    @Query("select c from Employee c where c.id not in (select d.id from Employee d where d.username =?1) and c.username =?2")
+    List<Employee> checkUserNameUpdate(String tenHT,String tenSua);
 }
