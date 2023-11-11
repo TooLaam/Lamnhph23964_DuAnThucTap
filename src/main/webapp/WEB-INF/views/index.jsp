@@ -96,6 +96,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="/product_detail/index">
+                        <i class="bi bi-circle"></i><span>Product_Detail</span>
+                    </a>
+                </li>
+                <li>
                     <a href="/category/index">
                         <i class="bi bi-circle"></i><span>Category</span>
                     </a>

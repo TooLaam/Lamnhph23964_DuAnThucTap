@@ -38,7 +38,7 @@
                                 </tr>
                                 </thead>
                              <tbody>
-                             <c:forEach items="${listProduct}" var="sp">
+                             <c:forEach items="${listProduct}" var="sp" >
                                  <tr>
 
                                      <td>${sp.name}</td>
@@ -58,6 +58,7 @@
 
                                      <td>
                                          <a href="/product/delete/${sp.id}" class="btn btn-danger" onclick="return confirm('Bạn chắc chắn có muốn xóa??')" style="text-decoration: none;color: white">Delete</a>
+<%--                                         <a href="/product/detail/${sp.id}" class="btn btn-success" style="text-decoration: none;color: white; margin-top: 5px" >Detail</a>--%>
                                          <a href="/product/detail/${sp.id}" class="btn btn-success" style="text-decoration: none;color: white; margin-top: 5px" >Detail</a>
                                      </td>
                                  </tr>

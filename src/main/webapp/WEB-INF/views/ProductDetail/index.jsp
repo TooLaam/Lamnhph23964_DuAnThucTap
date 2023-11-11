@@ -58,9 +58,9 @@
                                           <img src="/assets/img/color/${detailSP.color.image}" height="100px" width="100px"></td>
                                       <td>
                                           <c:forEach items="${detailSP.listImages}" var="image" varStatus="loop">
-<%--                                              <c:if test="${loop.index == 0}">--%>
+                                              <c:if test="${loop.index == 0}">
                                                   <img src="/assets/img/product/${image.name}" height="100px" width="100px">
-<%--                                              </c:if>--%>
+                                              </c:if>
                                           </c:forEach>
                                       </td>
                                       <td>

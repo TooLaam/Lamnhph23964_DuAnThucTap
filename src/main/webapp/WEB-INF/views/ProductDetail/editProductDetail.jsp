@@ -71,24 +71,20 @@
                             <input   type="radio" name="status" value="1" ${ detailSP.status == "1" ? "checked" : "" }> Hết hàng
                         </div>
                         <div class="form-group">
-                            Image :
-                            <%--                                    <label for="listImages"> <img src="/assets/img/product/${detailSP.listImages.name}" height="45xp" width="45px"></label>--%>
-<%--                            <c:forEach items="${listProductImage}" var="listImages">--%>
-<%--                                <input type="checkbox" id="listImages" name="listImages" value="${listImages.id}"  multiple>--%>
-<%--                                <label for="listImages"> <img src="/assets/img/product/${listImages.name}" height="45xp" width="45px"></label>--%>
-<%--                            </c:forEach>--%>
+                            <label>Images:</label>
+
+                            <!-- Display existing images with delete option -->
                             <c:forEach items="${detailSP.listImages}" var="image" varStatus="loop">
                                 <div class="image-container">
-                                    <img src="/assets/img/product/${image.name}" height="100px" width="100px">
+                                    <img src="<%= request.getContextPath() %>/assets/img/product/${image.name}" height="100px" width="100px">
                                     <a href="/product_detail/deleteImage/${image.id}" class="delete-image-link">Xóa</a>
                                 </div>
                             </c:forEach>
 
-                            <input type="file" name="files" multiple="multiple" />
-
-                            <input type="submit" value="Cập nhật">
-
+                            <!-- Input for adding new images -->
+                            <input type="file" name="files" multiple="multiple"/>
                         </div>
+
                         <input type="submit" class="btn btn-primary" value="Update" style="margin-top: 10px">
                     </form>
 

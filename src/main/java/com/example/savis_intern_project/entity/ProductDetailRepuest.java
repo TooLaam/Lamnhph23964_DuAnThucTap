@@ -24,4 +24,6 @@ public class ProductRepuest {
     private String descripTion;
     private UUID color;
     private UUID product;
+    private UUID brand;
+    private UUID category;
 }

@@ -28,11 +28,11 @@ public class ProductController {
     @Autowired
     private CategoryServiceimpl categoryServiceimpl;
     @Autowired
-    private CategoryDetailServiceimpl categoryDetailServiceimpl;
+    private ProductDetailServiceimpl productDetailServiceimpl;
     @Autowired
-    private BrandResponsitory responsitory;
+    private ProductImageServiceimpl productImageServiceimpl;
     @Autowired
-    private ProductResponsitory productResponsitory;
+    private ColorServiceimpl colorServiceimpl;
     @Autowired
     private CategoryDetailResponsitory categoryDetailResponsitory;
 
@@ -159,7 +159,7 @@ public class ProductController {
 
 
     @GetMapping("/detail/{id}")
-    public String detail(Model model,
+    public String detailSPCT(Model model,
                          @PathVariable("id") UUID id) {
         model.addAttribute("listProduct", productServiceimpl.getAll());
         model.addAttribute("listCategory", categoryServiceimpl.getAll());
@@ -175,7 +175,20 @@ public class ProductController {
         productServiceimpl.delete(id);
         return "redirect:/product/index";
     }
-
+//    @GetMapping("/detailSPCT/{id}")
+//    public String detailSPCT(Model model,
+//                         @PathVariable("id") UUID id
+//    ) {
+//        ProductDetail productDetail = productDetailServiceimpl.getOne(id);
+//        model.addAttribute("productDetail", productDetail);
+//        model.addAttribute("listProduct", productServiceimpl.getAll());
+//        model.addAttribute("listColor", colorServiceimpl.getAll());
+//        model.addAttribute("listProductImage", productImageServiceimpl.getAll());
+//        model.addAttribute("listProductDetail", productDetailServiceimpl.getAll());
+////        model.addAttribute("sp", productDetailServiceimpl.getOne(id));
+//        model.addAttribute("view", "/ProductDetail/editProductDetail.jsp");
+//        return "index";
+//    }
     @PostMapping("/update/{id}")
     public String update(Model model,
                          @PathVariable("id") UUID id,

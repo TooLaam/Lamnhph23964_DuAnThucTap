@@ -2,31 +2,22 @@ package com.example.savis_intern_project.controller;
 
 
 import com.example.savis_intern_project.entity.*;
-import com.example.savis_intern_project.repository.BrandResponsitory;
-import com.example.savis_intern_project.repository.ColorResponsitory;
 import com.example.savis_intern_project.repository.ProductImageResponsitory;
-import com.example.savis_intern_project.repository.ProductResponsitory;
 import com.example.savis_intern_project.service.serviceimpl.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,9 +33,9 @@ public class ProductDetailController {
     @Autowired
     private ProductImageServiceimpl productImageServiceimpl;
     @Autowired
-    private ProductResponsitory productResponsitory;
+    private BrandServiceimpl brandServiceimpl;
     @Autowired
-    private ColorResponsitory colorResponsitory;
+    private CategoryServiceimpl categoryServiceimpl;
     @Autowired
     private ProductImageResponsitory productImageResponsitory;
     private final Path root = Paths.get("src/main/resources/static/assets/img/product");
@@ -113,96 +104,23 @@ public class ProductDetailController {
         return "redirect:/product_detail/indexcus/{productDetailId}";
     }
 
-    //    @PostMapping("/add")
-//    public String add(Model model,
-//                      @RequestParam("importPrice") BigDecimal importPrice,
-//                      @RequestParam("price") BigDecimal price,
-//                      @RequestParam("quantity") Integer quantity,
-//                      @RequestParam("createdDate") Date createdDate,
-//                      @RequestParam("descripTion") String descripTion,
-//                      @RequestParam("status") Integer status,
-//                      @RequestParam("product") String product,
-//                      @RequestParam("color")String color,
-//                      @RequestParam("listImages")String listImages
-//    ){
-//
-//        Product product1 = productResponsitory.findById(UUID.fromString(product)).orElse(null);
-//        Color color1 = colorResponsitory.findById(UUID.fromString(color)).orElse(null);
-//        ProductImage productImage = productImageResponsitory.findById(UUID.fromString(listImages)).orElse(null);
-//        ProductDetail productDetail = new ProductDetail(importPrice,price,quantity,createdDate,status,descripTion,product1,color1, (List<ProductImage>) productImage);
-//        productDetailServiceimpl.add(productDetail);
-//        System.out.println(productDetail.toString());
-//        return "redirect:/product_detail/index";
-//    }
-//    @PostMapping(value = "add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public String upload(Model model,
-//                         @RequestParam("files") MultipartFile[] files,
-//                         @RequestParam("importPrice") BigDecimal importPrice,
-//                         @RequestParam("price") BigDecimal price,
-//                         @RequestParam("quantity") Integer quantity,
-//                         @RequestParam("createdDate") Date createdDate,
-//                         @RequestParam("descripTion") String descripTion,
-//                         @RequestParam("status") Integer status,
-//                         @RequestParam("product") String product,
-//                         @RequestParam("color") String color,
-//                         @RequestParam("listImages") String listImages) {
-//        ProductImage productImage = productImageResponsitory.findById(UUID.fromString(listImages)).orElse(null);
-//        Product product1 = productResponsitory.findById(UUID.fromString(product)).orElse(null);
-//        Color color1 = colorResponsitory.findById(UUID.fromString(color)).orElse(null);
-//        String message = "";
-//        try {
-//            String fileNames = null;
-//
-//            Arrays.asList(files).stream().forEach(file -> {
-//                ProductDetail a = new ProductDetail();
-//                File uploadRootDir = new File(String.valueOf(root));
-//                if (!uploadRootDir.exists()) {
-//                    uploadRootDir.mkdirs();
-//                }
-//                try {
-//                    String filename = file.getOriginalFilename();
-//                    File serverFile = new File(uploadRootDir.getAbsoluteFile() + File.separator + filename);
-//                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-//                    stream.write(file.getBytes());
-//                    a.setImportPrice(importPrice);
-//                    a.setPrice(price);
-//                    a.setQuantity(quantity);
-//                    a.setCreatedDate(createdDate);
-//                    a.setDescripTion(descripTion);
-//                    a.setStatus(status);
-//                    a.setProduct(product1);
-//                    a.setColor(color1);
-////                a.setListImages((List<ProductImage>) fileNames);
-//                    productDetailServiceimpl.add(a);
-//                    stream.close();
-//                } catch (Exception e) {
-//
-//                }
-//            });
-//
-//            message = "Uploaded the files successfully: " + fileNames;
-//        } catch (Exception e) {
-//            message = "Fail to upload files!";
-//        }
-//        return "redirect:/product_detail/index";
-//    }
     @PostMapping(value = "add")
     public String upload(Model model,
-                         @ModelAttribute("ProductRepuest") ProductRepuest productRepuest,
-                         @RequestParam("files") List<MultipartFile> files
+                         @ModelAttribute("ProductRepuest") ProductDetailRepuest productRepuest,
+                         @RequestParam("files") List<MultipartFile> files,
+                         RedirectAttributes redirectAttributes
                          ) throws IOException {
 
         ProductDetail a = new ProductDetail();
             a.setImportPrice(productRepuest.getImportPrice());
             a.setPrice(productRepuest.getPrice());
             a.setQuantity(productRepuest.getQuantity());
-            a.setStatus(productRepuest.getStatus());
+            a.setStatus(0);
             a.setDescripTion(productRepuest.getDescripTion());
         a.setCreatedDate(java.sql.Date.valueOf(LocalDate.now()));
         a.setProduct(Product.builder().id(productRepuest.getProduct()).build());
         a.setColor(Color.builder().Id(productRepuest.getColor()).build());
         productDetailServiceimpl.add(a);
-
         for (MultipartFile file : files) {
             ProductImage spa = new ProductImage();
             ClassPathResource resource = new ClassPathResource("static/assets/img/product/");
@@ -216,41 +134,42 @@ public class ProductDetailController {
             spa.setProductDetail(a);
             productImageServiceimpl.add(spa);
         }
-            return "redirect:/product_detail/index";
+
+        return "redirect:/product_detail/index";
     }
-    @PutMapping (value = "update/{id}")
+    @PutMapping(value = "update/{id}")
     public String update(Model model,
-                         @ModelAttribute("ProductRepuest") ProductRepuest productRepuest,
+                         @ModelAttribute("ProductRepuest") ProductDetailRepuest productRepuest,
                          @RequestParam("files") List<MultipartFile> files,
-                         @PathVariable("id") UUID id
-    ) throws IOException {
-
-        ProductDetail a = new ProductDetail();
-        a.setImportPrice(productRepuest.getImportPrice());
-        a.setPrice(productRepuest.getPrice());
-        a.setQuantity(productRepuest.getQuantity());
-        a.setStatus(productRepuest.getStatus());
-        a.setDescripTion(productRepuest.getDescripTion());
-        a.setCreatedDate(java.sql.Date.valueOf(LocalDate.now()));
-        a.setProduct(Product.builder().id(productRepuest.getProduct()).build());
-        a.setColor(Color.builder().Id(productRepuest.getColor()).build());
-        productDetailServiceimpl.update(id,a);
-
-        for (MultipartFile file : files) {
-            ProductImage spa = new ProductImage();
-            ClassPathResource resource = new ClassPathResource("static/assets/img/product/");
-            String uploadDir = resource.getFile().getAbsolutePath();
-            File uploadPath = new File(uploadDir);
-            if (!uploadPath.exists()) {
-                uploadPath.mkdirs();
+                         @PathVariable("id") UUID id) throws IOException {
+        ProductDetail existingProductDetail = productDetailServiceimpl.getOne(id);
+        if (existingProductDetail != null) {
+            existingProductDetail.setImportPrice(productRepuest.getImportPrice());
+            existingProductDetail.setPrice(productRepuest.getPrice());
+            existingProductDetail.setQuantity(productRepuest.getQuantity());
+            existingProductDetail.setStatus(productRepuest.getStatus());
+            existingProductDetail.setDescripTion(productRepuest.getDescripTion());
+            existingProductDetail.setProduct(Product.builder().id(productRepuest.getProduct()).build());
+            existingProductDetail.setColor(Color.builder().Id(productRepuest.getColor()).build());
+            existingProductDetail.setCreatedDate(java.sql.Date.valueOf(LocalDate.now()));
+            productDetailServiceimpl.update(id, existingProductDetail);
+            for (MultipartFile file : files) {
+                ProductImage spa = new ProductImage();
+                ClassPathResource resource = new ClassPathResource("static/assets/img/product/");
+                String uploadDir = resource.getFile().getAbsolutePath();
+                File uploadPath = new File(uploadDir);
+                if (!uploadPath.exists()) {
+                    uploadPath.mkdirs();
+                }
+                spa.setName(file.getOriginalFilename());
+                spa.setStaTus(0);
+                spa.setProductDetail(existingProductDetail);
+                productImageServiceimpl.update(id, spa); // Assuming you have an update method in your service
             }
-            spa.setName(file.getOriginalFilename());
-            spa.setStaTus(0);
-            spa.setProductDetail(a);
-            productImageServiceimpl.update(id,spa);
         }
         return "redirect:/product_detail/index";
     }
+
     @GetMapping("/detail/{id}")
     public String detail(Model model,
                          @PathVariable("id") UUID id
@@ -259,6 +178,8 @@ public class ProductDetailController {
         model.addAttribute("listColor", colorServiceimpl.getAll());
         model.addAttribute("listProductImage", productImageServiceimpl.getAll());
         model.addAttribute("listProductDetail", productDetailServiceimpl.getAll());
+        model.addAttribute("listCategory", categoryServiceimpl.getAll());
+        model.addAttribute("listBrand", brandServiceimpl.getAll());
         model.addAttribute("detailSP", productDetailServiceimpl.getOne(id));
         model.addAttribute("view", "/ProductDetail/editProductDetail.jsp");
         return "index";
