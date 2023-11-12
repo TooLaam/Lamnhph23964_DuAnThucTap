@@ -143,3 +143,10 @@
         </ul>
     </div>
 </div>
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+<df-messenger
+        intent="WELCOME"
+        chat-title="ChatBot"
+        agent-id="c9aa1141-ab88-427a-9131-9140328e202b"
+        language-code="vi"
+></df-messenger>
