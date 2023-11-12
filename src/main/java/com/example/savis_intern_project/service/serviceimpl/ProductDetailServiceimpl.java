@@ -46,7 +46,6 @@ public class ProductDetailServiceimpl implements ProductDetailService {
         detail.setImportPrice(productDetail.getImportPrice());
         detail.setPrice(productDetail.getPrice());
         detail.setQuantity(productDetail.getQuantity());
-//        detail.setCreatedDate(productDetail.getCreatedDate());
         detail.setStatus(productDetail.getStatus());
         detail.setDescripTion(productDetail.getDescripTion());
         detail.setProduct(productDetail.getProduct());

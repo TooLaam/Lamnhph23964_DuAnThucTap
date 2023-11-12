@@ -18,16 +18,10 @@
 
 <section className="section dashboard">
     <div className="row">
-
-
         <div className="col-lg-10">
-
-
             <div className="card">
-
                 <div className="card-body">
                     <h5 className="card-title">ADD<span>| xx</span></h5>
-
                     <form method="post" action="/product_detail/add" enctype="multipart/form-data">
                         <div class="form-group">
                             Mau :
@@ -61,11 +55,11 @@
                             Mo ta :
                             <input class="form-control" name="descripTion" >
                         </div>
-                        <div>
-                            Trang thai :<br>
-                            <input  type="radio" name="status" value="0" > Còn Hàng <br>
-                            <input   type="radio" name="status" value="1"> Hết hàng
-                        </div>
+<%--                        <div>--%>
+<%--                            Trang thai :<br>--%>
+<%--                            <input  type="radio" name="status" value="0" > Còn Hàng <br>--%>
+<%--                            <input   type="radio" name="status" value="1"> Hết hàng--%>
+<%--                        </div>--%>
                         <div class="form-group">
                             Image :
 <%--                            <label for="listImages"> <img src="/assets/img/product/${detailSP.listImages.name}" height="45xp" width="45px"></label>--%>
