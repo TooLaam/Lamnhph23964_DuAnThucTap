@@ -47,9 +47,8 @@
                     </c:forEach>
                 </ul>
             </div>
-            <br>
-            <div class="row">
-                <div class="col-3">
+            <div class="row mb-3">
+                <div class="col-3 my-2">
                     <span class="text-content">Quantity</span>
                 </div>
                 <div class="col-3">
@@ -59,11 +58,10 @@
                         <a href="/product_detail/increase/${productDetail.id}" class="btn btn-outline">+</a>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-6 my-2">
                     <span class="text-content">${productDetail.availableQuantity} Products Available</span>
                 </div>
             </div>
-            <br>
             <div class="d-grid gap-2">
                 <div class="row">
                     <div class="col-10">
@@ -80,7 +78,7 @@
                 <button class="btn" type="button">BUY IT NOW</button>
             </div>
             <br>
-            <%--<strong>LIPSTICK WORLD'S COMMITMENT</strong>
+            <strong>LIPSTICK WORLD'S COMMITMENT</strong>
             <ul class="list-unstyled">
                 <li>
                     <i class="fa fa-check">
@@ -97,7 +95,7 @@
                         SERVE UNTIL CUSTOMERS ARE SATISFIED
                     </i>
                 </li>
-            </ul>--%>
+            </ul>
         </div>
     </div>
     <div class="recently">

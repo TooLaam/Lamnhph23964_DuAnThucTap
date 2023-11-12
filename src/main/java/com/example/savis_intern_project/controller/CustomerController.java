@@ -75,6 +75,16 @@ public class CustomerController {
         return "/customerFE/index";
     }
 
+    @GetMapping("/indexcus/changeAccountInfo")
+    public String changeAccountInfo(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("CustomerName");
+        String password = (String) session.getAttribute("CustomerPass");
+        model.addAttribute("cus", customerService.login(username, password));
+        model.addAttribute("cusList", customerService.findAll());
+        model.addAttribute("view", "/changeAccountInfo/index.jsp");
+        return "/customerFE/index";
+    }
+
     @GetMapping("/signup")
     public String signup(Model model) {
         model.addAttribute("view", "/signup/index.jsp");

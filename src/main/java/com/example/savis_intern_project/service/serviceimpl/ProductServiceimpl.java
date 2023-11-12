@@ -34,12 +34,12 @@ public class ProductServiceimpl implements ProductServie {
     @Override
     public Product add(Product product) {
         product.setCreatedDate(Date.valueOf(LocalDate.now()));
-         return  responsitory.saveAndFlush(product);
+        return responsitory.saveAndFlush(product);
     }
 
     @Override
     public void delete(UUID id) {
-      responsitory.deleteById(id);
+        responsitory.deleteById(id);
     }
 
     @Override
@@ -76,31 +76,34 @@ public class ProductServiceimpl implements ProductServie {
         ArrayList<ProductView> pv = new ArrayList<>();
 
         for (Product product : products) {
-            ProductDetail productDetail = productDetailResponsitory.findByProductId(product.getId()).get(0);
+            if (productDetailResponsitory.findByProductId(product.getId()).size() == 0) {
+                continue;
+            } else {
+                ProductDetail productDetail = productDetailResponsitory.findByProductId(product.getId()).get(0);
 
-            if (productDetail != null) {
-                ProductView productView = new ProductView();
-                productView.setId(product.getId());
-                productView.setName(product.getName());
-                productView.setAvailableQuantity(product.getAvailableQuantity());
-                productView.setPrice(productDetail.getPrice());
-                productView.setSold(product.getSold());
-                productView.setLikes(product.getLikes());
-                productView.setCreatedDate(product.getCreatedDate());
-                productView.setStatus(product.getStatus());
-                productView.setDescripTion(product.getDescripTion());
-                productView.setProductDetailId(productDetail.getId());
-                productView.setBrand(product.getBrand());
+                if (productDetail != null) {
+                    ProductView productView = new ProductView();
+                    productView.setId(product.getId());
+                    productView.setName(product.getName());
+                    productView.setAvailableQuantity(product.getAvailableQuantity());
+                    productView.setPrice(productDetail.getPrice());
+                    productView.setSold(product.getSold());
+                    productView.setLikes(product.getLikes());
+                    productView.setCreatedDate(product.getCreatedDate());
+                    productView.setStatus(product.getStatus());
+                    productView.setDescripTion(product.getDescripTion());
+                    productView.setProductDetailId(productDetail.getId());
+                    productView.setBrand(product.getBrand());
 
-                ProductImage productImage = productImageResponsitory.findByProductDetailId(productDetail.getId()).get(0);
+                    ProductImage productImage = productImageResponsitory.findByProductDetailId(productDetail.getId()).get(0);
 
-                if (productImage != null) {
-                    productView.setImage(productImage.getName());
+                    if (productImage != null) {
+                        productView.setImage(productImage.getName());
+                    } else {
+                        productView.setImage("deafault.png");
+                    }
+                    pv.add(productView);
                 }
-                else{
-                    productView.setImage("deafault.png");
-                }
-                pv.add(productView);
             }
         }
         return pv;
@@ -113,31 +116,34 @@ public class ProductServiceimpl implements ProductServie {
         ArrayList<ProductView> pv = new ArrayList<>();
 
         for (Product product : products) {
-            ProductDetail productDetail = productDetailResponsitory.findByProductId(product.getId()).get(0);
+            if (productDetailResponsitory.findByProductId(product.getId()).size() == 0) {
+                continue;
+            } else {
+                ProductDetail productDetail = productDetailResponsitory.findByProductId(product.getId()).get(0);
 
-            if (productDetail != null) {
-                ProductView productView = new ProductView();
-                productView.setId(product.getId());
-                productView.setName(product.getName());
-                productView.setAvailableQuantity(product.getAvailableQuantity());
-                productView.setPrice(productDetail.getPrice());
-                productView.setSold(product.getSold());
-                productView.setLikes(product.getLikes());
-                productView.setCreatedDate(product.getCreatedDate());
-                productView.setStatus(product.getStatus());
-                productView.setDescripTion(product.getDescripTion());
-                productView.setProductDetailId(productDetail.getId());
-                productView.setBrand(product.getBrand());
+                if (productDetail != null) {
+                    ProductView productView = new ProductView();
+                    productView.setId(product.getId());
+                    productView.setName(product.getName());
+                    productView.setAvailableQuantity(product.getAvailableQuantity());
+                    productView.setPrice(productDetail.getPrice());
+                    productView.setSold(product.getSold());
+                    productView.setLikes(product.getLikes());
+                    productView.setCreatedDate(product.getCreatedDate());
+                    productView.setStatus(product.getStatus());
+                    productView.setDescripTion(product.getDescripTion());
+                    productView.setProductDetailId(productDetail.getId());
+                    productView.setBrand(product.getBrand());
 
-                ProductImage productImage = productImageResponsitory.findByProductDetailId(productDetail.getId()).get(0);
+                    ProductImage productImage = productImageResponsitory.findByProductDetailId(productDetail.getId()).get(0);
 
-                if (productImage != null) {
-                    productView.setImage(productImage.getName());
+                    if (productImage != null) {
+                        productView.setImage(productImage.getName());
+                    } else {
+                        productView.setImage("deafault.png");
+                    }
+                    pv.add(productView);
                 }
-                else{
-                    productView.setImage("deafault.png");
-                }
-                pv.add(productView);
             }
         }
         int start = (int) pageable.getOffset();
@@ -154,31 +160,34 @@ public class ProductServiceimpl implements ProductServie {
         ArrayList<ProductView> pv = new ArrayList<>();
 
         for (Product product : products) {
-            ProductDetail productDetail = productDetailResponsitory.findByProductId(product.getId()).get(0);
+            if (productDetailResponsitory.findByProductId(product.getId()).size() == 0) {
+                continue;
+            } else {
+                ProductDetail productDetail = productDetailResponsitory.findByProductId(product.getId()).get(0);
 
-            if (productDetail != null) {
-                ProductView productView = new ProductView();
-                productView.setId(product.getId());
-                productView.setName(product.getName());
-                productView.setAvailableQuantity(product.getAvailableQuantity());
-                productView.setPrice(productDetail.getPrice());
-                productView.setSold(product.getSold());
-                productView.setLikes(product.getLikes());
-                productView.setCreatedDate(product.getCreatedDate());
-                productView.setStatus(product.getStatus());
-                productView.setDescripTion(product.getDescripTion());
-                productView.setProductDetailId(productDetail.getId());
-                productView.setBrand(product.getBrand());
+                if (productDetail != null) {
+                    ProductView productView = new ProductView();
+                    productView.setId(product.getId());
+                    productView.setName(product.getName());
+                    productView.setAvailableQuantity(product.getAvailableQuantity());
+                    productView.setPrice(productDetail.getPrice());
+                    productView.setSold(product.getSold());
+                    productView.setLikes(product.getLikes());
+                    productView.setCreatedDate(product.getCreatedDate());
+                    productView.setStatus(product.getStatus());
+                    productView.setDescripTion(product.getDescripTion());
+                    productView.setProductDetailId(productDetail.getId());
+                    productView.setBrand(product.getBrand());
 
-                ProductImage productImage = productImageResponsitory.findByProductDetailId(productDetail.getId()).get(0);
+                    ProductImage productImage = productImageResponsitory.findByProductDetailId(productDetail.getId()).get(0);
 
-                if (productImage != null) {
-                    productView.setImage(productImage.getName());
+                    if (productImage != null) {
+                        productView.setImage(productImage.getName());
+                    } else {
+                        productView.setImage("deafault.png");
+                    }
+                    pv.add(productView);
                 }
-                else{
-                    productView.setImage("deafault.png");
-                }
-                pv.add(productView);
             }
         }
         int start = (int) pageable.getOffset();
@@ -195,31 +204,34 @@ public class ProductServiceimpl implements ProductServie {
         ArrayList<ProductView> pv = new ArrayList<>();
 
         for (Product product : products) {
-            ProductDetail productDetail = productDetailResponsitory.findByProductId(product.getId()).get(0);
+            if (productDetailResponsitory.findByProductId(product.getId()).size() == 0) {
+                continue;
+            } else {
+                ProductDetail productDetail = productDetailResponsitory.findByProductId(product.getId()).get(0);
 
-            if (productDetail != null) {
-                ProductView productView = new ProductView();
-                productView.setId(product.getId());
-                productView.setName(product.getName());
-                productView.setAvailableQuantity(product.getAvailableQuantity());
-                productView.setPrice(productDetail.getPrice());
-                productView.setSold(product.getSold());
-                productView.setLikes(product.getLikes());
-                productView.setCreatedDate(product.getCreatedDate());
-                productView.setStatus(product.getStatus());
-                productView.setDescripTion(product.getDescripTion());
-                productView.setProductDetailId(productDetail.getId());
-                productView.setBrand(product.getBrand());
+                if (productDetail != null) {
+                    ProductView productView = new ProductView();
+                    productView.setId(product.getId());
+                    productView.setName(product.getName());
+                    productView.setAvailableQuantity(product.getAvailableQuantity());
+                    productView.setPrice(productDetail.getPrice());
+                    productView.setSold(product.getSold());
+                    productView.setLikes(product.getLikes());
+                    productView.setCreatedDate(product.getCreatedDate());
+                    productView.setStatus(product.getStatus());
+                    productView.setDescripTion(product.getDescripTion());
+                    productView.setProductDetailId(productDetail.getId());
+                    productView.setBrand(product.getBrand());
 
-                ProductImage productImage = productImageResponsitory.findByProductDetailId(productDetail.getId()).get(0);
+                    ProductImage productImage = productImageResponsitory.findByProductDetailId(productDetail.getId()).get(0);
 
-                if (productImage != null) {
-                    productView.setImage(productImage.getName());
+                    if (productImage != null) {
+                        productView.setImage(productImage.getName());
+                    } else {
+                        productView.setImage("deafault.png");
+                    }
+                    pv.add(productView);
                 }
-                else{
-                    productView.setImage("deafault.png");
-                }
-                pv.add(productView);
             }
         }
         int start = (int) pageable.getOffset();
@@ -236,31 +248,34 @@ public class ProductServiceimpl implements ProductServie {
         ArrayList<ProductView> pv = new ArrayList<>();
 
         for (Product product : products) {
-            ProductDetail productDetail = productDetailResponsitory.findByProductId(product.getId()).get(0);
+            if (productDetailResponsitory.findByProductId(product.getId()).size() == 0) {
+                continue;
+            } else {
+                ProductDetail productDetail = productDetailResponsitory.findByProductId(product.getId()).get(0);
 
-            if (productDetail != null && productDetail.getPrice().compareTo(min) >= 0 && productDetail.getPrice().compareTo(max) <= 0) {
-                ProductView productView = new ProductView();
-                productView.setId(product.getId());
-                productView.setName(product.getName());
-                productView.setAvailableQuantity(product.getAvailableQuantity());
-                productView.setPrice(productDetail.getPrice());
-                productView.setSold(product.getSold());
-                productView.setLikes(product.getLikes());
-                productView.setCreatedDate(product.getCreatedDate());
-                productView.setStatus(product.getStatus());
-                productView.setDescripTion(product.getDescripTion());
-                productView.setProductDetailId(productDetail.getId());
-                productView.setBrand(product.getBrand());
+                if (productDetail != null && productDetail.getPrice().compareTo(min) >= 0 && productDetail.getPrice().compareTo(max) <= 0) {
+                    ProductView productView = new ProductView();
+                    productView.setId(product.getId());
+                    productView.setName(product.getName());
+                    productView.setAvailableQuantity(product.getAvailableQuantity());
+                    productView.setPrice(productDetail.getPrice());
+                    productView.setSold(product.getSold());
+                    productView.setLikes(product.getLikes());
+                    productView.setCreatedDate(product.getCreatedDate());
+                    productView.setStatus(product.getStatus());
+                    productView.setDescripTion(product.getDescripTion());
+                    productView.setProductDetailId(productDetail.getId());
+                    productView.setBrand(product.getBrand());
 
-                ProductImage productImage = productImageResponsitory.findByProductDetailId(productDetail.getId()).get(0);
+                    ProductImage productImage = productImageResponsitory.findByProductDetailId(productDetail.getId()).get(0);
 
-                if (productImage != null) {
-                    productView.setImage(productImage.getName());
+                    if (productImage != null) {
+                        productView.setImage(productImage.getName());
+                    } else {
+                        productView.setImage("deafault.png");
+                    }
+                    pv.add(productView);
                 }
-                else{
-                    productView.setImage("deafault.png");
-                }
-                pv.add(productView);
             }
         }
         int start = (int) pageable.getOffset();
