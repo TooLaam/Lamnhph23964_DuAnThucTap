@@ -60,7 +60,7 @@
 <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
 <df-messenger
         intent="WELCOME"
-        chat-title="CHAT_BOT"
-        agent-id="f11829aa-4fa2-4ada-b34f-4d257015173c"
+        chat-title="ChatBot"
+        agent-id="c9aa1141-ab88-427a-9131-9140328e202b"
         language-code="vi"
 ></df-messenger>
