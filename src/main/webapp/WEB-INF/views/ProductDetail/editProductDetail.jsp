@@ -12,6 +12,18 @@
             <li class="breadcrumb-item active">Overview</li>
             <li class="breadcrumb-item active">Product</li>
         </ol>
+        <style>
+            .image-container {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .image-item {
+                margin-right: 10px;
+                margin-bottom: 10px;
+            }
+
+        </style>
     </nav>
 </div>
 <!-- End Page Title -->
@@ -28,7 +40,7 @@
                 <div className="card-body">
                     <h5 className="card-title">ADD<span>| xx</span></h5>
 
-                    <form method="post" action="/product_detail/update/${detailSP.id}" enctype="multipart/form-data">
+                    <form method="post" action="/product_detail/update/${detailSP.id}" enctype="multipart/form-data" name="updateForm" onsubmit="return validateForm()">
                         <div class="form-group">
                             Mau :
                             <select name="color" class="form-select"  aria-label="Default select example">
@@ -74,16 +86,21 @@
                             <label>Images:</label>
 
                             <!-- Display existing images with delete option -->
-                            <c:forEach items="${detailSP.listImages}" var="image" varStatus="loop">
-                                <div class="image-container">
-                                    <img src="<%= request.getContextPath() %>/assets/img/product/${image.name}" height="100px" width="100px">
-                                    <a href="/product_detail/deleteImage/${image.id}" class="delete-image-link">Xóa</a>
-                                </div>
-                            </c:forEach>
+                            <div class="image-container">
+                                <c:forEach items="${detailSP.listImages}" var="image">
+                                    <div class="image-item">
+                                        <img src="<%= request.getContextPath() %>/assets/img/product/${image.name}" height="100px" width="100px">
+                                        <a href="/product_detail/deleteImage/${image.id}" class="delete-image-link">Xóa</a>
+                                    </div>
+                                </c:forEach>
+                            </div>
 
                             <!-- Input for adding new images -->
-                            <input type="file" name="files" multiple="multiple"/>
+                            <div class="image-container">
+                                <input type="file" name="files" multiple="multiple" accept="image/*" />
+                            </div>
                         </div>
+
 
                         <input type="submit" class="btn btn-primary" value="Update" style="margin-top: 10px">
                     </form>
@@ -98,6 +115,33 @@
     </div>
     </div>
     </div>
+    <script>
+        function validateForm() {
+            var importPrice = document.forms["updateForm"]["importPrice"].value;
+            var price = document.forms["updateForm"]["price"].value;
+            var quantity = document.forms["updateForm"]["quantity"].value;
+
+            if (importPrice === "" || isNaN(importPrice)) {
+                alert("Please enter a valid import price.");
+                return false;
+            }
+
+            if (price === "" || isNaN(price)) {
+                alert("Please enter a valid price.");
+                return false;
+            }
+
+            if (quantity === "" || isNaN(quantity)) {
+                alert("Please enter a valid quantity.");
+                return false;
+            }
+
+            // Add more validation if needed...
+
+            return true;
+        }
+    </script>
+
 </section>
 
 

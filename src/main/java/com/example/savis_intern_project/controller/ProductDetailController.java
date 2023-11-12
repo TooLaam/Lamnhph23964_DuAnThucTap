@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -105,8 +106,8 @@ public class ProductDetailController {
     }
 
     @PostMapping(value = "add")
-    public String upload(Model model,
-                         @ModelAttribute("ProductRepuest") ProductDetailRepuest productRepuest,
+    public String add(Model model,
+                         @ModelAttribute("ProductRepuest") ProductRepuest productRepuest,
                          @RequestParam("files") List<MultipartFile> files,
                          RedirectAttributes redirectAttributes
                          ) throws IOException {
@@ -137,13 +138,14 @@ public class ProductDetailController {
 
         return "redirect:/product_detail/index";
     }
-    @PutMapping(value = "update/{id}")
+    @PostMapping(value = "update/{id}")
     public String update(Model model,
-                         @ModelAttribute("ProductRepuest") ProductDetailRepuest productRepuest,
+                         @ModelAttribute("ProductRepuest") ProductRepuest productRepuest,
                          @RequestParam("files") List<MultipartFile> files,
                          @PathVariable("id") UUID id) throws IOException {
+        System.out.println(id+"??");
         ProductDetail existingProductDetail = productDetailServiceimpl.getOne(id);
-        if (existingProductDetail != null) {
+//        if (existingProductDetail != null) {
             existingProductDetail.setImportPrice(productRepuest.getImportPrice());
             existingProductDetail.setPrice(productRepuest.getPrice());
             existingProductDetail.setQuantity(productRepuest.getQuantity());
@@ -153,22 +155,27 @@ public class ProductDetailController {
             existingProductDetail.setColor(Color.builder().Id(productRepuest.getColor()).build());
             existingProductDetail.setCreatedDate(java.sql.Date.valueOf(LocalDate.now()));
             productDetailServiceimpl.update(id, existingProductDetail);
-            for (MultipartFile file : files) {
-                ProductImage spa = new ProductImage();
-                ClassPathResource resource = new ClassPathResource("static/assets/img/product/");
-                String uploadDir = resource.getFile().getAbsolutePath();
-                File uploadPath = new File(uploadDir);
-                if (!uploadPath.exists()) {
-                    uploadPath.mkdirs();
-                }
-                spa.setName(file.getOriginalFilename());
-                spa.setStaTus(0);
-                spa.setProductDetail(existingProductDetail);
-                productImageServiceimpl.update(id, spa); // Assuming you have an update method in your service
+//            if (files != null && !files.isEmpty()) {
+            System.out.println(existingProductDetail.getId()+"heheh");
+                for (MultipartFile file : files) {
+                    ProductImage spa = new ProductImage();
+                    ClassPathResource resource = new ClassPathResource("static/assets/img/product/");
+                    String uploadDir = resource.getFile().getAbsolutePath();
+                    File uploadPath = new File(uploadDir);
+                    if (!uploadPath.exists()) {
+                        uploadPath.mkdirs();
+                    }
+                    spa.setName(file.getOriginalFilename());
+                    spa.setStaTus(0);
+                    System.out.println(existingProductDetail.getId()+"heheh");
+                    spa.setProductDetail(existingProductDetail);
+                    productImageServiceimpl.add(spa);
+//                }
             }
-        }
+//        }
         return "redirect:/product_detail/index";
     }
+
 
     @GetMapping("/detail/{id}")
     public String detail(Model model,
@@ -201,11 +208,11 @@ public class ProductDetailController {
 
     }
 
-    @PostMapping("/update/{id}")
-    public String update(Model model,
-                         @PathVariable("id") UUID id,
-                         @ModelAttribute("productDetail") ProductDetail productDetail) {
-        productDetailServiceimpl.update(id, productDetail);
-        return "redirect:/product_detail/index";
-    }
+//    @PostMapping("/update/{id}")
+//    public String update(Model model,
+//                         @PathVariable("id") UUID id,
+//                         @ModelAttribute("productDetail") ProductDetail productDetail) {
+//        productDetailServiceimpl.update(id, productDetail);
+//        return "redirect:/product_detail/index";
+//    }
 }

@@ -72,7 +72,7 @@
                               </tbody>
 
                             </table>
-                    <a href="/product_detail/create" class="btn btn-success" style="text-decoration: none;color: white; margin-top: 5px" >Thêm sản phẩm</a>
+                            <a href="/product_detail/create" class="btn btn-success" style="text-decoration: none;color: white; margin-top: 5px" >Thêm sản phẩm</a>
                             <%--                            <form method="post" enctype="multipart/form-data" action="import">--%>
                             <%--                                Thêm từ file excel: <input class="form-control" name="file" type="file">--%>
                             <%--                                <button>Thêm</button>--%>
