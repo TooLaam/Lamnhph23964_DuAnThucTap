@@ -104,18 +104,22 @@
 	position: relative;
 	text-decoration: none;
 	color: #333 !important;
-    cursor: pointer;
-	border-radius: 5px;
+	cursor: pointer;
+	border-radius: var(--bs-border-radius);
+	transition: all 0.3s ease;
 }
 
 .datatable-pagination a:hover {
 	background-color: #d9d9d9;
+	box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
 }
 
 .datatable-pagination .datatable-active a,
 .datatable-pagination .datatable-active a:focus,
 .datatable-pagination .datatable-active a:hover {
 	background-color: #d9d9d9;
+	cursor: default;
+	box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
 }
 
 .datatable-pagination .datatable-ellipsis a,

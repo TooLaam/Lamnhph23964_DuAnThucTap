@@ -2,12 +2,15 @@ package com.example.savis_intern_project.controller;
 
 
 import com.example.savis_intern_project.entity.*;
+import com.example.savis_intern_project.entity.ViewModels.ProductView;
 import com.example.savis_intern_project.repository.*;
 import com.example.savis_intern_project.repuest.ProductRepuest;
 import com.example.savis_intern_project.service.EmployeeService;
 import com.example.savis_intern_project.service.serviceimpl.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -72,25 +75,61 @@ public class ProductController {
     }
 
     @GetMapping("/indexcus")
-    public String show_data_product_cus(Model model) {
-        model.addAttribute("listProduct", productServiceimpl.getAllProduct());
-        model.addAttribute("quantityProduct", productServiceimpl.getAllProduct().size());
+    public String show_data_product_cus(Model model,
+                                        @RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "8") int size) {
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Page<ProductView> entitiesPage = productServiceimpl.getAllProductWithPagination(pageable);
+        model.addAttribute("entitiesPage", entitiesPage);
+        model.addAttribute("listProduct", entitiesPage.getContent());
+        model.addAttribute("quantityProduct", entitiesPage.getContent().size());
+        model.addAttribute("listBrand", brandServiceimpl.getAll());
         model.addAttribute("view", "/product/index.jsp");
         return "/customerFE/index";
     }
 
     @GetMapping("/indexcus/{name}")
-    public String show_data_product_cus_search(Model model, @PathVariable("name") String name) {
-        model.addAttribute("listProduct", productServiceimpl.getAllProductByName(name));
-        model.addAttribute("quantityProduct", productServiceimpl.getAllProductByName(name).size());
+    public String show_data_product_cus_search(Model model,
+                                               @PathVariable("name") String name,
+                                               @RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "8") int size) {
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Page<ProductView> entitiesPage = productServiceimpl.getAllProductByName(name, pageable);
+        model.addAttribute("entitiesPage", entitiesPage);
+        model.addAttribute("listProduct", entitiesPage.getContent());
+        model.addAttribute("quantityProduct", entitiesPage.getContent().size());
+        model.addAttribute("listBrand", brandServiceimpl.getAll());
         model.addAttribute("view", "/product/index.jsp");
         return "/customerFE/index";
     }
 
     @GetMapping("/indexcus/brand/{brandId}")
-    public String show_data_product_cus_brand(Model model, @PathVariable("brandId") UUID brandId) {
-        model.addAttribute("listProduct", productServiceimpl.getAllProductByBrand(brandId));
-        model.addAttribute("quantityProduct", productServiceimpl.getAllProductByBrand(brandId).size());
+    public String show_data_product_cus_brand(Model model,
+                                              @PathVariable("brandId") UUID brandId,
+                                              @RequestParam(defaultValue = "0") int page,
+                                              @RequestParam(defaultValue = "8") int size) {
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Page<ProductView> entitiesPage = productServiceimpl.getAllProductByBrand(brandId, pageable);
+        model.addAttribute("entitiesPage", entitiesPage);
+        model.addAttribute("listProduct", entitiesPage.getContent());
+        model.addAttribute("quantityProduct", entitiesPage.getContent().size());
+        model.addAttribute("listBrand", brandServiceimpl.getAll());
+        model.addAttribute("view", "/product/index.jsp");
+        return "/customerFE/index";
+    }
+
+    @GetMapping("/indexcus/price/{min}/{max}")
+    public String show_data_product_cus_price(Model model,
+                                              @PathVariable("min") BigDecimal min,
+                                              @PathVariable("max") BigDecimal max,
+                                              @RequestParam(defaultValue = "0") int page,
+                                              @RequestParam(defaultValue = "8") int size) {
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Page<ProductView> entitiesPage = productServiceimpl.getAllProductByPrice(min, max, pageable);
+        model.addAttribute("entitiesPage", entitiesPage);
+        model.addAttribute("listProduct", entitiesPage.getContent());
+        model.addAttribute("quantityProduct", entitiesPage.getContent().size());
+        model.addAttribute("listBrand", brandServiceimpl.getAll());
         model.addAttribute("view", "/product/index.jsp");
         return "/customerFE/index";
     }

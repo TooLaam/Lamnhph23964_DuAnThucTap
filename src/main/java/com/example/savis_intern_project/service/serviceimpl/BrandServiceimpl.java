@@ -5,6 +5,8 @@ import com.example.savis_intern_project.entity.Brand;
 import com.example.savis_intern_project.repository.BrandResponsitory;
 import com.example.savis_intern_project.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,6 +39,11 @@ public class BrandServiceimpl implements BrandService {
     @Override
     public List<Brand> getAll() {
         return responsitory.findAll();
+    }
+
+    @Override
+    public Page<Brand> getAllWithPagination(Pageable pageable) {
+        return responsitory.findAll(pageable);
     }
 
     @Override

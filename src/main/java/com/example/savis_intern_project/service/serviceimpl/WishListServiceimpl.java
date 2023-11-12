@@ -9,6 +9,9 @@ import com.example.savis_intern_project.entity.WishList;
 import com.example.savis_intern_project.repository.*;
 import com.example.savis_intern_project.service.WishListService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -104,6 +107,46 @@ public class WishListServiceimpl implements WishListService {
         }
 
         return wlv;
+    }
+
+    @Override
+    public Page<WishListView> getAllByCustomerIdWithPagination(UUID id, Pageable pageable) {
+        List<WishList> wishLists = responitory.findByCustomerId(id);
+
+        ArrayList<WishListView> wlv = new ArrayList<>();
+
+        for (WishList wishList : wishLists) {
+            Product product = productResponitory.findById(wishList.getProduct().getId()).get();
+            if (product != null) {
+
+                ProductDetail productDetail = productDetailResponitory.findByProductId(product.getId()).get(0);
+
+                if (productDetail != null) {
+                    WishListView wishListView = new WishListView();
+                    wishListView.setId(wishList.getId());
+                    wishListView.setCustomerId(wishList.getCustomer().getId());
+                    wishListView.setProductId(wishList.getProduct().getId());
+                    wishListView.setProductDetailId(productDetail.getId());
+                    wishListView.setPrice(productDetail.getPrice());
+                    wishListView.setCustomer(wishList.getCustomer());
+                    wishListView.setProduct(wishList.getProduct());
+
+                    ProductImage productImage = productImageResponsitory.findByProductDetailId(productDetail.getId()).get(0);
+
+                    if (productImage != null) {
+                        wishListView.setImage(productImage.getName());
+                    } else {
+                        wishListView.setImage("deafault.png");
+                    }
+                    wlv.add(wishListView);
+                }
+            }
+        }
+        int start = (int) pageable.getOffset();
+        int end = Math.min(start + pageable.getPageSize(), wlv.size());
+
+        List<WishListView> sublist = wlv.subList(start, end);
+        return new PageImpl<>(sublist, pageable, wlv.size());
     }
 
     @Override

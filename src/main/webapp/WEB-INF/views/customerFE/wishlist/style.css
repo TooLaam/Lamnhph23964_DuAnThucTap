@@ -24,6 +24,21 @@
 .pagea-item-active .pagea-link{
     background-color: #00575C4D;
 }
+.pagea-text{
+    display: block;
+    border-radius: 20px;
+    margin: 0 5px;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+}
 .pagea-link{
     display: block;
     border-radius: 20px;
