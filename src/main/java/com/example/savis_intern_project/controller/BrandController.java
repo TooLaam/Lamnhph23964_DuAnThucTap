@@ -3,11 +3,14 @@ package com.example.savis_intern_project.controller;
 import com.example.savis_intern_project.entity.Brand;
 import com.example.savis_intern_project.entity.Employee;
 import com.example.savis_intern_project.entity.Product;
+import com.example.savis_intern_project.entity.ViewModels.ProductView;
 import com.example.savis_intern_project.service.EmployeeService;
 import com.example.savis_intern_project.service.serviceimpl.BrandServiceimpl;
 import com.example.savis_intern_project.service.serviceimpl.ProductServiceimpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -46,9 +49,14 @@ public class BrandController {
     }
 
     @GetMapping("/indexcus" )
-    public String show_data_product_cus(Model model){
-        model.addAttribute("listBrand",serviceimpl.getAll());
-        model.addAttribute("quantityBrand",serviceimpl.getAll().size());
+    public String show_data_product_cus(Model model,
+                                        @RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "12") int size){
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Page<Brand> entitiesPage = serviceimpl.getAllWithPagination(pageable);
+        model.addAttribute("entitiesPage", entitiesPage);
+        model.addAttribute("listBrand",entitiesPage.getContent());
+        model.addAttribute("quantityBrand",entitiesPage.getContent().size());
         model.addAttribute("view", "/brand/index.jsp");
         return "/customerFE/index";
     }

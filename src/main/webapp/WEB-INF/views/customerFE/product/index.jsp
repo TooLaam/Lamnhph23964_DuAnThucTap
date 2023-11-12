@@ -12,7 +12,7 @@
     <div class="content">
         <span class="text-content">Lips </span>
         <span class="available">(${quantityProduct})</span>
-        <div class="btn-group" role="group">
+        <%--<div class="btn-group" role="group">
             <button type="button" class="btn btn-outline dropdown-toggle" data-bs-toggle="dropdown"
                     aria-expanded="false">
                 Best selling
@@ -21,54 +21,29 @@
                 <li><a class="dropdown-item" href="#">Lip Dior</a></li>
                 <li><a class="dropdown-item" href="#">Lip Channel</a></li>
             </ul>
-        </div>
+        </div>--%>
     </div>
     <div class="row">
         <div class="col-3">
             <h6 class="text-filter">Filter</h6>
             <h6 class="filter">BRAND</h6>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value=""/>
-                <label class="form-check-label">
-                    Lip MAC
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value=""/>
-                <label class="form-check-label">
-                    Lip Dior
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value=""/>
-                <label class="form-check-label">
-                    Lip Channel
-                </label>
-            </div>
+            <c:forEach items="${listBrand}" var="brand">
+                <div class="filter-brand">
+                    <a href="/product/indexcus/brand/${brand.id}">${brand.name}</a>
+                </div>
+            </c:forEach>
             <h6 class="filter">PRICE</h6>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="price" value=""/>
-                <label class="form-check-label">
-                    Under 100000$
-                </label>
+            <div class="filter-brand">
+                <a href="/product/indexcus/price/0/15">Under 15$</a>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="price" value=""/>
-                <label class="form-check-label">
-                    100000$ - 300000$
-                </label>
+            <div class="filter-brand">
+                <a href="/product/indexcus/price/16/25">16$ - 25$</a>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="price" value=""/>
-                <label class="form-check-label">
-                    300000$ - 500000$
-                </label>
+            <div class="filter-brand">
+                <a href="/product/indexcus/price/26/35">26$ - 35$</a>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="price" value=""/>
-                <label class="form-check-label">
-                    500000$ - 1000000$
-                </label>
+            <div class="filter-brand">
+                <a href="/product/indexcus/price/36/10000">Over 36$</a>
             </div>
             <%--<h6 class="filter">COLOR</h6>
             <div class="form-check">
@@ -119,22 +94,126 @@
                     </div>
                 </c:forEach>
             </div>
+
+            <ul class="pagination">
+                <c:if test="${not entitiesPage.first}">
+                    <li class="pagea-item">
+                        <a class="pagea-link" href="?page=${entitiesPage.number - 1}&size=${entitiesPage.size}">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                </c:if>
+                <c:choose>
+                    <c:when test="${entitiesPage.totalPages > 5}">
+                        <c:choose>
+                            <c:when test="${entitiesPage.number < 4}">
+                                <c:forEach var="pageNumber" begin="1" end="${entitiesPage.number + 3}">
+                                    <c:choose>
+                                        <c:when test="${(pageNumber - 1) == entitiesPage.number}">
+                                            <li class="pagea-item-active">
+                                                <a class="pagea-link" href="?page=${pageNumber - 1}&size=${entitiesPage.size}">${pageNumber}</a>
+                                            </li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li class="pagea-item">
+                                                <a class="pagea-link" href="?page=${pageNumber - 1}&size=${entitiesPage.size}">${pageNumber}</a>
+                                            </li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                                <li class="pagea-item"><span class="pagea-text">...</span></li>
+                                <li class="pagea-item">
+                                    <a class="pagea-link" href="?page=${entitiesPage.totalPages - 1}&size=${entitiesPage.size}">${entitiesPage.totalPages}</a>
+                                </li>
+                            </c:when>
+                            <c:when test="${(entitiesPage.totalPages - entitiesPage.number) < 5}">
+                                <li class="pagea-item">
+                                    <a class="pagea-link" href="?page=1&size=${entitiesPage.size}">1</a>
+                                </li>
+                                <li class="pagea-item"><span class="pagea-text">...</span></li>
+                                <c:forEach var="pageNumber" begin="${entitiesPage.number - 1}" end="${entitiesPage.totalPages}">
+                                    <c:choose>
+                                        <c:when test="${(pageNumber - 1) == entitiesPage.number}">
+                                            <li class="pagea-item-active">
+                                                <a class="pagea-link" href="?page=${pageNumber - 1}&size=${entitiesPage.size}">${pageNumber}</a>
+                                            </li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li class="pagea-item">
+                                                <a class="pagea-link" href="?page=${pageNumber - 1}&size=${entitiesPage.size}">${pageNumber}</a>
+                                            </li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="pagea-item">
+                                    <a class="pagea-link" href="?page=1&size=${entitiesPage.size}">1</a>
+                                </li>
+                                <li class="pagea-item"><span class="pagea-text">...</span></li>
+                                <c:forEach var="pageNumber" begin="${entitiesPage.number - 1}" end="${entitiesPage.number + 3}">
+                                    <c:choose>
+                                        <c:when test="${(pageNumber - 1) == entitiesPage.number}">
+                                            <li class="pagea-item-active">
+                                                <a class="pagea-link" href="?page=${pageNumber - 1}&size=${entitiesPage.size}">${pageNumber}</a>
+                                            </li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li class="pagea-item">
+                                                <a class="pagea-link" href="?page=${pageNumber - 1}&size=${entitiesPage.size}">${pageNumber}</a>
+                                            </li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                                <li class="pagea-item"><span class="pagea-text">...</span></li>
+                                <li class="pagea-item">
+                                    <a class="pagea-link" href="?page=${entitiesPage.totalPages - 1}&size=${entitiesPage.size}">${entitiesPage.totalPages}</a>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:when>
+                    <c:when test="${entitiesPage.totalPages > 3}">
+                        <c:forEach var="pageNumber" begin="1" end="${entitiesPage.totalPages}">
+                            <c:choose>
+                                <c:when test="${(pageNumber - 1) == entitiesPage.number}">
+                                    <li class="pagea-item-active">
+                                        <a class="pagea-link" href="?page=${pageNumber - 1}&size=${entitiesPage.size}">${pageNumber}</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="pagea-item">
+                                        <a class="pagea-link" href="?page=${pageNumber - 1}&size=${entitiesPage.size}">${pageNumber}</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="pageNumber" begin="1" end="${entitiesPage.totalPages}">
+                            <c:choose>
+                                <c:when test="${(pageNumber - 1) == entitiesPage.number}">
+                                    <li class="pagea-item-active">
+                                        <a class="pagea-link" href="?page=${pageNumber - 1}&size=${entitiesPage.size}">${pageNumber}</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="pagea-item">
+                                        <a class="pagea-link" href="?page=${pageNumber - 1}&size=${entitiesPage.size}">${pageNumber}</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+                <c:if test="${not entitiesPage.last}">
+                    <li class="pagea-item">
+                        <a class="pagea-link" href="?page=${entitiesPage.number + 1}&size=${entitiesPage.size}">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </c:if>
+            </ul>
         </div>
     </div>
-    <ul class="pagination">
-        <li class="pagea-item">
-            <a class="pagea-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li class="pagea-item-active"><a class="pagea-link" href="#">1</a></li>
-        <li class="pagea-item"><a class="pagea-link" href="#">2</a></li>
-        <li class="pagea-item"><a class="pagea-link" href="#">3</a></li>
-        <li class="pagea-item">
-            <a class="pagea-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
 </div>
 <br>
