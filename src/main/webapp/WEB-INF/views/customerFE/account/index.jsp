@@ -11,10 +11,13 @@
         <div class="col-3">
             <div class="content">
                 <span class="account-name">${cus.fullname} Account </span>
-                <a href="/home/index.html" class="link-text-logout">(Logout)</a>
+                <a href="/customer/logout" class="link-text-logout">(SignOut)</a>
             </div>
             <div class="link">
-                <a href="/account/index.html" class="link-text-active">Account Info</a>
+                <a href="/customer/indexcus" class="link-text-active">Account Info</a>
+            </div>
+            <div class="link">
+                <a href="/customer/indexcus/changeAccountInfo" class="link-text">Change Account Info</a>
             </div>
         </div>
         <div class="col-9">
@@ -53,7 +56,6 @@
                         <label class="form-label">Address: </label>
                         <label class="form-label text-inf">${cus.address}</label>
                     </div>
-                    <button type="button" class="btn">Change Account Info</button>
                 </form>
             </div>
         </div>

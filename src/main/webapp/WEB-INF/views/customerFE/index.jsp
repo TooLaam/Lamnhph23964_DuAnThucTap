@@ -44,23 +44,21 @@
             </c:otherwise>
         </c:choose>
     </ul>
-    <nav class="nav-search">
-        <div class="row">
-            <div class="col-md-2 col-4">
-                <a href="/home"><img src="/assets/img/logo.png" class="logo" alt="logo"/>
+    <nav class="nav-search my-2">
+        <ul class="navbar mx-auto mb-lg-0 list-unstyled">
+            <li class="nav-item">
+                <a href="/home"><img src="/assets/img/logo.png" width="200" alt="logo"/>
                 </a>
-            </div>
-            <div class="col-md-1 col-0"></div>
-            <div class="col-md-6 col-4">
-                <form action="/product/search" method="get" class="input-group mb-3" id="nav-search">
+            </li>
+            <li class="nav-item">
+                <form action="/product/search" method="get" class="input-group" id="nav-search" style="width: 600px;">
                     <input type="text" name="name" class="form-control" placeholder="What can we help you find?"
                            aria-label="Recipient's username"/>
                     <button type="submit" class="btn">SEARCH</button>
                 </form>
-            </div>
-            <div class="col-md-1 col-0"></div>
-            <div class="col-md-2 col-4">
-                <ul class="list-unstyled" style="display: flex;">
+            </li>
+            <li class="nav-item">
+                <ul class="list-unstyled" style="display: flex; margin-right: 1rem;">
                     <c:if test="${CustomerName != null}">
                         <li>
                             <a href="/customer/indexcus">
@@ -84,8 +82,8 @@
                         </a>
                     </li>
                 </ul>
-            </div>
-        </div>
+            </li>
+        </ul>
     </nav>
 </div>
 <div class="nav-shadow">
