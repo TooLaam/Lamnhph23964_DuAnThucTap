@@ -370,6 +370,18 @@ public class CustomerController {
         model.addAttribute("view", "/Customer/detail.jsp");
     }
 
+    public void valiUpdateCus(Model model,HttpSession session,UUID id){
+        model.addAttribute("cus", customerService.detail(id));
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+        Employee checkLogin = employeeService.login(username, password);
+        session.setAttribute("checkRole", employeeService.checkRole(username));
+
+        session.setAttribute("Name", checkLogin);
+        model.addAttribute("empLogin", checkLogin);
+        model.addAttribute("view", "/changeAccountInfo/index.jsp");
+    }
+
     @PostMapping("/update")
     public String update(Model model,
                          @RequestParam("id") UUID id,
@@ -454,6 +466,90 @@ public class CustomerController {
         }
     }
 
+
+    @PostMapping("/updateCus/{id}")
+    public String updateCus(Model model,
+                         @PathVariable("id") UUID id,
+                         @RequestParam("fullname") String fullname,
+                         @RequestParam("dateofbirth") String dateofbirth,
+                         @RequestParam("address") String address,
+                         @RequestParam("phone") String phone,
+                         @RequestParam("email") String email,
+                         @RequestParam("gender") int gender,
+//                         @RequestParam("status") Integer status,
+                         @RequestParam("username") String username1,
+                         @RequestParam("password") String password1,
+                         HttpSession session
+    ) {
+        if (fullname.isBlank()){
+            model.addAttribute("errName","Invalid Receiver FullName");
+            valiUpdateCus(model,session,id);
+            return "/customerFE/index";
+
+        }
+        if (dateofbirth.isBlank()){
+            model.addAttribute("errDate","Invalid Receiver Date Of Birth");
+            valiUpdateCus(model,session,id);
+            return "/customerFE/index";        }
+        String Regex = "^(0|84)(2(0[3-9]|1[0-6|8|9]|2[0-2|5-9]|3[2-9]|4[0-9]|5[1|2|4-9]|6[0-3|9]|7[0-7]|8[0-9]|9[0-4|6|7|9])|3[2-9]|5[5|6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])([0-9]{7})$";
+
+        if (phone.isBlank()){
+            model.addAttribute("errPhone","Invalid Receiver Phone Number");
+            valiUpdateCus(model,session,id);
+            return "/customerFE/index";        }
+        if (email.isBlank()){
+            model.addAttribute("errEmail","Invalid Receiver Email");
+            valiUpdateCus(model,session,id);
+            return "/customerFE/index";
+        }
+        if (address.isBlank()){
+            model.addAttribute("errAdd","Invalid Receiver Address");
+            valiUpdateCus(model,session,id);
+            return "/customerFE/index";
+        }
+        if (username1.isBlank()){
+            model.addAttribute("errUser","Invalid Receiver UserName");
+            valiUpdateCus(model,session,id);
+            return "/customerFE/index";        }
+        if (password1.isBlank()){
+            model.addAttribute("errPass","Invalid Receiver Password");
+            valiUpdateCus(model,session,id);
+            return "/customerFE/index";
+        }else {
+            List<Customer> checkUser = customerService.checkUserNameUpdate(customerService.detail(id).getUsername(),username1);
+            if (!(checkUser.isEmpty())) {
+                model.addAttribute("errUserTrung", "Duplicate Username !!! Please enter another username");
+                valiUpdateCus(model,session,id);
+                return "/customerFE/index";            }
+            Date currentDate = new Date(System.currentTimeMillis());
+            Date birth = Date.valueOf(dateofbirth);
+            if (birth.after(currentDate)) {
+                model.addAttribute("errDateAfter", "Date of birth must be less than current date !!!");
+                valiUpdateCus(model,session,id);
+                return "/customerFE/index";            }
+            if (!phone.matches(Regex)) {
+                model.addAttribute("errPhoneErrr", "Phone number syntax is incorrect !!!");
+                valiUpdateCus(model,session,id);
+                return "/customerFE/index";            }
+            Customer customer = new Customer();
+
+            customer.setFullname(fullname);
+            customer.setDateofbirth(Date.valueOf(dateofbirth));
+            customer.setAddress(address);
+            customer.setPhone(phone);
+            customer.setId(id);
+            customer.setEmail(email);
+            customer.setGender(gender);
+            customer.setStatus(0);
+            customer.setUsername(username1);
+            customer.setPassword(password1);
+            customer.setDatecreated(String.valueOf(currentDate));
+
+
+            customerService.update(customer);
+            return "redirect:/customer/indexcus";
+        }
+    }
 
 
     @GetMapping("/detail/{id}")

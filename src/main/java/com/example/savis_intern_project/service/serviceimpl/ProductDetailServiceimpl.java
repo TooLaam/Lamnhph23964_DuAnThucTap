@@ -103,7 +103,7 @@ public class ProductDetailServiceimpl implements ProductDetailService {
         Product product = productResponsitory.findById(productDetail.getProduct().getId()).get();
         Color color = colorResponsitory.findById(productDetail.getColor().getId()).get();
 
-        if (product != null && color != null && product.getBrand() == color.getBrand()) {
+        if (product != null && color != null /*&& product.getBrand() == color.getBrand()*/) {
             productDetailView.setName(product.getName());
             productDetailView.setAvailableQuantity(product.getAvailableQuantity());
             productDetailView.setSold(product.getSold());
