@@ -10,6 +10,6 @@
   - Tô Đặng Hương Giang
   - Nguyễn Hoàng Lâm
 # Cách build và chạy dự án:
-B1: Chạy file database trong savis_intern/src/main/resources/Database.sql để chạy database
-B2: Chạy project bằng Intelji
-B3: Sau khi chạy xong lên trình duyệt bật localhost:8080 để thực hiện trải nghiệm website
+  - B1: Chạy file database trong savis_intern/src/main/resources/Database.sql để chạy database
+  - B2: Chạy project bằng Intelji
+  - B3: Sau khi chạy xong lên trình duyệt bật localhost:8080 để thực hiện trải nghiệm website
